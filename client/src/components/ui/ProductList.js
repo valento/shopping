@@ -1,12 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-export default class ProductList extends React.Component {
+class ProductList extends React.Component {
   constructor(props) {
     super(props)
   }
   render() {
     return (
-      <div>ProductList: {this.props.location.pathname}</div>
+      <div>ProductList: {this.props.category}</div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {category: state.settings.category}
+}
+
+export default connect(mapStateToProps, null)(ProductList)

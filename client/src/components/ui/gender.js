@@ -26,7 +26,7 @@ class Gender extends React.Component {
     const gen = (this.props.gender)? 'm' : 'w'
     const style = (this.props.gender === this.props.domain)? 'domain' : ''
     return (
-      <Link to={'/fashion/' + gen} onClick={this.onClick} className={style}>{l[this.props.gender]}</Link>
+      <Link to={'/fashion/' + gen} onClick={this.onClick}>{l[this.props.gender]}</Link>
     )
   }
 }

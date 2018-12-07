@@ -9,7 +9,7 @@ export const settings = (state={}, action) => {
     case DOMAIN_CHANGED :
      return {...state, domain: action.domain}
     case CATEGORY_CHANGED :
-      return {...state, subdomain: action.category}
+      return {...state, category: action.category}
     default: return state
   }
 }

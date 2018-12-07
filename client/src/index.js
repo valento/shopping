@@ -15,7 +15,7 @@ const initState = {
   settings: {
     language: 'en',
     domain: null,
-    subdomain: null
+    category: 'HOME'
   },
   user: {}
 }

@@ -8,7 +8,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development nodemon --watch server --exec babel-node -- server/index.js",
-    "start": "NODE_ENV=production babel-node server/index.js"
+    "prod": "NODE_ENV=production babel-node server/index.js",
+    "start": "NODE_ENV=production node ./build/index.js",
+    "babel:prod": "NODE_ENV=production babel -d ./build ./server -s --presets=env"
   },
   "babel": {
     "presets": [

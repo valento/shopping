@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom'
 import { DOMAIN_CHANGED } from '../../types'
-import '../../App.css'
+//import '../../App.css'
 import Sign from '../brand/sign'
 import Gender from '../ui/gender'
 import User from '../ui/user'
@@ -45,5 +45,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps,
   dispatch => ({
-  onSwitchDomain: domain => dispatch({ type: DOMAIN_CHANGED, domain })})
+    onSwitchDomain: domain => dispatch({ type: DOMAIN_CHANGED, domain })
+  })
 )(Top)
