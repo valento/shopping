@@ -1,0 +1,11 @@
+// SETTINGS ACTION TYPES:
+
+export const LANGUAGE = 'LANGUAGE'
+export const GENDER = 'GENDER'
+export const DOMAIN_CHANGED = 'DOMAIN_CHANGED'
+export const CATEGORY_CHANGED = 'CATEGORY_CHANGED'
+export const LOCATION = 'LOCATION'
+
+// USER ACTION TYPES:
+
+export const USER_SIGNED = 'USER_SIGNED'

@@ -1,0 +1,31 @@
+{
+  "name": "adricollection",
+  "version": "1.0.0",
+  "description": "shopping",
+  "main": "index.js",
+  "repository": "https://github.com/valento/shopping.git",
+  "author": "valentin m.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon --watch server --exec babel-node -- server/index.js",
+    "start": "NODE_ENV=production babel-node server/index.js"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.0.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
+    "express": "^4.16.4",
+    "generate-password": "^1.4.1",
+    "jsonwebtoken": "^8.4.0",
+    "sqlite3": "^4.0.4"
+  }
+}

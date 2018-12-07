@@ -1,0 +1,145 @@
+.App {
+  text-align: center;
+  background-color: rgba(230,220,210,.8);
+}
+
+.App-menu {
+  position: fixed;
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  max-height: 7vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  background-color: rgb(30,30,10);
+}
+.App-menu a {
+  margin: 6px auto;
+  font-family: 'Cormorant', serif;
+  font-size: 1.2em;
+  font-weight: 500;
+  color: rgb(230, 220, 215)
+
+}
+
+.App-content {
+  min-height: 100vh;
+  background: rgb(230, 220, 215) url(/img/IMG_1143.jpg);
+  background-size: cover;
+}
+
+
+.App-content.man {
+  background: url(/img/IMG_5875.jpg);
+  background-size: cover;
+}
+.App-content.woman {
+  background: url(/img/IMG_5884.jpg);
+  background-size: cover;
+}
+
+.home-page {
+  padding-top: 10vh;
+  min-height: 100vh;
+  background-color: rgba(230, 220, 215,.8)
+}
+
+.content {
+  padding-top: 8vh;
+  min-height: 100vh;
+  background-color: rgb(230, 220, 215,.8)
+}
+.submenu {
+  padding: 1vh;
+}
+.content .ui.menu {
+  margin-top: 0;
+  background-color: rgb(220, 200, 180);
+  color: #dcc8b4;
+}
+.content .ui.inverted.menu .item {
+  color: rgb(80,60,60)
+}
+.content .ui.menu .item:before {
+  background: rgba(120,110,100,.4);
+  height: 2em;
+  margin-top: 7px;
+}
+.content .ui.menu .active.item {
+  background: none;
+  color: rgb(180, 45, 0)!important;
+  font-weight: 700;
+}
+
+.signup {
+  min-height: 100px;
+  margin: 14px;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+}
+.signup .ui.form input, .signup .ui.form input:focus, .signup .ui.form input>input {
+  border: 1px solid black;
+  border-radius: 1em;
+  background: none;
+}
+.signup .ui.form input>input {
+  border: 1px solid black;
+  border-radius: 1em;
+  background: none;
+}
+
+.user-page {
+  background: url(/img/payment.jpg);
+  background-size: cover;
+}
+
+.vintage {
+  font-family: 'Cormorant', serif;
+  font-style: italic;
+}
+.vintage.title {
+  line-height: 1em;
+  text-align: left;
+  border-bottom: 1px solid #dcc6ab;
+}
+.vintage.big {
+  font-size: 2.3em;
+  font-weight: 700;
+}
+.vintage.small {
+  font-size: 1.2em;
+  font-weight: 300;
+}
+
+a.domain {
+  color: rgb(255,190,10);
+}
+
+.brand {
+  display: inline-block;
+}
+.brand span {
+  position: relative;
+  left: -47px;
+  font-family: 'Alex Brush', cursive;
+  font-size: 1.2em;
+  color: white;
+}
+/* ------------------------------------------------------------------ */
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
