@@ -20,7 +20,7 @@ class HomePage extends React.Component {
   initUser(logged){
     if(logged) {
       console.log('Component Did Update')
-      this.props.initUser()
+      //this.props.initUser()
     }
   }
 

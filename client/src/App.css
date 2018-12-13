@@ -23,7 +23,6 @@
   font-size: 1.2em;
   font-weight: 500;
   color: rgb(230, 220, 215)
-
 }
 
 .App-content {
@@ -39,6 +38,14 @@
 }
 .App-content.woman {
   background: url(/img/IMG_5884.jpg);
+  background-size: cover;
+}
+.App-content.proman {
+  background: url(/img/IMG_1203.jpg);
+  background-size: cover;
+}
+.App-content.prowoman {
+  background: url(/img/IMG_1203.jpg);
   background-size: cover;
 }
 
@@ -122,6 +129,18 @@
 .promo {
   font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
   font-style: normal;
+  padding: 0 1em;
+}
+.promo ul {
+  padding: 0;
+}
+.promo li {
+  margin: 1em 0;
+  min-height: 14vh;
+  border: 2px solid black;
+  list-style: none;
+  display: flex;
+  justify-content: center;
 }
 
 a.domain {
@@ -137,6 +156,10 @@ a.domain {
   font-family: 'Alex Brush', cursive;
   font-size: 1.2em;
   color: white;
+}
+
+.promo {
+
 }
 /* ------------------------------------------------------------------ */
 .App-logo {

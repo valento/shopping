@@ -6,7 +6,12 @@ export const ch_cat = category => ({
   category
 })
 
+export const userUpdated = user => ({
+  type: USER_UPDATED,
+  user
+})
+
 export const changeCategory = category => dispatch => dispatch(ch_cat(category))
 
 export const updateUser = user => dispatch =>
-  api.user.updateUser(user).then( res => console.log('User Updated') )
+  api.user.updateUser(user).then( res => dispatch(userUpdated(user)) )

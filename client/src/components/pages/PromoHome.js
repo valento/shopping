@@ -2,25 +2,26 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Form, Button, Icon, Divider } from 'semantic-ui-react'
-import UserDataForm from '../forms/UserDataForm'
 import { updateUser } from '../../actions/'
+import UserDataForm from '../forms/UserDataForm'
+import PromoList from '../ui/PromoList'
 
-const PromoHome = ({ gender,username,language,updateUser,email,credit }) => {
+const PromoHome = ({ gender,username,language,updateUser,email,credit,rating }) => {
+  let bkg = (gender !== null) && (username !== null)? (gender > 0)? 'proman' : 'woman' : ''
   return(
-    <div className='App-content'>
+    <div className={'App-content '+bkg}>
       <div className='home-page vintage'>
-        <p>Please help me with some data so my Proms suit you better!</p>
-        <UserDataForm
+        {(gender === null) && (username === null) && <UserDataForm
           gender={gender}
           username={username}
           language={language}
           credit={credit}
           email={email}
           onSave={updateUser}
-        />
+        />}
         <div className='promo general'>
-          <Divider horizontal>promo</Divider>
-          Face
+          <Divider horizontal>{gender? 'man' : 'woman'} promos</Divider>
+          {(gender !== null) && (username !== null) && <PromoList gender={gender} />}
         </div>
       </div>
     </div>

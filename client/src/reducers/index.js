@@ -1,6 +1,7 @@
 import {
-  LANGUAGE, GENDER, LOCATION, USER_SIGNED,
-  DOMAIN_CHANGED, CATEGORY_CHANGED, USER_INIT
+  LANGUAGE, GENDER, LOCATION,
+  DOMAIN_CHANGED, CATEGORY_CHANGED,
+  USER_INIT, USER_SIGNED, USER_UPDATED,
 } from '../types'
 
 export const settings = (state={}, action) => {
@@ -28,6 +29,8 @@ export const user = (state={}, action) => {
     case USER_SIGNED :
       return action.user
     case USER_INIT :
+      return {...state, ...action.user}
+    case USER_UPDATED :
       return {...state, ...action.user}
 
     default: return state

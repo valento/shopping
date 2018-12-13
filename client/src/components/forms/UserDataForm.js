@@ -16,6 +16,7 @@ export default class UserDataForm extends React.Component {
         gender: this.props.gender,
         language: this.props.language,
         credit: this.props.credit,
+        rating: this.props.rating,
         email: this.props.email
       }
     }
@@ -61,6 +62,7 @@ export default class UserDataForm extends React.Component {
     const { email } = this.props
     return(
       <div className='signup mail'>
+        <p>Please help me with some data so my Proms suit you better!</p>
         <Form>
           <Divider horizontal className='promo general'>Username</Divider>
           <Form.Input onChange={this.onChange} fluid inline centered focus
