@@ -11,41 +11,47 @@ class FashionMenu extends React.Component {
     super(props)
     const state = {
             lan: {
-              es: ['Mujer', 'Hombre'],
-              en: ['Woman', 'Man']
+              es: ['Hombre', 'Mujer'],
+              en: ['Man', 'Woman']
             }
           }
   }
 
-  handleClick(e, { name }) {
-    this.props.changeCategory(name)
+  handleClick(e, { index }) {
+    console.log(index)
+    this.props.changeCategory(index)
   }
 
   render() {
     const { match, category } = this.props
     const bkg = (this.props.gen === 'm')? 'man' : 'woman'
+
     return (
       <Menu fluid inverted size='mini'>
         <Menu.Item as={Link} to={match.url}
-          active={category === 'HOME'}
-          onClick={(e, {name}) => this.props.changeCategory(name)}
+          active={category === '0'}
+          onClick={(e, {index}) => this.props.changeCategory(index)}
+          index={0}
           name='HOME'
         >
           <Icon name={bkg} color='black' size='large'/>
         </Menu.Item>
         <Menu.Item as={Link} to={`${match.url}/clothing`}
-          active={category === 'CLOTHING'}
-          onClick={(e, {name}) => this.props.changeCategory(name)}
+          active={category === '1'}
+          onClick={(e, {index}) => this.props.changeCategory(index)}
+          index={1}
           name='CLOTHING'
         />
         <Menu.Item as={Link} to={`${match.url}/footwear`}
-          active={category === 'FOOTWEAR'}
-          onClick={(e, {name}) => this.props.changeCategory(name)}
+          active={category === '2'}
+          onClick={(e, {index}) => this.props.changeCategory(index)}
+          index={2}
           name='FOOTWEAR'
         />
         <Menu.Item as={Link} to={`${match.url}/accessories`}
-          active={category === 'ACCESSORIES'}
-          onClick={(e, {name}) => this.props.changeCategory(name)}
+          active={category === '3'}
+          onClick={(e, {index}) => this.props.changeCategory(index)}
+          index={3}
           name='ACCESSORIES'
         />
       </Menu>
@@ -55,7 +61,7 @@ class FashionMenu extends React.Component {
 
 FashionMenu.propTypes = {
   gen: PropTypes.number.isRequired,
-  category: PropTypes.string.isRequired
+  category: PropTypes.number.isRequired
 }
 
 const mapStateToProps = state => ({

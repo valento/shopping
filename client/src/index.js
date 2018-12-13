@@ -9,13 +9,15 @@ import 'semantic-ui-css/semantic.min.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import decode from 'jwt-decode'
-import { userSignedIn } from './actions/auth'
+import { userSignedIn, initUser } from './actions/auth'
+import setAuthHeader from './setAuthHeader'
 
 const initState = {
   settings: {
     language: 'en',
     domain: null,
-    category: 'HOME'
+    category: 0,
+    gender: 0
   },
   user: {}
 }
@@ -31,12 +33,12 @@ const store = createStore(
 if(localStorage.valeCollectionJWT){
   const jtoken = decode(localStorage.valeCollectionJWT)
   const user = {
-    email: jtoken.email,
-    username: jtoken.username,
+    new_user: false,
     token: localStorage.valeCollectionJWT
   }
-  console.log(user)
+  setAuthHeader(localStorage.valeCollectionJWT)
   store.dispatch(userSignedIn(user))
+  store.dispatch(initUser())
 }
 
 const Root = (

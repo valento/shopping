@@ -1,4 +1,7 @@
-import { LANGUAGE, GENDER, LOCATION, USER_SIGNED, DOMAIN_CHANGED, CATEGORY_CHANGED } from '../types'
+import {
+  LANGUAGE, GENDER, LOCATION, USER_SIGNED,
+  DOMAIN_CHANGED, CATEGORY_CHANGED, USER_INIT
+} from '../types'
 
 export const settings = (state={}, action) => {
   switch (action.type) {
@@ -24,6 +27,9 @@ export const user = (state={}, action) => {
   switch (action.type) {
     case USER_SIGNED :
       return action.user
+    case USER_INIT :
+      return {...state, ...action.user}
+
     default: return state
   }
 }

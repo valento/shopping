@@ -22,18 +22,36 @@ function database ( url ) {
   }
 }
 
-database.prototype.findUser = function(data={}, result=['email']) {
+database.prototype.findUser = function(data={}, scope=['email']) {
   const that = this
   const s = Object.keys(data).map( key => data[key] )
   const k = Object.keys(data)
-  //console.log(search)
-  const sql = `SELECT ${result} FROM users WHERE ${k} = ?`
+  console.log(s,k)
+  const sql = `SELECT ${scope} FROM users WHERE ${k} = ?`
   return new Promise((resolve,reject) => {
     that.db.get(sql, s, (err,row) => {
       if(err) {
+        console.log('Find User error: ', err.message);
         reject(err)
       } else {
-        console.log('DB: ', row)
+        console.log('DB get returns: ', row)
+        resolve(row)
+      }
+    })
+  })
+}
+
+database.prototype.getUser = function( data={}, scope=['email']) {
+  console.log('DB get User: ', data.email)
+  const that = this
+  const { email } = data
+  const sql = `SELECT ${scope} FROM users WHERE email = ?`
+  console.log(sql, email)
+  return new Promise (( resolve, reject ) => {
+    that.db.get(sql, email, (err,row) => {
+      if(err){
+        reject({errors: { global: 'Wrong DB'}})
+      } else {
         resolve(row)
       }
     })
@@ -55,7 +73,27 @@ database.prototype.signup = function(data){
       if(err) {
         reject({message: 'Nothing saved'})
       } else {
+        console.log('DB Insert returns: ', data);
         resolve (data)
+      }
+    })
+  })
+}
+
+database.prototype.saveUser = function(data={}, q=[]) {
+  const that = this
+  const params = Object.assign({},data)
+  const set = Object.keys(data).map( key => `${key} = '${data[key]}'`)
+  const sql = `UPDATE users SET ${set} WHERE email = '${q}'`
+  console.log(sql, set)
+  return new Promise((resolve,reject) => {
+    that.db.run(sql, err => {
+      if(err){
+        console.log(err)
+        reject({errors: { global: err.message }})
+      } else {
+        console.log(this)
+        resolve()
       }
     })
   })

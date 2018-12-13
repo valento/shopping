@@ -5,6 +5,8 @@ import Top from './components/pages/Top'
 import HomePage from './components/pages/HomePage'
 import FashionHome from './components/pages/FashionPage'
 import AccountHome from './components/pages/AccountPage'
+import PromoHome from './components/pages/PromoHome'
+import PerksHome from './components/pages/PerksHome'
 import CartHome from './components/pages/CartPage'
 import UserRoute from './components/routes/userRoute'
 import './App.css'
@@ -17,6 +19,8 @@ const App = ({ location }) => {
       <Route location={location} path='/fashion/:gender' component={FashionHome} />
       <UserRoute location={location} path='/account' exact component={AccountHome}/>
       <UserRoute location={location} path='/cart' exact component={CartHome}/>
+      <Route location={location} path='/proms' component={PromoHome} />
+      <Route location={location} path='/perks' component={PerksHome} />
     </div>
   )
 }

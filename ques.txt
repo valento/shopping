@@ -1,0 +1,81 @@
+CREATE TABLE campaigns (
+camp_id integer PRIMARY KEY NOT NULL UNIQUE,
+exp_date text NOT NULL,
+init_date text NOT NULL,
+unit integer DEFAULT 0,
+type integer DEFAULT 1,
+desciption text,
+rules varchar,
+active integer DEFAULT 0,
+price integer default 0
+);
+
+CREATE TABLE category (
+category_id integer NOT NULL UNIQUE PRIMARY KEY,
+name text NOT NULL,
+domain_id integer NOT NULL,
+FOREIGN KEY (domain_id) REFERENCES domains (domain_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+// ======= STORE ======= //
+
+create table products (
+
+create table products (
+product_id integer PRIMARY KEY UNIQUE NOT NULL,
+category_id integer NOT NULL,
+domain_id integer NOT NULL,
+name text NOT NULL,
+description text,
+active integer DEFAULT 1,
+FOREIGN KEY (domain_id) REFERENCES domains (domain_id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (category_id) REFERENCES categories (category_id) ON DELETE CASCADE ON UPDATE CASCADE,
+);
+
+CREATE TABLE prod_props (
+prop_id integer PRIMARY KEY UNIQUE NOT NULL,
+name text NOT NULL,
+prod_id integer NOT NULL,
+value varchar NOT NULL,
+FOREIGN KEY (prod_id) REFERENCES products (prod_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE items (
+item_id integer PRIMARY KEY UNIQUE NOT NULL,
+product_id integer NOT NULL,
+brand_id integer,
+price integer NOT NULL,
+name text NOT NULL,
+description text,
+store_id integer,
+FOREIGN KEY (store_id) REFERENCES stores (store_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (brand_id) REFERENCES brands (brand_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (campaign_id) REFERENCES campaigns (campaign_id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE ON UPDATE CASCADE
+active integer DEFAULT 1,
+);
+
+
+CREATE TABLE users (
+user_id integer PRIMARY KEY NOT NULL UNIQUE,
+email varchar NOT NULL UNIQUE,
+password varchar NOT NULL UNIQUE,
+verified integer DEFAULT 0,
+active integer DEFAULT 1,
+username varchar,
+gender integer,
+language integer,
+timestamp text DEFAULT current_timestamp,
+last_log text DEFAULT (DATETIME('now','localtime')),
+credit integer DEFAULT 10,
+location_id integer,
+rating integer,
+lat REAL,
+lng real,
+fb_id INTEGER,
+payment integer,
+FOREIGN KEY (location_id)
+REFERENCES locations (location_id) ON DELETE CASCADE ON UPDATE NO ACTION
+);

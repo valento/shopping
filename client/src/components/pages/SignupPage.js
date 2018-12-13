@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { signup } from '../../actions/auth'
+import { log } from '../../actions/auth'
 import SignupForm from '../forms/signup'
 
 class SignupPage extends React.Component {
 
   submit = data => {
     console.log('Form Component: ', data)
-    this.props.signup(data)// .then(() => this.props.history.push('/'))
+    this.props.log(data)// .then(() => this.props.history.push('/'))
   }
 
   render() {
@@ -18,4 +18,8 @@ class SignupPage extends React.Component {
   }
 }
 
-export default connect(null, { signup })(SignupPage)
+SignupPage.propTypes = {
+  log: PropTypes.func.isRequired
+}
+
+export default connect(null, { log })(SignupPage)

@@ -49,10 +49,8 @@ authRouter.get('/check', function (req, res, next) {
 });
 
 authRouter.post('/', function (req, res, next) {
-  console.log('Auth Router: ', req.body.credentials);
-  var email = req.body.credentials.email;
-
-  var scope = ['email', 'username', 'credit', 'rating', 'gender'];
+  var new_user = true;
+  var scope = ['email', 'gender', 'username', 'credit', 'rating', 'language', 'verified'];
   db.findUser(req.body.credentials, scope).then(function (user) {
     if (!user || undefined) {
       var pass = _generatePassword2.default.generate({
@@ -63,32 +61,36 @@ authRouter.post('/', function (req, res, next) {
         //signup user:
         var data = Object.assign({ password: hash }, req.body.credentials);
         db.signup(data).then(function (user) {
-          return db.findUser(user.mail, scope);
-        }).then(function (user) {
-          var token = _jsonwebtoken2.default.sign({
-            email: user.email,
-            username: user.username
-          }, 'valeCollectionJWT');
+          var email = user.email;
+
+          console.log('After Signup Insert: ', email);
+          var token = _jsonwebtoken2.default.sign({ email: email }, 'valeCollectionJWT');
           res.status(200).json({
             user: {
               token: token,
-              username: user.username,
-              credit: user.credit,
-              rating: user.rating,
-              gender: user.gender
+              new_user: new_user
             }
           });
         }).catch(function (err) {
-          return res.status(500).json({ errors: { global: 'Apologies: DB failure... Please, try again!' } });
+          return res.status(500).json({ errors: { global: err.message } });
         });
       });
     } else {
+      new_user = false;
       var token = _jsonwebtoken2.default.sign({
-        email: user.email,
-        username: user.username
+        email: user.email
       }, 'valeCollectionJWT');
-      user.token = token;
-      res.status(200).json({ user: user });
+
+      res.status(200).json({ user: {
+          token: token,
+          username: user.username,
+          rating: user.rating,
+          gender: user.gender,
+          credit: user.credit,
+          language: user.language,
+          verified: user.verified
+        }
+      });
     }
   }).catch(function (err) {
     res.status(200).json({ message: 'Welcome new one' });

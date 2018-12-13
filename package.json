@@ -7,21 +7,24 @@
   "author": "valentin m.",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --watch server --exec babel-node -- server/index.js",
+    "dev": "NODE_ENV=development nodemon --watch server --exec babel-node -- server/index.js --presets=env,stage-2",
     "prod": "NODE_ENV=production babel-node server/index.js",
     "start": "NODE_ENV=production node ./build/index.js",
-    "babel:prod": "NODE_ENV=production babel -d ./build ./server -s --presets=env"
+    "babel:prod": "NODE_ENV=production babel -d ./build ./server -s --presets=env,stage-2"
   },
   "babel": {
     "presets": [
       "env"
-    ]
+    ],
+    "plugins": ["transform-object-rest-spread"]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",

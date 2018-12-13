@@ -1,4 +1,4 @@
-import { CATEGORY_CHANGED } from '../types'
+import { CATEGORY_CHANGED, USER_UPDATED } from '../types'
 import api from '../api'
 
 export const ch_cat = category => ({
@@ -7,3 +7,6 @@ export const ch_cat = category => ({
 })
 
 export const changeCategory = category => dispatch => dispatch(ch_cat(category))
+
+export const updateUser = user => dispatch =>
+  api.user.updateUser(user).then( res => console.log('User Updated') )

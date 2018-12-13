@@ -27,9 +27,8 @@ authRouter.get('/check', (req,res,next) => {
 })
 
 authRouter.post('/', (req,res,next) => {
-  console.log('Auth Router: ', req.body.credentials)
-  const { email } = req.body.credentials
-  const scope = ['email','username','credit','rating','gender']
+  let new_user = true
+  const  scope = ['email','gender','username','credit','rating','language','verified']
   db.findUser( req.body.credentials, scope )
   .then( user => {
     if(!user || undefined) {
@@ -41,32 +40,37 @@ authRouter.post('/', (req,res,next) => {
         //signup user:
         const data = Object.assign({password: hash}, req.body.credentials)
         db.signup( data )
-        .then( user => db.findUser( user.mail, scope ))
         .then( user => {
-          const token = jwt.sign({
-            email: user.email,
-            username: user.username
-          }, 'valeCollectionJWT')
+          let { email } = user
+          console.log('After Signup Insert: ', email)
+          const token = jwt.sign({ email }, 'valeCollectionJWT')
           res.status(200).json({
             user: {
               token: token,
-              username: user.username,
-              credit: user.credit,
-              rating: user.rating,
-              gender: user.gender
+              new_user: new_user
             }
           })
         })
-        .catch( err => res.status(500).json({errors: {global: 'Apologies: DB failure... Please, try again!'}}))
+        .catch( err => res.status(500).json({errors: {global: err.message}}))
 
       })
     } else {
+      new_user = false
       const token = jwt.sign({
-        email: user.email,
-        username: user.username
+        email: user.email
       }, 'valeCollectionJWT')
-      user.token = token
-      res.status(200).json({ user })
+
+      res.status(200).json({ user: {
+          token: token,
+          username: user.username,
+          rating: user.rating,
+          gender: user.gender,
+          credit: user.credit,
+          language: user.language,
+          verified: user.verified
+        }
+      })
+
     }
   })
   .catch( err => {

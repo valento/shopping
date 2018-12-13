@@ -14,7 +14,6 @@ class Top extends React.Component {
   }
 
   switchDomain(d) {
-    console.log('Top Component: ', d)
     this.props.onSwitchDomain(d)
   }
   render() {

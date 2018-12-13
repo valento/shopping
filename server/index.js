@@ -7,8 +7,8 @@ import authRouter from './routes/auth'
 
 let app = express()
 
-app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 
 app.use('/static', express.static(path.join(__dirname, '../client/build/static')))
 

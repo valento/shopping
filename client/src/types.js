@@ -9,3 +9,5 @@ export const LOCATION = 'LOCATION'
 // USER ACTION TYPES:
 
 export const USER_SIGNED = 'USER_SIGNED'
+export const USER_INIT = 'USER_INIT'
+export const USER_UPDATED = 'USER_UPDATED'
