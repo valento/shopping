@@ -5,7 +5,7 @@ import { Form, Button, Icon, Divider } from 'semantic-ui-react'
 import UserDataForm from '../forms/UserDataForm'
 import { updateUser } from '../../actions/'
 
-const PromoHome = ({ gender,username,language,updateUser,email }) => {
+const PromoHome = ({ gender,username,language,updateUser,email,credit }) => {
   return(
     <div className='App-content'>
       <div className='home-page vintage'>
@@ -14,6 +14,7 @@ const PromoHome = ({ gender,username,language,updateUser,email }) => {
           gender={gender}
           username={username}
           language={language}
+          credit={credit}
           email={email}
           onSave={updateUser}
         />
@@ -30,6 +31,7 @@ const mapStateToProps = state => ({
   gender: state.user.gender,
   username: state.user.username,
   language: state.user.language,
+  credit: state.user.credit,
   email: state.user.email
 })
 

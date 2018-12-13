@@ -2,27 +2,35 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Divider } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 
-const WellcomeUser = (props) => {
-  const text = {
+class WellcomeUser extends React.Component {
+
+  state = {}
+
+  text = {
     en: ['Glad to have you back, ', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Windowshop', 'Welcome, '],
     es: ['Me alegra que volviste, ', 'o', 'o simple' , 'Ve las gangas', 'Recibe su Bono', 'Vitrinando', 'Bienvenido, ']
   }
-  const { gender, gen, new_user, username, lan } = props
-  const u_name = (username) ? username : 'Anon'
-  const l = text[lan]
-  const g = (gender !== null)? ( gender ? 'm' : 'w') : ( gen ? 'm' : 'w')
-  return (
-    <div className='vintage small'>
-      <p>{new_user ? l[6] : l[0]} <b>{u_name}</b></p>
-      <Button as={Link} to='/proms' fluid color='black'>{l[3]}</Button>
-      <Divider horizontal>{l[1]}</Divider>
-      <Button as={Link} to='/perks' fluid color='black'>{l[4]}</Button>
-      <Divider horizontal>{l[2]}</Divider>
-      <Button as={Link} to={'/fashion/'+g} fluid color='black'>{l[5]}</Button>
-    </div>
-  )
+
+  render() {
+    const { gender, gen, new_user, username, lan } = this.props
+    const u_name = (username) ? username : 'Anon'
+    const l = this.text[lan]
+    const g = (gender !== null)? ( gender ? 'm' : 'w') : ( gen ? 'm' : 'w')
+    return (
+      <div className='vintage small'>
+        <p>{new_user ? l[6] : l[0]} <b>{u_name}</b></p>
+        <Button as={Link} to='/proms' fluid color='black'>{l[3]}</Button>
+        <Divider horizontal>{l[1]}</Divider>
+        <Button as={Link} to='/perks' fluid color='black'>{l[4]}</Button>
+        <Divider horizontal>{l[2]}</Divider>
+        <Button as={Link} to={'/fashion/'+g} fluid color='black'>{l[5]}</Button>
+      </div>
+    )
+  }
 }
+
 
 const mapStateToProps = state => {
   return {

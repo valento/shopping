@@ -2,9 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Divider, Segment, TransitionablePortal } from 'semantic-ui-react'
-import '../../App.css'
 import SignupPage from './SignupPage'
 import WellcomeUser from '../ui/WellcomeUser'
+import { initUser } from '../../actions/auth'
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -16,6 +16,14 @@ class HomePage extends React.Component {
       portalOpen: true
     }
   }
+
+  initUser(logged){
+    if(logged) {
+      console.log('Component Did Update')
+      this.props.initUser()
+    }
+  }
+
   render() {
     console.log(this.props.history)
     const lan = this.state[this.props.lan]
@@ -23,6 +31,7 @@ class HomePage extends React.Component {
       <div className='App-content'>
         <div className='home-page vintage'>
           <TransitionablePortal
+            onShow={this.initUser(this.props.logged)}
             open={this.state.register}
             closeOnDocumentClick={false}
             transition={{animation:'fly up', duration: 800}}
@@ -50,7 +59,8 @@ class HomePage extends React.Component {
 
 HomePage.propTypes = {
   lan: PropTypes.string.isRequired,
-  logged: PropTypes.bool.isRequired
+  logged: PropTypes.bool.isRequired,
+  initUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -60,4 +70,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, null)(HomePage)
+export default connect(mapStateToProps, { initUser })(HomePage)

@@ -15,6 +15,7 @@ export default class UserDataForm extends React.Component {
         username: this.props.username,
         gender: this.props.gender,
         language: this.props.language,
+        credit: this.props.credit,
         email: this.props.email
       }
     }
@@ -43,17 +44,20 @@ export default class UserDataForm extends React.Component {
 
   onSave = () => {
     const {ns,ss} = this.state
-    const credit = ns + ss
-    //const data = Object.assign(this.state.data, {credit: credit})
-    console.log(this.state.data)
+    const add = ns + ss
+    const { credit } = this.state.data
+    const data = Object.assign(this.state.data, {credit: credit + add})
+    console.log(data)
     this.props.onSave(this.state.data)
   }
 
   render() {
     const {uname,sex,ns,ss,min} = this.state
     const {username,gender} = this.state.data
-    let minimum = min - ((gender === null || gender === 'undefeined') ? 3 : 0)
-    minimum = min - ((username === null || username === 'indefined') ? 3 : 0)
+    let nless = (this.props.username === null || this.props.username === 'indefined') ? 3 : 0
+    let sless = (this.props.gender === null || this.props.gender === 'undefined') ? 3 : 0
+    let minimum = min - nless - sless
+    console.log(minimum)
     const { email } = this.props
     return(
       <div className='signup mail'>
@@ -62,15 +66,15 @@ export default class UserDataForm extends React.Component {
           <Form.Input onChange={this.onChange} fluid inline centered focus
             name='username'
             type='username'
-            disabled={username !== null || username !== 'indefined'}
-            placeholder={username ? username : 'Username: Anon'}
+            disabled={this.props.username !== null}
+            placeholder={this.props.username ? this.props.username : 'Username: Anon'}
           />
           <Divider horizontal className='promo general'>Gender</Divider>
           <Button.Group icon color='black'>
-            <Button onClick={this.onClick} disabled={!(gender < 0)} name='gender' index={1} >
+            <Button onClick={this.onClick} disabled={this.props.gender !== null} name='gender' index={1} >
               <Icon name='man' size='big' color={gender === 1 ? 'blue' : ''} />
             </Button>
-            <Button onClick={this.onClick} disabled={!(gender < 0)} name='gender' index={0} >
+            <Button onClick={this.onClick} disabled={this.props.gender !== null} name='gender' index={0} >
               <Icon name='woman' size='big' color={gender === 0 ? 'blue' : ''} />
             </Button>
           </Button.Group>
