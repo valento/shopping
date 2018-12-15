@@ -10,8 +10,11 @@ export default {
       if(res.status !== 200) {
         //
       } else {
-        
+
       }
     })
+  },
+  collection: {
+    getPromos: g => axios.get('list/proms/'+g).then( res => res.data)
   }
 }

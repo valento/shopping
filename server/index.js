@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 
 import userRouter from './routes/user'
 import authRouter from './routes/auth'
+import listRouter from './routes/lists'
 
 let app = express()
 
@@ -17,6 +18,7 @@ app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
 //app.use('/auth', authRouter)
 app.use('/user', userRouter)
 app.use('/auth', authRouter)
+app.use('/list', listRouter)
 
 app.get('/', (req,res) => {
   console.log(req.headers)

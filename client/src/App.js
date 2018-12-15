@@ -9,6 +9,8 @@ import PromoHome from './components/pages/PromoHome'
 import PerksHome from './components/pages/PerksHome'
 import CartHome from './components/pages/CartPage'
 import UserRoute from './components/routes/userRoute'
+import GuestRoute from './components/routes/guestRoute'
+import ProductList from './components/product/ProductList'
 import './App.css'
 
 const App = ({ location }) => {
@@ -19,7 +21,8 @@ const App = ({ location }) => {
       <Route location={location} path='/fashion/:gender' component={FashionHome} />
       <UserRoute location={location} path='/account' exact component={AccountHome}/>
       <UserRoute location={location} path='/cart' exact component={CartHome}/>
-      <Route location={location} path='/proms' component={PromoHome} />
+      <Route location={location} path='/proms' exact component={PromoHome} />
+      <Route location={location} path='/proms/:gender/:id' component={ProductList} />
       <Route location={location} path='/perks' component={PerksHome} />
     </div>
   )

@@ -1,5 +1,5 @@
 import {
-  LANGUAGE, GENDER, LOCATION,
+  LANGUAGE, GENDER, LOCATION, PROMOS_LIST,
   DOMAIN_CHANGED, CATEGORY_CHANGED,
   USER_INIT, USER_SIGNED, USER_UPDATED,
 } from '../types'
@@ -21,6 +21,14 @@ export const location = (state={}, action) => {
   switch (action.type) {
     case LOCATION :
       return {...state, location: action.location}
+    default: return state
+  }
+}
+export const proms = (state={}, action) => {
+  console.log(action.proms)
+  switch (action.type) {
+    case PROMOS_LIST :
+      return action.proms
     default: return state
   }
 }

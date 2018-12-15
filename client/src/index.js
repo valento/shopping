@@ -20,6 +20,7 @@ const initState = {
     category: 0,
     gender: 0
   },
+  proms: [],
   user: {}
 }
 

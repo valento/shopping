@@ -1,31 +1,64 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Form, Button, Icon, Divider } from 'semantic-ui-react'
-import { updateUser } from '../../actions/'
+import { Divider } from 'semantic-ui-react'
+import { updateUser, getPromos } from '../../actions/'
 import UserDataForm from '../forms/UserDataForm'
 import PromoList from '../ui/PromoList'
 
-const PromoHome = ({ gender,username,language,updateUser,email,credit,rating }) => {
-  let bkg = (gender !== null) && (username !== null)? (gender > 0)? 'proman' : 'woman' : ''
-  return(
-    <div className={'App-content '+bkg}>
-      <div className='home-page vintage'>
-        {(gender === null) && (username === null) && <UserDataForm
-          gender={gender}
-          username={username}
-          language={language}
-          credit={credit}
-          email={email}
-          onSave={updateUser}
-        />}
-        <div className='promo general'>
-          <Divider horizontal>{gender? 'man' : 'woman'} promos</Divider>
-          {(gender !== null) && (username !== null) && <PromoList gender={gender} />}
+class PromoHome extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      gender: this.props.gender || null,
+      username: this.props.username || null,
+      language:  this.props.language || null
+    }
+  }
+
+  componentDidMount(){
+    const { gender,username } = this.props
+    console.log('PromoHome Mounted: ', gender, username)
+    if((gender !== 'undefined') && (username !== 'undefined')) {
+      this.props.getPromos(gender)
+    }
+  }
+
+  componentDidUpdate(){
+    const { gender,username } = this.props
+    console.log('PromoHome Mounted: ', gender, username)
+    if((gender !== 'undefined') && (username !== 'undefined')) {
+      this.props.getPromos(gender)
+    }
+  }
+
+  onSave = data => {
+    this.props.updateUser(data)
+    .then(data => this.props.getPromos(data.gender))
+  }
+
+  render() {
+    const { gender,username,language,updateUser,email,credit,rating } = this.props
+    let bkg = (gender !== null) && (username !== null)? (gender > 0)? 'proman' : 'woman' : ''
+    return(
+      <div className={'App-content '+bkg}>
+        <div className='home-page vintage'>
+          {(gender === null) && (username === null) && <UserDataForm
+            gender={gender}
+            username={username}
+            language={language}
+            credit={credit}
+            email={email}
+            onSave={this.onSave}
+          />}
+          <div className='promo general'>
+            <Divider horizontal>{gender? 'man' : 'woman'} promos</Divider>
+            {(gender !== null) && (username !== null) && <PromoList gender={gender} />}
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 const mapStateToProps = state => ({
@@ -36,4 +69,4 @@ const mapStateToProps = state => ({
   email: state.user.email
 })
 
-export default connect(mapStateToProps, { updateUser })(PromoHome)
+export default connect(mapStateToProps, { updateUser, getPromos })(PromoHome)

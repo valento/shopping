@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const UserRoute = ({component: Component, ...rest }) => {
+const UserRoute = ({isAuthenticated, component: Component, ...rest }) => {
   return (
-    <Route {...rest} render={ props => <Component {...props} /> } />
+    <Route {...rest} render={ props => isAuthenticated? <Component {...props} /> : <Redirect to='/' /> } />
   )
 }
 

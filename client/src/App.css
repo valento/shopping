@@ -133,14 +133,34 @@
 }
 .promo ul {
   padding: 0;
+  font-family:
 }
-.promo li {
+.promo .ui.segment {
   margin: 1em 0;
   min-height: 14vh;
-  border: 2px solid black;
+  border: 0 solid black;
   list-style: none;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  text-transform: uppercase;
+  background-color: rgba(20,20,20,.5);
+  color: white;
+}
+.promo a.item, .ui.list>a.item i.icon {
+  color: white;
+}
+.promo .ties {
+  background: url(/img/tie.jpg) no-repeat;
+  background-size: cover;
+}
+.promo h2 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+}
+.promo .divider {
+  font-family: 'Cormorant', serif;
+  color: white;
 }
 
 a.domain {
@@ -158,9 +178,6 @@ a.domain {
   color: white;
 }
 
-.promo {
-
-}
 /* ------------------------------------------------------------------ */
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

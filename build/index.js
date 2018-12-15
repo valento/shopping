@@ -20,6 +20,10 @@ var _auth = require('./routes/auth');
 
 var _auth2 = _interopRequireDefault(_auth);
 
+var _lists = require('./routes/lists');
+
+var _lists2 = _interopRequireDefault(_lists);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
@@ -34,6 +38,7 @@ app.use('/img', _express2.default.static(_path2.default.join(__dirname, '../clie
 //app.use('/auth', authRouter)
 app.use('/user', _user2.default);
 app.use('/auth', _auth2.default);
+app.use('/list', _lists2.default);
 
 app.get('/', function (req, res) {
   console.log(req.headers);

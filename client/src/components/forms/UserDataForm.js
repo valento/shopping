@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button, Icon, Divider } from 'semantic-ui-react'
-//import PropTypes from 'prop-types'
 
 export default class UserDataForm extends React.Component {
 

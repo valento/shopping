@@ -17,6 +17,30 @@ domain_id integer NOT NULL,
 FOREIGN KEY (domain_id) REFERENCES domains (domain_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE proms (
+promo_id integer PRIMARY KEY UNIQUE NOT NULL,
+domain_id integer NOT NULL,
+title text NOT NULL DEFAULT 'Promo',
+header text,
+description text,
+type integer,
+discount real,
+rule_id varchar,
+exp_date text,
+timestamp text DEFAULT current_timestamp,
+active integer DEFAULT 1,
+FOREIGN KEY (domain_id) REFERENCES domains (domain_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (rule_id) REFERENCES rules (rule_id) ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
+INSERT INTO proms (domain_id, title, header, type, discount, rule_id)
+VALUES (1,'30% OFF ALL TIES', 1, 30, 1);
+
+CREATE TABLE rules (
+rule_id integer PRIMARY KEY NOT NULL UNIQUE,
+type integer,
+description text
+);
 
 
 // ======= STORE ======= //
@@ -79,3 +103,5 @@ payment integer,
 FOREIGN KEY (location_id)
 REFERENCES locations (location_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
+
+SELECT * FROM promos WHERE domain_id = ?
