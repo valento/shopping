@@ -11,20 +11,29 @@ class FashionMenu extends React.Component {
     super(props)
     const state = {
             lan: {
-              es: ['Hombre', 'Mujer'],
-              en: ['Man', 'Woman']
+              es: ['','Hombre', 'Mujer'],
+              en: ['','Man', 'Woman']
             }
           }
   }
 
   handleClick(e, { index }) {
-    console.log(index)
     this.props.changeCategory(index)
   }
 
   render() {
     const { match, category } = this.props
-    const bkg = (this.props.gen === 'm')? 'man' : 'woman'
+    let cat = []
+    const bkg =  (this.props.gen > 1) ? 'woman' : 'man'
+    //const {taxonomy} = this.props
+    if(this.props.taxonomy !== undefined) {
+      if(this.props.taxonomy.length > 0){
+        cat = this.props.taxonomy.filter( c => {
+          if( c.hasOwnProperty('0')) return c[0]
+        })
+      }
+      console.log(cat)
+    }
 
     return (
       <Menu fluid inverted size='mini'>
@@ -32,28 +41,23 @@ class FashionMenu extends React.Component {
           active={category === '0'}
           onClick={(e, {index}) => this.props.changeCategory(index)}
           index={0}
-          name='HOME'
         >
           <Icon name={bkg} color='black' size='large'/>
         </Menu.Item>
-        <Menu.Item as={Link} to={`${match.url}/clothing`}
-          active={category === '1'}
-          onClick={(e, {index}) => this.props.changeCategory(index)}
-          index={1}
-          name='CLOTHING'
-        />
-        <Menu.Item as={Link} to={`${match.url}/footwear`}
-          active={category === '2'}
-          onClick={(e, {index}) => this.props.changeCategory(index)}
-          index={2}
-          name='FOOTWEAR'
-        />
-        <Menu.Item as={Link} to={`${match.url}/accessories`}
-          active={category === '3'}
-          onClick={(e, {index}) => this.props.changeCategory(index)}
-          index={3}
-          name='ACCESSORIES'
-        />
+        {(cat.length > 0)?
+          cat.map( entry => {
+            return (
+              <Menu.Item as={Link} to={`${match.url}/${entry[0].cat_id}`}
+                active={category === entry[0].cat_id}
+                onClick={(e, {index}) => this.props.changeCategory(index)}
+                index={entry[0].cat_id}
+                name={entry[0].name.toUpperCase()}
+              />
+            )
+          })
+          :
+          ''
+        }
       </Menu>
     )
   }
@@ -61,11 +65,30 @@ class FashionMenu extends React.Component {
 
 FashionMenu.propTypes = {
   gen: PropTypes.number.isRequired,
-  category: PropTypes.number.isRequired
+  category: PropTypes.number.isRequired,
+  taxonomy: PropTypes.array
 }
 
 const mapStateToProps = state => ({
-  category: state.settings.category
+  category: state.settings.category,
+  taxonomy: state.settings.taxonomy
 })
 
 export default connect(mapStateToProps,{ changeCategory })(FashionMenu)
+
+
+/*
+
+<Menu.Item as={Link} to={`${match.url}/footwear`}
+  active={category === '2'}
+  onClick={(e, {index}) => this.props.changeCategory(index)}
+  index={2}
+  name='FOOTWEAR'
+/>
+<Menu.Item as={Link} to={`${match.url}/accessories`}
+  active={category === '3'}
+  onClick={(e, {index}) => this.props.changeCategory(index)}
+  index={3}
+  name='ACCESSORIES'
+/>
+*/

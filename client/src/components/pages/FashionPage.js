@@ -2,9 +2,10 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Menu, Icon } from 'semantic-ui-react'
-import ProductList from '../ui/ProductList'
+import AnyList from '../ui/AnyList'
 import FashionMenu from '../ui/FashionMenu'
 import SubmenuRoute from '../routes/SubMenu'
+import PropTypes from 'prop-types'
 
 class FashionHome extends React.Component {
 
@@ -14,9 +15,9 @@ class FashionHome extends React.Component {
 
   render() {
     const { match } = this.props
-    //console.log(match)
+    console.log('Fashion Page Gender: ', match.params.gender)
     const g = match.params.gender
-    const bkg = (g === 'm')? 'man' : 'woman'
+    const bkg = (g > 1) ? 'woman' : 'man'
     return (
       <div className={'App-content ' + bkg}>
         <div className='content'>
@@ -27,8 +28,8 @@ class FashionHome extends React.Component {
             />
           </div>
           <Switch>
-            <Route path={match.url} component={ProductList}/>
-            <Route path={`${match.url}/:category`} component={ProductList}/>
+            <Route path={match.url} component={AnyList}/>
+            <Route path={`${match.url}/:category`} component={AnyList}/>
           </Switch>
         </div>
       </div>
@@ -36,9 +37,14 @@ class FashionHome extends React.Component {
   }
 }
 
+FashionHome.propTypes = {
+  gender: PropTypes.number.isRequired
+}
+
 const mapStateToProps = state => {
   return {
-    lan: state.settings.language
+    lan: state.settings.language,
+    domain: state.settings.domain
   }
 }
 

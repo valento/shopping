@@ -25,7 +25,7 @@ class WellcomeUser extends React.Component {
         <Divider horizontal>{l[1]}</Divider>
         <Button as={Link} to='/perks' fluid color='black'>{l[4]}</Button>
         <Divider horizontal>{l[2]}</Divider>
-        <Button as={Link} to={'/fashion/'+g} fluid color='black'>{l[5]}</Button>
+        <Button as={Link} to={'/fashion/'+gender} fluid color='black'>{l[5]}</Button>
       </div>
     )
   }

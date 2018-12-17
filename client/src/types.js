@@ -4,6 +4,7 @@ export const LANGUAGE = 'LANGUAGE'
 export const GENDER = 'GENDER'
 export const DOMAIN_CHANGED = 'DOMAIN_CHANGED'
 export const CATEGORY_CHANGED = 'CATEGORY_CHANGED'
+export const CATEGORY_TREE = 'CATEGORY_TREE'
 export const LOCATION = 'LOCATION'
 export const PROMOS_LIST = 'PROMOS_LIST'
 

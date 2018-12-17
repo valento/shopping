@@ -52,13 +52,13 @@ export default class UserDataForm extends React.Component {
   }
 
   render() {
-    const {uname,sex,ns,ss,min} = this.state
+    const {ns,ss,min} = this.state// uname,sex
     const {username,gender} = this.state.data
     let nless = (this.props.username === null || this.props.username === 'indefined') ? 3 : 0
     let sless = (this.props.gender === null || this.props.gender === 'undefined') ? 3 : 0
     let minimum = min - nless - sless
-    console.log(minimum)
-    const { email } = this.props
+    //console.log(minimum)
+    //const { email } = this.props
     return(
       <div className='signup mail'>
         <p>Please help me with some data so my Proms suit you better!</p>
@@ -75,8 +75,8 @@ export default class UserDataForm extends React.Component {
             <Button onClick={this.onClick} disabled={this.props.gender !== null} name='gender' index={1} >
               <Icon name='man' size='big' color={gender === 1 ? 'blue' : ''} />
             </Button>
-            <Button onClick={this.onClick} disabled={this.props.gender !== null} name='gender' index={0} >
-              <Icon name='woman' size='big' color={gender === 0 ? 'blue' : ''} />
+            <Button onClick={this.onClick} disabled={this.props.gender !== null} name='gender' index={2} >
+              <Icon name='woman' size='big' color={gender === 2 ? 'blue' : ''} />
             </Button>
           </Button.Group>
           <Divider horizontal />

@@ -22,9 +22,12 @@ function database ( url ) {
   }
 }
 
-database.prototype.getItems = function(data={}, table, scope='*') {
+database.prototype.getList = function(data={}, table, scope='*') {
   const that = this
-  const s = Object.keys(data).map( key => data[key] )
+  const s = Object.keys(data).map( key => {
+    if(data[key] == 0) return 2
+    return data[key]
+  } )
   const k = Object.keys(data)
   console.log(s,k)
   const sql = `SELECT ${scope} FROM ${table} WHERE domain_id = ?`
@@ -34,7 +37,7 @@ database.prototype.getItems = function(data={}, table, scope='*') {
         console.log('Find Items error: ', err.message);
         reject(err)
       } else {
-        console.log('DB get returns: ', rows)
+        console.log('DB get returns: ', rows.length)
         resolve(rows)
       }
     })

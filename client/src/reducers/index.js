@@ -1,6 +1,6 @@
 import {
   LANGUAGE, GENDER, LOCATION, PROMOS_LIST,
-  DOMAIN_CHANGED, CATEGORY_CHANGED,
+  DOMAIN_CHANGED, CATEGORY_CHANGED, CATEGORY_TREE,
   USER_INIT, USER_SIGNED, USER_UPDATED,
 } from '../types'
 
@@ -14,6 +14,8 @@ export const settings = (state={}, action) => {
      return {...state, domain: action.domain}
     case CATEGORY_CHANGED :
       return {...state, category: action.category}
+    case CATEGORY_TREE :
+      return {...state, taxonomy: action.taxonomy}
     default: return state
   }
 }
@@ -25,7 +27,6 @@ export const location = (state={}, action) => {
   }
 }
 export const proms = (state={}, action) => {
-  console.log(action.proms)
   switch (action.type) {
     case PROMOS_LIST :
       return action.proms

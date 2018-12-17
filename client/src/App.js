@@ -11,6 +11,7 @@ import CartHome from './components/pages/CartPage'
 import UserRoute from './components/routes/userRoute'
 import GuestRoute from './components/routes/guestRoute'
 import ProductList from './components/product/ProductList'
+import AnyList from './components/ui/AnyList'
 import './App.css'
 
 const App = ({ location }) => {

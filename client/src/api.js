@@ -15,6 +15,7 @@ export default {
     })
   },
   collection: {
-    getPromos: g => axios.get('list/proms/'+g).then( res => res.data)
+    getPromos: g => axios.get('list/proms/'+g).then( res => res.data),
+    getCategories: g => axios.get('../list/category/'+g).then( res => res.data)
   }
 }

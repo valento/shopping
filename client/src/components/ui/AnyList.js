@@ -1,18 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-class ProductList extends React.Component {
+class AnyList extends React.Component {
   constructor(props) {
     super(props)
   }
 
-  componentDidMount(){
-    console.log('ProdList did Mount!')
+  componentDidUpdate(){
+    console.log('AnyList just Updated!')
   }
 
   render() {
     return (
-      <div>ProductList: {this.props.category}</div>
+      <div>AnyList: {this.props.category}</div>
     )
   }
 }
@@ -21,4 +21,4 @@ const mapStateToProps = state => {
   return {category: state.settings.category}
 }
 
-export default connect(mapStateToProps, null)(ProductList)
+export default connect(mapStateToProps, null)(AnyList)

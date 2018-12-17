@@ -1,6 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 class Gender extends React.Component {
@@ -8,8 +6,8 @@ class Gender extends React.Component {
     super(props)
     this.state = {
       lan: {
-        en: ['W','M'],
-        es: ['M','H']
+        en: ['','M','W'],
+        es: ['','H','M']
       },
       domain: this.props.domain
     }
@@ -23,22 +21,11 @@ class Gender extends React.Component {
   render() {
     const { lan } = this.state
     const l = lan[this.props.lan]
-    const gen = (this.props.gender)? 'm' : 'w'
-    const style = (this.props.gender === this.props.domain)? 'domain' : ''
+    const { gender } = this.props
     return (
-      <Link to={'/fashion/' + gen} onClick={this.onClick}>{l[this.props.gender]}</Link>
+      <Link to={'/fashion/' + gender} onClick={this.onClick}>{l[gender]}</Link>
     )
   }
 }
 
-Gender.propTypes = {
-  domain: PropTypes.number.isRequired
-}
-
-const mapStateToProps = state => {
-  return {
-    domain: state.settings.domain
-  }
-}
-
-export default connect(mapStateToProps)(Gender)
+export default Gender

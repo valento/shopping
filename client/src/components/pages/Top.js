@@ -1,20 +1,27 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom'
-import { DOMAIN_CHANGED } from '../../types'
 //import '../../App.css'
 import Sign from '../brand/sign'
 import Gender from '../ui/gender'
 import User from '../ui/user'
 
+import { getStore, switchDomain, changeCategory } from '../../actions/'
+
 class Top extends React.Component {
   constructor(props) {
     super(props)
-    this.switchDomain = this.switchDomain.bind(this)
+    this.onSwitchDomain = this.onSwitchDomain.bind(this)
   }
 
-  switchDomain(d) {
-    this.props.onSwitchDomain(d)
+  componentDidMount(){
+    this.props.getStore(this.props.domain)
+  }
+
+  onSwitchDomain(d) {
+    this.props.switchDomain(d)
+    this.props.changeCategory(0)
+    this.props.getStore(d)
   }
   render() {
     return (
@@ -23,9 +30,9 @@ class Top extends React.Component {
             <Link to='/'><Sign fontsize='20' /></Link>
           </div>
           <div className='four wide column centered'>
-            <Gender onDomain={this.switchDomain} gender={1} lan={this.props.lan} />
+            <Gender onDomain={this.onSwitchDomain} gender={1} lan={this.props.lan} />
             <span> | </span>
-            <Gender onDomain={this.switchDomain} gender={0} lan={this.props.lan} />
+            <Gender onDomain={this.onSwitchDomain} gender={2} lan={this.props.lan} />
           </div>
           <div className='six wide column centered'>
             <User lan={this.props.lan} />
@@ -42,8 +49,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps,
-  dispatch => ({
-    onSwitchDomain: domain => dispatch({ type: DOMAIN_CHANGED, domain })
-  })
-)(Top)
+export default connect(mapStateToProps, { getStore, switchDomain, changeCategory })(Top)

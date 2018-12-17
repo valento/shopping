@@ -39,7 +39,7 @@ class PromoHome extends React.Component {
 
   render() {
     const { gender,username,language,updateUser,email,credit,rating } = this.props
-    let bkg = (gender !== null) && (username !== null)? (gender > 0)? 'proman' : 'woman' : ''
+    let bkg = (gender !== null) && (username !== null)? (gender == 1)? 'proman' : 'woman' : ''
     return(
       <div className={'App-content '+bkg}>
         <div className='home-page vintage'>
@@ -52,7 +52,7 @@ class PromoHome extends React.Component {
             onSave={this.onSave}
           />}
           <div className='promo general'>
-            <Divider horizontal>{gender? 'man' : 'woman'} promos</Divider>
+            <Divider horizontal>{(gender == 1)? 'man' : 'woman'} promos</Divider>
             {(gender !== null) && (username !== null) && <PromoList gender={gender} />}
           </div>
         </div>
