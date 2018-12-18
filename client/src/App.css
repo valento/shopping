@@ -178,6 +178,25 @@ a.domain {
   color: white;
 }
 
+.card .content {
+  min-width: 23vw;
+  min-height: 23vw;
+}
+.ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui) {
+  font-size: 1em;
+  color: white;
+}
+.ui.card>.content, .ui.cards>.card>.content {
+  padding: none;
+}
+.ui.card, .ui.cards>.card {
+  padding: none;
+  background: rgba(162, 198, 219,.7);
+}
+.category {
+  padding: 0 1.5em;
+}
+
 /* ------------------------------------------------------------------ */
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

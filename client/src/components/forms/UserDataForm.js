@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Form, Button, Icon, Divider } from 'semantic-ui-react'
 
 export default class UserDataForm extends React.Component {
@@ -53,7 +52,7 @@ export default class UserDataForm extends React.Component {
 
   render() {
     const {ns,ss,min} = this.state// uname,sex
-    const {username,gender} = this.state.data
+    const {gender} = this.state.data
     let nless = (this.props.username === null || this.props.username === 'indefined') ? 3 : 0
     let sless = (this.props.gender === null || this.props.gender === 'undefined') ? 3 : 0
     let minimum = min - nless - sless

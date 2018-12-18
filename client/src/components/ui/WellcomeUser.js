@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Divider } from 'semantic-ui-react'
-import PropTypes from 'prop-types'
 
 class WellcomeUser extends React.Component {
 
@@ -17,7 +16,6 @@ class WellcomeUser extends React.Component {
     const { gender, gen, new_user, username, lan } = this.props
     const u_name = (username) ? username : 'Anon'
     const l = this.text[lan]
-    const g = (gender !== null)? ( gender ? 'm' : 'w') : ( gen ? 'm' : 'w')
     return (
       <div className='vintage small'>
         <p>{new_user ? l[6] : l[0]} <b>{u_name}</b></p>

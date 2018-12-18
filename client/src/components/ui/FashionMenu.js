@@ -7,16 +7,6 @@ import { changeCategory } from '../../actions/'
 
 class FashionMenu extends React.Component {
 
-  constructor(props) {
-    super(props)
-    const state = {
-            lan: {
-              es: ['','Hombre', 'Mujer'],
-              en: ['','Man', 'Woman']
-            }
-          }
-  }
-
   handleClick(e, { index }) {
     this.props.changeCategory(index)
   }
@@ -64,6 +54,7 @@ class FashionMenu extends React.Component {
 }
 
 FashionMenu.propTypes = {
+  lan: PropTypes.number.isRequired,
   gen: PropTypes.number.isRequired,
   category: PropTypes.number.isRequired,
   taxonomy: PropTypes.array
@@ -71,6 +62,7 @@ FashionMenu.propTypes = {
 
 const mapStateToProps = state => ({
   category: state.settings.category,
+  lan: state.settings.language,
   taxonomy: state.settings.taxonomy
 })
 

@@ -14,28 +14,41 @@ var _product2 = _interopRequireDefault(_product);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var listRouter = _express2.default.Router({
   mergeParams: true
 });
 
 var db = new _product2.default('aapp.db');
 
-listRouter.get('/proms/:g/:id', function (req, res, next) {
+listRouter.get('/:table/:g/:cat', function (req, res, next) {
   var _req$params = req.params,
+      table = _req$params.table,
       g = _req$params.g,
-      id = _req$params.id;
+      cat = _req$params.cat;
 
-  console.log(id, g);
-  //db.getItems({g}, 'proms', '*').then( rows => console.log(rows))
+  console.log(cat, { g: g });
+  db.getList({ g: g, cat: cat }, table, '*').then(function (rows) {
+    return console.log(rows);
+  });
 });
 
-listRouter.get('/proms/:g', function (req, res, next) {
-  var g = req.params.g;
+listRouter.get('/:table/:g', function (req, res, next) {
+  var _req$params2 = req.params,
+      g = _req$params2.g,
+      table = _req$params2.table;
 
-  console.log(g, req.path);
-  db.getItems({ g: g }, 'proms', '*').then(function (data) {
-    console.log(data);
-    res.status(200).json(data);
+  db.getList({ g: g }, table, '*').then(function (data) {
+    //console.log('List Router recieves: ', data)
+    var collection = data.map(function (item, index) {
+      if (item.hasOwnProperty('parent_id')) {
+        return _defineProperty({}, item.parent_id, item);
+      } else {
+        return item;
+      }
+    });
+    res.status(200).json(collection);
   });
 });
 

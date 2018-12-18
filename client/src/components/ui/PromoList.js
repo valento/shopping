@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import { Icon, Divider, Segment } from 'semantic-ui-react'
+import { Divider, Segment } from 'semantic-ui-react'
 
 const PromoList = ({ gender, loading, proms }) => {
 

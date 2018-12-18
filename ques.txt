@@ -14,17 +14,26 @@ CREATE TABLE category (
 cat_id integer NOT NULL UNIQUE PRIMARY KEY,
 name text NOT NULL,
 domain_id integer DEFAULT null,
-scat_id integer DEFAULT null,
-sscat_id integer DEFAULT null,
-ssscat_id integer DEFAULT null,
+parent_id integer NOT NULL,
 active integer DEFAULT 1,
 FOREIGN KEY (domain_id) REFERENCES domains (domain_id) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (scat_id) REFERENCES category (cat_id),
-FOREIGN KEY (sscat_id) REFERENCES category (scat_id),
-FOREIGN KEY (ssscat_id) REFERENCES category (sscat_id)
+FOREIGN KEY (parent_id) REFERENCES category (cat_id)
 );
 
 INSERT INTO category (name,domain_id) VALUES ('clothing',1);
+INSERT INTO category (name,domain_id) VALUES ('clothing',2);
+INSERT INTO category (name,domain_id) VALUES ('footwear',1);
+INSERT INTO category (name,domain_id) VALUES ('footwear',2);
+INSERT INTO category (name,domain_id) VALUES ('accessory',1);
+INSERT INTO category (name,domain_id) VALUES ('accessory',2);
+INSERT INTO category (name,scat_id) VALUES ('shirt',1);
+INSERT INTO category (name,scat_id) VALUES ('shirt',2);
+INSERT INTO category (name,scat_id) VALUES ('trousers',1);
+INSERT INTO category (name,scat_id) VALUES ('trousers',2);
+INSERT INTO category (name,scat_id) VALUES ('jacket',1);
+INSERT INTO category (name,scat_id) VALUES ('jacket',2);
+INSERT INTO category (name,scat_id) VALUES ('suit',1);
+INSERT INTO category (name,scat_id) VALUES ('dress',2);
 
 
 CREATE TABLE proms (

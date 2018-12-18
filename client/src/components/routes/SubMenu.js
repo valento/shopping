@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import { Menu, Icon } from 'semantic-ui-react'
 
 const SubmenuRoute = ({gen: gen, component: Component, ...rest}) => {
   //console.log('Submenu: ', rest)

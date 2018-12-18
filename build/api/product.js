@@ -36,13 +36,14 @@ function database(url) {
   }
 }
 
-database.prototype.getItems = function () {
+database.prototype.getList = function () {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var table = arguments[1];
   var scope = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '*';
 
   var that = this;
   var s = Object.keys(data).map(function (key) {
+    if (data[key] == 0) return 2;
     return data[key];
   });
   var k = Object.keys(data);
@@ -54,7 +55,7 @@ database.prototype.getItems = function () {
         console.log('Find Items error: ', err.message);
         reject(err);
       } else {
-        console.log('DB get returns: ', rows);
+        console.log('DB get returns: ', rows.length);
         resolve(rows);
       }
     });
