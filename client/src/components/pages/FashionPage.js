@@ -15,7 +15,7 @@ class FashionHome extends React.Component {
     const bkg = (g > 1) ? 'woman' : 'man'
     return (
       <div className={'App-content ' + bkg}>
-        <div className='content'>
+        <div className='contents'>
           <div className='submenu'>
             <SubmenuRoute location={this.props.location} path={match.url}
               gen={g}

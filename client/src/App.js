@@ -12,6 +12,7 @@ import UserRoute from './components/routes/userRoute'
 import GuestRoute from './components/routes/guestRoute'
 import ProductList from './components/product/ProductList'
 import AnyList from './components/ui/AnyList'
+import MannequinHome from './components/pages/MannequinHome'
 import './App.css'
 
 const App = ({ location }) => {
@@ -25,6 +26,7 @@ const App = ({ location }) => {
       <Route location={location} path='/proms' exact component={PromoHome} />
       <Route location={location} path='/proms/:gender/:id' component={ProductList} />
       <Route location={location} path='/perks' component={PerksHome} />
+      <Route location={location} path='/mannequin' component={MannequinHome} />
     </div>
   )
 }

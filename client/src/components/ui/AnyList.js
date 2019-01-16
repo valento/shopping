@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Card } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import CatList from './CatList'
+import { changeCategory } from '../../actions'
 
 class AnyList extends React.Component {
 
@@ -9,8 +10,13 @@ class AnyList extends React.Component {
     console.log('AnyList just Updated!')
   }
 
+  onSubcat = (c) => {
+    console.log('Sub Category: ', c)
+    this.props.changeCategory(c)
+  }
+
   render() {
-    const {category,taxonomy} = this.props
+    const {category,taxonomy,domain} = this.props
     let cat = []
     if(taxonomy.length > 0 && category > 0) {
       cat = taxonomy.filter( c => {
@@ -18,21 +24,21 @@ class AnyList extends React.Component {
       })
     }
     return (
-      <Card.Group itemsPerRow='3' className='category'>
-        {cat.map( (entry,ind) => <Card key={ind} header={entry[category].name} />)}
-      </Card.Group>
+      <CatList cat={cat} category={category} domain={domain} onSub={this.onSubcat}/>
     )
   }
 }
 
 AnyList.propTypes = {
   taxonomy: PropTypes.array.isRequired,
-  category: PropTypes.number.isRequired
+  category: PropTypes.number.isRequired,
+  domain: PropTypes.number.isRequired
 }
 
 const mapStateToProps = state => ({
   category: state.settings.category,
-  taxonomy: state.settings.taxonomy
+  taxonomy: state.settings.taxonomy,
+  domain: state.settings.domain
 })
 
-export default connect(mapStateToProps, null)(AnyList)
+export default connect(mapStateToProps, { changeCategory })(AnyList)
