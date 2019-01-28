@@ -1,7 +1,6 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-//import '../../App.css'
 import Sign from '../brand/sign'
 import Gender from '../ui/gender'
 import User from '../ui/user'
@@ -25,9 +24,9 @@ class Top extends React.Component {
   }
   render() {
     return (
-      <header className='App-menu ui grid padded'>
+      <div className='ui grid padded App-menu'>
           <div className='six wide column'>
-            <Link to='/'><Sign fontsize='20' /></Link>
+            <Link to='/'><Sign fontsize={20} /></Link>
           </div>
           <div className='four wide column centered'>
             <Gender onDomain={this.onSwitchDomain} gender={1} lan={this.props.lan} />
@@ -37,7 +36,7 @@ class Top extends React.Component {
           <div className='six wide column centered'>
             <User lan={this.props.lan} />
           </div>
-      </header>
+      </div>
     )
   }
 }

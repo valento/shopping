@@ -15,11 +15,69 @@ import setAuthHeader from './setAuthHeader'
 
 const initState = {
   settings: {
-    language: 'en',
-    domain: 2,
+    language: 'es',
+    domain: 1,
     category: 0,
-    gender: 0,
+    gender: 0,// 0-none, 1-male, 2-female
     taxonomy: []
+  },
+  mannequin: {
+    id: 'vale',
+    head: {
+      main: {// hat
+        index: 0,
+        library: ['','vale_head_1001.png','vale_head_1002.png'],
+        active: false
+      }
+    },
+    corp: {
+    top: {
+      index: 0,
+      library: ['','vale_corp_1001.png','vale_corp_1002.png'],
+      active: false
+    },
+      over: {
+        index: 0,
+        library: ['','vale_corp_1003.png'],
+        active: false
+      },
+      main: {
+        index: 0,
+        library: ['','vale_corp_1001.png','vale_corp_1002.png'],
+        active: false
+      },
+      under: {
+        index: 0,
+        library: ['','vale_corp_1001.png','vale_corp_1002.png'],
+        active: false
+      },
+      skin: {
+        index: 0,
+        library: ['','vale_corp_1001.png','vale_corp_1002.png'],
+        active: false
+      }
+    },
+    waist: {
+      main: {
+        index: 0,
+        library: ['','vale_waist_1001.png','vale_waist_1002.png'],
+        active: false
+      }
+    },
+    legs: {
+      under: {
+        index: 0,
+        library: ['0','vale_legs_1001.png','vale_legs_1002.png'],
+        active: false
+      }// socks/underwear
+    },
+    feet: {
+      main: {
+        index: 0,
+        library: ['0','vale_foot_1001.png','vale_foot_1002.png'],
+        active: false,
+      }
+    }
   },
   proms: [],
   user: {}

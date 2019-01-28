@@ -33,6 +33,9 @@ export const proms = (state={}, action) => {
     default: return state
   }
 }
+export const mannequin = ( state={}, action ) => {
+  return state
+}
 export const user = (state={}, action) => {
   switch (action.type) {
     case USER_SIGNED :

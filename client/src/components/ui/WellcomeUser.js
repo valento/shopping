@@ -8,8 +8,8 @@ class WellcomeUser extends React.Component {
   state = {}
 
   text = {
-    en: ['Glad to have you back, ', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Windowshop', 'Welcome, '],
-    es: ['Me alegra que volviste, ', 'o', 'o simple' , 'Ve las gangas', 'Recibe su Bono', 'Vitrinando', 'Bienvenido, ']
+    en: ['Glad to have you back, ', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Windowshop', 'Welcome, ', 'Mannequin Game'],
+    es: ['Me alegra que volviste, ', 'o', 'o simple' , 'Ve las gangas', 'Recibe su Bono', 'Vitrinando', 'Bienvenido, ', 'Mannequin Game']
   }
 
   render() {
@@ -19,11 +19,7 @@ class WellcomeUser extends React.Component {
     return (
       <div className='vintage small'>
         <p>{new_user ? l[6] : l[0]} <b>{u_name}</b></p>
-        <Button as={Link} to='/proms' fluid color='black'>{l[3]}</Button>
-        <Divider horizontal>{l[1]}</Divider>
-        <Button as={Link} to='/perks' fluid color='black'>{l[4]}</Button>
-        <Divider horizontal>{l[2]}</Divider>
-        <Button as={Link} to={'/fashion/'+gender} fluid color='black'>{l[5]}</Button>
+        <Button as={Link} to='/mannequin' fluid color='black'>{l[6]}</Button>
       </div>
     )
   }
@@ -41,7 +37,15 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(WellcomeUser)
+/*
+// Standard Welcome Menu:
 
+<Button as={Link} to='/proms' fluid color='black'>{l[3]}</Button>
+<Divider horizontal>{l[1]}</Divider>
+<Button as={Link} to='/perks' fluid color='black'>{l[4]}</Button>
+<Divider horizontal>{l[2]}</Divider>
+<Button as={Link} to={'/fashion/'+gender} fluid color='black'>{l[5]}</Button>
+*/
 
 /*
 When a customer purchases an item for a first time,

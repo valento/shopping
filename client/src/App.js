@@ -25,8 +25,8 @@ const App = ({ location }) => {
       <UserRoute location={location} path='/cart' exact component={CartHome}/>
       <Route location={location} path='/proms' exact component={PromoHome} />
       <Route location={location} path='/proms/:gender/:id' component={ProductList} />
-      <Route location={location} path='/perks' component={PerksHome} />
-      <Route location={location} path='/mannequin' component={MannequinHome} />
+      <Route location={location} path='/perks' exact component={PerksHome} />
+      <Route location={location} path='/mannequin' exact component={MannequinHome} />
     </div>
   )
 }

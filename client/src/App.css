@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+  background-color: rgb(230, 220, 215);
+}
 .App {
   text-align: center;
   background-color: rgba(230,220,210,.8);
@@ -5,11 +9,12 @@
 
 .App-menu {
   position: fixed;
+  top: 0;
   z-index: 100;
   margin: 0;
   padding: 0;
   width: 100vw;
-  max-height: 7vh;
+  height: 7vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,7 +27,7 @@
   font-family: 'Cormorant', serif;
   font-size: 1.2em;
   font-weight: 500;
-  color: rgb(230, 220, 215)
+  color: rgb(230, 220, 215);
 }
 
 .App-content {
@@ -48,10 +53,6 @@
   background: url(/img/IMG_1203.jpg);
   background-size: cover;
 }
-.App-content.mannequin {
-  background: url(/img/base.jpg) center;
-  background-size: cover;
-}
 
 .home-page {
   padding-top: 10vh;
@@ -59,8 +60,11 @@
   background-color: rgba(230, 220, 215,.8);
 }
 .home-mannequin {
-  min-height: 100vh;
-  background-color: rgba(230, 220, 215,.8);
+  position: relative;
+  height: 100vh;
+  background-color: rgba(230, 220, 215, 1);
+  z-index: 69;
+  overflow: hidden;
 }
 
 .contents {
@@ -92,38 +96,123 @@
 
 /* ========= MANNEQUIN ================================================= */
 /* -- inside App-content.mannequin : .CONTENTS -------------- */
-.body {
+.mannequin-controls {
   position: absolute;
+  top: 250px;
+  left: 0;
+  width: 24vw;
+  height: 180px;
+  z-index: 79;
+}
+
+.mnq-menu {
+  position: absolute;
+  width: 100vw;
+  z-index: 90;
+  top: 8vh;
+  left: 0;
+  display: flex;
+  overflow-x: auto;
+}
+.carrousel {
+  min-width: 100vw;
+  text-align: left;
+  display: flex;
+  position: relative;
+  left: 0;
+}
+
+.mnq-menu .ui {
+  margin: 0 8px;
+}
+/* === Mannequin Menu Semantic ==================== */
+.mnq-menu::-webkit-scrollbar {
+  display: none;
+}
+.mnq-menu .ui.buttons .button:first-child {
+  border-top-left-radius: 1.1rem;
+  border-bottom-left-radius: 1.1rem;
+}
+.mnq-menu .ui.buttons .button {
+  flex: 1 0 auto;
+  margin: 0;
+  border-radius: .3em;
+  padding: .7em 1.1em;
+}
+.mnq-menu .ui.buttons .button:last-child {
+  border-top-right-radius: 1.1rem;
+  border-bottom-right-radius: 1.1rem;
+}
+/* === Mannequin Menu Semantic ==================== */
+.mnq-menu .body-part-menu {
+  position: relative;
+  left: 0;
+  min-width: 100vw;
+  text-align: center;
+}
+.move {
+  -webkit-transition-property: left;
+  -webkit-transition-duration: 2s;
+  -webkit-transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  transition-property: left;
+  transition-duration: 2s;
+  transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.controls-menu {
+  max-width: 180px;
+}
+
+.controls-menu li {
+  list-style: none;
+  min-height: 40px;
+}
+.mannequin-thong {
+  position: absolute;
+  top: 60px;
+  left: -1px;
+  min-width: 30px;
+  max-width: 45px;
+  min-height: 30px;
+  border-radius: 0 14px 14px 0;
+  border-left: 2px dotted rgb(230, 220, 215);
+  padding-top: 5px;
+  background-color: black;
+}
+.body-parts {
+  position: absolute;
+  max-width: 100vw;
+  overflow: hidden;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  z-index: inherit;
 }
-.body img {
+.body-parts img {
   position: relative;
   left: -43px;
 }
-.head {
-  background: url('/img/head.png') center;
-  background-size: cover;
+.cursor {
+  position: absolute;
+  padding: 0 6px;
+  width: 66vw;
+  top: 65px;
+  right: -1px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px 0 0 14px;
+  background-color: black;
+  color: white;
 }
-.corp {
-  background: url('/img/corp.png') center;
-  background-size: cover;
+.cursor-move {
+    -webkit-transition-property: left top;
+    -webkit-transition-duration: 1s;
+    -webkit-transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition-property: left top;
+    transition-duration: 1s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
-.waist {
-  background: url('/img/waist.png') center;
-  background-size: cover;
-}
-.legs {
-  background: url('/img/legs.png') center;
-  background-size: cover;
-}
-.foot {
-  background: url('/img/foot.png') center;
-  background-size: cover;
-}
-
 
 .signup {
   min-height: 100px;
@@ -258,5 +347,26 @@ a.domain {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .body-parts img {
+    left: -67px;
+    top: -28px;
+  }
+}
+@media screen and (min-width: 414px) {
+  .body-parts img {
+    left: -67px;
+    top: 0px;
+    height: 100vh;
+  }
+}
+@media screen and (min-height: 812px) {
+  .body-parts img {
+    left: -87px;
+    top: 0px;
+    height: 100vh;
   }
 }

@@ -2,10 +2,17 @@ import React from 'react'
 
 export default class Mannequin extends React.Component {
   render() {
-    const image = '/img/'+this.props.humman+'00'+this.props.count+'.png'
+    let image
+    const { humman,items,count,active,id } = this.props
+    if(humman === 'base') {
+      image = '/img/mannequin/' + id + '_base.png'
+    } else {
+      image = (count > 0)? '/img/mannequin/' + items[count] : null
+    }
+
     return (
-      <div className={'body ' + this.props.humman}>
-        {this.props.active? (<img src={image} />) : null}
+      <div className='body-parts'>
+        { (active)? (<img src={image} />) : null }
       </div>
     )
   }
