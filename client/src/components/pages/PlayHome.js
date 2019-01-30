@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Divider, Button, Card, Icon } from 'semantic-ui-react'
 
 export default class PlayHome extends React.Component {
@@ -9,7 +10,7 @@ export default class PlayHome extends React.Component {
           <p className='paraf-big'>Mannequins</p>
           <Divider horizontal className='promo'> * * * </Divider>
           <Card.Group itemsPerRow={2}>
-            <Card raised className='main' href='/mannequin/2/1'>
+            <Card raised className='main' as={Link} to='/mannequin/2/1'>
               <Card.Content>
                 <Card.Header>Mannequin.1</Card.Header>
                 <Card.Header><Icon name='image' size='huge' /></Card.Header>
