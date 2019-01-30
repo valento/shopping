@@ -7,25 +7,25 @@ const listRouter = express.Router({
 
 const db = new database('aapp.db')
 
-listRouter.get('/:table/:g/:cat', (req,res,next) => {
-  const {table,g,cat} = req.params
-  console.log(cat, {g})
-  db.getList({g,cat}, table, '*').then( rows => console.log(rows))
+listRouter.get('/:table/:domain/:cat', (req,res,next) => {
+  const { table,domain,cat } = req.params
+  db.getList( { domain,cat }, table, '*').then( rows => console.log(rows))
 })
 
-listRouter.get('/:table/:g', (req,res,next) => {
-  let {g, table} = req.params
-  db.getList({g}, table, '*').then( data => {
-    //console.log('List Router recieves: ', data)
-    const collection = data.map( (item, index) => {
-      if(item.hasOwnProperty('parent_id')) {
-        return {[item.parent_id]:item}
+listRouter.get('/:table/:domain', (req,res,next) => {
+  let { domain, table } = req.params
+  db.getList( { domain }, table, '*')
+  .then( data => {
+    const collection = data.map( item => {
+      if( item.hasOwnProperty('parent_id') ) {
+        return { [item.parent_id]:item }
       } else {
         return item
       }
     })
     res.status(200).json(collection)
   })
+  .catch( err => { res.status(500).json( {errors: {global: err.message}} ) })
 })
 
 export default listRouter

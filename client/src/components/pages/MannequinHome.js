@@ -50,7 +50,7 @@ class MannequinHome extends React.Component {
         return e.clientY < f
       })
     }
-console.log('Controls Position: ',menu_option)
+
     this.setState({
       part: item[i],
       settings: {

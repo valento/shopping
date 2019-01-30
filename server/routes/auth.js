@@ -13,7 +13,7 @@ const db = new database('./aapp.db')
 authRouter.use(bodyParser.json())
 
 authRouter.get('/check', (req,res,next) => {
-  db.findUser( req.query )
+  db.findOne( req.query, 'users' )
   .then(user => {
     if(!user || undefined) {
       res.json({message: 'User is new'})
@@ -28,8 +28,8 @@ authRouter.get('/check', (req,res,next) => {
 
 authRouter.post('/', (req,res,next) => {
   let new_user = true
-  const  scope = ['email','gender','username','credit','rating','language','verified']
-  db.findUser( req.body.credentials, scope )
+  const scope = ['email','gender','username','verified','credit','rating','language']
+  db.findOne( req.body.credentials, 'users', scope )
   .then( user => {
     if(!user || undefined) {
       const pass = generator.generate({
@@ -40,36 +40,39 @@ authRouter.post('/', (req,res,next) => {
         //signup user:
         const data = Object.assign({password: hash}, req.body.credentials)
         db.signup( data )
-        .then( user => {
-          let { email } = user
-          console.log('After Signup Insert: ', email)
-          const token = jwt.sign({ email }, 'valeCollectionJWT')
-          res.status(200).json({
-            user: {
-              token: token,
-              new_user: new_user
+        .then(
+          db.findOne( req.body.credentials, 'users', scope )
+          .then( user => {
+              const token = jwt.sign({
+                email: user.email,
+                username: user.username,
+                rating: user.rating,
+                gender: user.gender,
+                credit: user.credit,
+                language: user.language,
+                verified: user.verified
+              }, 'valeCollectionJWT')
+
+              res.status(200).json( { user: {token: token}} )
             }
-          })
-        })
+          )
+        )
         .catch( err => res.status(500).json({errors: {global: err.message}}))
 
       })
     } else {
       new_user = false
       const token = jwt.sign({
-        email: user.email
+        email: user.email,
+        username: user.username,
+        rating: user.rating,
+        gender: user.gender,
+        credit: user.credit,
+        language: user.language,
+        verified: user.verified
       }, 'valeCollectionJWT')
 
-      res.status(200).json({ user: {
-          token: token,
-          username: user.username,
-          rating: user.rating,
-          gender: user.gender,
-          credit: user.credit,
-          language: user.language,
-          verified: user.verified
-        }
-      })
+      res.status(200).json({ user: { token: token }})
 
     }
   })

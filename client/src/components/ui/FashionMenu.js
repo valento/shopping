@@ -32,16 +32,16 @@ class FashionMenu extends React.Component {
           onClick={(e, {index}) => this.props.changeCategory(index)}
           index={0}
         >
-          <Icon name={bkg} color='black' size='large'/>
+        <Icon name={bkg} color='black' size='large'/>
         </Menu.Item>
         {(cat.length > 0)?
           cat.map( entry => {
             return (
-              <Menu.Item as={Link} to={`${match.url}/${entry[0].cat_id}`}
-                active={category === entry[0].cat_id}
+              <Menu.Item as={Link} to={`${match.url}/${entry[0].uid}`}
+                active={category === entry[0].uid}
                 onClick={(e, {index}) => this.props.changeCategory(index)}
-                index={entry[0].cat_id}
-                name={entry[0].name.toUpperCase()}
+                index={entry[0].uid}
+                name={entry[0][this.props.lan].toUpperCase()}
               />
             )
           })

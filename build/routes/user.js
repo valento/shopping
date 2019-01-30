@@ -24,25 +24,25 @@ var userRouter = _express2.default.Router({
 //userRouter.use()
 var db = new _user2.default('./aapp.db');
 
-userRouter.get('/data', _auth.getUserId, function (req, res, next) {
+//userRouter.all('/data',checkAuth)
+
+userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
   var email = req.email;
 
   var scope = ['email', 'username', 'credit', 'gender', 'rating', 'language', 'verified'];
-  db.getUser({ email: email }, scope).then(function (user) {
+  db.findOne({ email: email }, 'users', scope).then(function (user) {
     res.status(200).json({ user: user });
   }).catch(function (err) {
     res.send(500).json({ errors: { global: err.message } });
   });
-});
+}).post(_auth.checkAuth, function (req, res, next) {
+  //const { email } = req.user
+  var user = req.body.user;
 
-userRouter.post('/data/', _auth.checkAuth, function (req, res, next) {
-  var _req$body$user = req.body.user,
-      email = _req$body$user.email,
-      user = _objectWithoutProperties(_req$body$user, ['email']);
-  //console.log(user)
+  var email = user.email,
+      rest = _objectWithoutProperties(user, ['email']);
 
-
-  db.saveUser(user, email).then(function (err) {
+  db.saveUser(rest, email).then(function (err) {
     if (err) {
       res.send(500).json({ errors: { global: err.message } });
     } else {

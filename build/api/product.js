@@ -43,12 +43,11 @@ database.prototype.getList = function () {
 
   var that = this;
   var s = Object.keys(data).map(function (key) {
-    if (data[key] == 0) return 2;
     return data[key];
   });
   var k = Object.keys(data);
   console.log(s, k);
-  var sql = 'SELECT ' + scope + ' FROM ' + table + ' WHERE domain_id = ?';
+  var sql = 'SELECT ' + scope + ' FROM ' + table + ' WHERE domain = ?';
   return new Promise(function (resolve, reject) {
     that.db.all(sql, s, function (err, rows) {
       if (err) {

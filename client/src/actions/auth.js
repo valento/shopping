@@ -18,13 +18,13 @@ export const log = credentials => (dispatch) => {
   api.user.log( credentials ).then( user => {
     localStorage.valeCollectionJWT = user.token
     setAuthHeader(localStorage.valeCollectionJWT)
-    const jt = decode(localStorage.valeCollectionJWT)
-    user.email = jt.email
+    const token = decode(localStorage.valeCollectionJWT)
+    user.email = token.email
     user.username = user.username || null
-    user.language = user.language || 0
+    user.language = user.language || null
     user.credit = user.credit || 10
     user.gender = user.gender || null
-    user.rating = user.rating || 0
+    user.rating = user.rating || null
     dispatch(userSignedIn(user))
   })
 }

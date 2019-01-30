@@ -37,7 +37,7 @@ var db = new _user2.default('./aapp.db');
 authRouter.use(_bodyParser2.default.json());
 
 authRouter.get('/check', function (req, res, next) {
-  db.findUser(req.query).then(function (user) {
+  db.findOne(req.query, 'users').then(function (user) {
     if (!user || undefined) {
       res.json({ message: 'User is new' });
     } else {
@@ -50,8 +50,8 @@ authRouter.get('/check', function (req, res, next) {
 
 authRouter.post('/', function (req, res, next) {
   var new_user = true;
-  var scope = ['email', 'gender', 'username', 'credit', 'rating', 'language', 'verified'];
-  db.findUser(req.body.credentials, scope).then(function (user) {
+  var scope = ['email', 'gender', 'username', 'verified', 'credit', 'rating', 'language'];
+  db.findOne(req.body.credentials, 'users', scope).then(function (user) {
     if (!user || undefined) {
       var pass = _generatePassword2.default.generate({
         length: 8,
@@ -60,37 +60,35 @@ authRouter.post('/', function (req, res, next) {
       _bcryptNodejs2.default.hash(pass, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
         //signup user:
         var data = Object.assign({ password: hash }, req.body.credentials);
-        db.signup(data).then(function (user) {
-          var email = user.email;
+        db.signup(data).then(db.findOne(req.body.credentials, 'users', scope).then(function (user) {
+          var token = _jsonwebtoken2.default.sign({
+            email: user.email,
+            username: user.username,
+            rating: user.rating,
+            gender: user.gender,
+            credit: user.credit,
+            language: user.language,
+            verified: user.verified
+          }, 'valeCollectionJWT');
 
-          console.log('After Signup Insert: ', email);
-          var token = _jsonwebtoken2.default.sign({ email: email }, 'valeCollectionJWT');
-          res.status(200).json({
-            user: {
-              token: token,
-              new_user: new_user
-            }
-          });
-        }).catch(function (err) {
+          res.status(200).json({ user: { token: token } });
+        })).catch(function (err) {
           return res.status(500).json({ errors: { global: err.message } });
         });
       });
     } else {
       new_user = false;
       var token = _jsonwebtoken2.default.sign({
-        email: user.email
+        email: user.email,
+        username: user.username,
+        rating: user.rating,
+        gender: user.gender,
+        credit: user.credit,
+        language: user.language,
+        verified: user.verified
       }, 'valeCollectionJWT');
 
-      res.status(200).json({ user: {
-          token: token,
-          username: user.username,
-          rating: user.rating,
-          gender: user.gender,
-          credit: user.credit,
-          language: user.language,
-          verified: user.verified
-        }
-      });
+      res.status(200).json({ user: { token: token } });
     }
   }).catch(function (err) {
     res.status(200).json({ message: 'Welcome new one' });

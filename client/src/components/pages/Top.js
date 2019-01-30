@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Sign from '../brand/sign'
 import Gender from '../ui/gender'
-import User from '../ui/user'
+import UserAccount from '../ui/user'
 
 import { getStore, switchDomain, changeCategory } from '../../actions/'
 
@@ -17,24 +17,25 @@ class Top extends React.Component {
     this.props.getStore(this.props.domain)
   }
 
-  onSwitchDomain(d) {
-    this.props.switchDomain(d)
+  onSwitchDomain(domain) {
+    this.props.switchDomain(domain)
     this.props.changeCategory(0)
-    this.props.getStore(d)
+    this.props.getStore(domain)
   }
   render() {
+    const { lan,user } = this.props
     return (
       <div className='ui grid padded App-menu'>
           <div className='six wide column'>
             <Link to='/'><Sign fontsize={20} /></Link>
           </div>
           <div className='four wide column centered'>
-            <Gender onDomain={this.onSwitchDomain} gender={1} lan={this.props.lan} />
+            <Gender onDomain={this.onSwitchDomain} gender={1} lan={lan} />
             <span> | </span>
-            <Gender onDomain={this.onSwitchDomain} gender={2} lan={this.props.lan} />
+            <Gender onDomain={this.onSwitchDomain} gender={2} lan={lan} />
           </div>
           <div className='six wide column centered'>
-            <User lan={this.props.lan} />
+            <UserAccount credit={user.credit} />
           </div>
       </div>
     )
@@ -44,7 +45,8 @@ class Top extends React.Component {
 const mapStateToProps = state => {
   return {
     lan: state.settings.language,
-    domain: state.settings.domain
+    domain: state.settings.domain,
+    user: state.user
   }
 }
 

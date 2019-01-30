@@ -22,12 +22,12 @@ function database ( url ) {
   }
 }
 
-database.prototype.findUser = function(data={}, scope=['email']) {
+database.prototype.findOne = function(data={},table,scope=['email']) {
   const that = this
   const s = Object.keys(data).map( key => data[key] )
   const k = Object.keys(data)
-  console.log(s,k)
-  const sql = `SELECT ${scope} FROM users WHERE ${k} = ?`
+  const sql = `SELECT ${scope} FROM ${table} WHERE ${k} = ?`
+  console.log(sql)
   return new Promise((resolve,reject) => {
     that.db.get(sql, s, (err,row) => {
       if(err) {
@@ -35,23 +35,6 @@ database.prototype.findUser = function(data={}, scope=['email']) {
         reject(err)
       } else {
         console.log('DB get returns: ', row)
-        resolve(row)
-      }
-    })
-  })
-}
-
-database.prototype.getUser = function( data={}, scope=['email']) {
-  console.log('DB get User: ', data.email)
-  const that = this
-  const { email } = data
-  const sql = `SELECT ${scope} FROM users WHERE email = ?`
-  console.log(sql, email)
-  return new Promise (( resolve, reject ) => {
-    that.db.get(sql, email, (err,row) => {
-      if(err){
-        reject({errors: { global: 'Wrong DB'}})
-      } else {
         resolve(row)
       }
     })
@@ -98,5 +81,26 @@ database.prototype.saveUser = function(data={}, q=[]) {
     })
   })
 }
+
+
+/*
+database.prototype.getUser = function( data={}, table='user', scope=['email']) {
+  console.log('DB get User: ', data.email)
+  const that = this
+  const { email } = data
+  const sql = `SELECT ${scope} FROM ${table} WHERE email = ?`
+  console.log(sql, email)
+  return new Promise (( resolve, reject ) => {
+    that.db.get(sql, email, (err,row) => {
+      if(err){
+        reject({errors: { global: 'Wrong DB'}})
+      } else {
+        resolve(row)
+      }
+    })
+  })
+}
+*/
+
 
 export default database

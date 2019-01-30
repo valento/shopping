@@ -23,13 +23,12 @@ export const setTree = taxonomy => ({
   taxonomy
 })
 
-export const getStore = g => dispatch =>
-  api.collection.getCategories(g)
-  .then( collection => dispatch(setTree(collection)) )
+export const getStore = domain => dispatch =>
+  api.collection.getCategories(domain).then( collection => dispatch(setTree(collection)) )
 
 
-export const getPromos = g => dispatch =>
-  api.collection.getPromos(g).then( proms =>  dispatch(promos(proms)) )
+export const getPromos = domain => dispatch =>
+  api.collection.getPromos(domain).then( proms =>  dispatch(promos(proms)) )
 
 export const userUpdated = user => ({
   type: USER_UPDATED,

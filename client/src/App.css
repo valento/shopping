@@ -29,14 +29,15 @@ body {
   font-weight: 500;
   color: rgb(230, 220, 215);
 }
-
+.label-small {
+  position: relative;
+  top: -4px;
+}
 .App-content {
   min-height: 100vh;
   background: rgb(230, 220, 215) url(/img/IMG_1143.jpg);
   background-size: cover;
 }
-
-
 .App-content.man {
   background: url(/img/IMG_5875.jpg);
   background-size: cover;
@@ -234,12 +235,31 @@ body {
 .signup .ui.form .disabled.field, .ui.form .disabled.fields .field, .ui.form .field :disabled {
   opacity: 1;
 }
-
+/* Account, Cart Pages */
 .user-page {
   background: url(/img/payment.jpg);
   background-size: cover;
 }
+.user-icon {
+  position: relative;
+  display: inline-block;
+  width: 50%;
+}
+.user-icon span {
+  position: absolute;
+  top: 8px;
+  left: 35px;
+  padding: 0px 4px;
+  font-size: .65em;
+  border-radius: 9px;
+  background-color: #eee;
+  color: black;
+}
+.right-border {
+  border-right: 1px solid white;
+}
 
+/* Wellcome, Fashion Pages*/
 .vintage {
   font-family: 'Cormorant', serif;
   font-style: italic;
@@ -249,11 +269,11 @@ body {
   text-align: left;
   border-bottom: 1px solid #dcc6ab;
 }
-.vintage.big {
+.paraf-big {
   font-size: 2.3em;
   font-weight: 700;
 }
-.vintage.small {
+.paraf-mid {
   font-size: 1.2em;
   font-weight: 300;
 }

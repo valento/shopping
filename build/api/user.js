@@ -36,17 +36,18 @@ function database(url) {
   }
 }
 
-database.prototype.findUser = function () {
+database.prototype.findOne = function () {
   var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ['email'];
+  var table = arguments[1];
+  var scope = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ['email'];
 
   var that = this;
   var s = Object.keys(data).map(function (key) {
     return data[key];
   });
   var k = Object.keys(data);
-  console.log(s, k);
-  var sql = 'SELECT ' + scope + ' FROM users WHERE ' + k + ' = ?';
+  var sql = 'SELECT ' + scope + ' FROM ' + table + ' WHERE ' + k + ' = ?';
+  console.log(sql);
   return new Promise(function (resolve, reject) {
     that.db.get(sql, s, function (err, row) {
       if (err) {
@@ -54,27 +55,6 @@ database.prototype.findUser = function () {
         reject(err);
       } else {
         console.log('DB get returns: ', row);
-        resolve(row);
-      }
-    });
-  });
-};
-
-database.prototype.getUser = function () {
-  var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var scope = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ['email'];
-
-  console.log('DB get User: ', data.email);
-  var that = this;
-  var email = data.email;
-
-  var sql = 'SELECT ' + scope + ' FROM users WHERE email = ?';
-  console.log(sql, email);
-  return new Promise(function (resolve, reject) {
-    that.db.get(sql, email, function (err, row) {
-      if (err) {
-        reject({ errors: { global: 'Wrong DB' } });
-      } else {
         resolve(row);
       }
     });
@@ -130,6 +110,25 @@ database.prototype.saveUser = function () {
     });
   });
 };
+
+/*
+database.prototype.getUser = function( data={}, table='user', scope=['email']) {
+  console.log('DB get User: ', data.email)
+  const that = this
+  const { email } = data
+  const sql = `SELECT ${scope} FROM ${table} WHERE email = ?`
+  console.log(sql, email)
+  return new Promise (( resolve, reject ) => {
+    that.db.get(sql, email, (err,row) => {
+      if(err){
+        reject({errors: { global: 'Wrong DB'}})
+      } else {
+        resolve(row)
+      }
+    })
+  })
+}
+*/
 
 exports.default = database;
 //# sourceMappingURL=user.js.map

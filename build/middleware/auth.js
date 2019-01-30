@@ -14,8 +14,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getUserId = exports.getUserId = function getUserId(req, res, next) {
   var token = req.get('Authorization');
   var decoded = _jsonwebtoken2.default.decode(token);
+  console.log('Auth Middleware: ', decoded);
   req.email = decoded.email;
-  console.log('Auth Middleware: ', req.email);
+
   next();
 };
 

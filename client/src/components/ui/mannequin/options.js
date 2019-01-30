@@ -29,9 +29,9 @@ class Options extends React.Component {
     position = (this.props.position === '')? 0 : (_position + 1)
 
     const trans = {
-      left: `-${position*375}px`
+      left: `-${position*window.screen.width}px`
     }
-
+console.log(window.screen.width)
     const menu = Object.keys(man).map( k => {
       let i = this.state._keys.findIndex( _k => {
         return _k === k

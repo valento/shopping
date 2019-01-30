@@ -25,12 +25,11 @@ function database ( url ) {
 database.prototype.getList = function(data={}, table, scope='*') {
   const that = this
   const s = Object.keys(data).map( key => {
-    if(data[key] == 0) return 2
     return data[key]
   } )
   const k = Object.keys(data)
   console.log(s,k)
-  const sql = `SELECT ${scope} FROM ${table} WHERE domain_id = ?`
+  const sql = `SELECT ${scope} FROM ${table} WHERE domain = ?`
   return new Promise((resolve,reject) => {
     that.db.all(sql, s, (err,rows) => {
       if(err) {

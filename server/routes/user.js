@@ -8,10 +8,13 @@ const userRouter = express.Router({
 //userRouter.use()
 const db = new database('./aapp.db')
 
-userRouter.get('/data',getUserId, (req,res,next) => {
+//userRouter.all('/data',checkAuth)
+
+userRouter.route('/data')
+.get(getUserId, (req,res,next) => {
   const { email } = req
   const scope = ['email','username','credit','gender','rating','language','verified']
-  db.getUser({email}, scope)
+  db.findOne({email}, 'users', scope)
   .then( user => {
     res.status(200).json({user: user})
   })
@@ -19,11 +22,11 @@ userRouter.get('/data',getUserId, (req,res,next) => {
     res.send(500).json({errors: {global: err.message}})
   })
 })
-
-userRouter.post('/data/', checkAuth, (req,res,next) => {
-  const { email, ...user } = req.body.user
-  //console.log(user)
-  db.saveUser(user, email)
+.post(checkAuth,(req,res,next) => {
+  //const { email } = req.user
+  const { user } = req.body
+  const { email, ...rest} = user
+  db.saveUser(rest, email)
   .then( err => {
     if (err) {
       res.send(500).json({errors: {global: err.message}})

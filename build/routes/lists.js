@@ -22,26 +22,24 @@ var listRouter = _express2.default.Router({
 
 var db = new _product2.default('aapp.db');
 
-listRouter.get('/:table/:g/:cat', function (req, res, next) {
+listRouter.get('/:table/:domain/:cat', function (req, res, next) {
   var _req$params = req.params,
       table = _req$params.table,
-      g = _req$params.g,
+      domain = _req$params.domain,
       cat = _req$params.cat;
 
-  console.log(cat, { g: g });
-  db.getList({ g: g, cat: cat }, table, '*').then(function (rows) {
+  db.getList({ domain: domain, cat: cat }, table, '*').then(function (rows) {
     return console.log(rows);
   });
 });
 
-listRouter.get('/:table/:g', function (req, res, next) {
+listRouter.get('/:table/:domain', function (req, res, next) {
   var _req$params2 = req.params,
-      g = _req$params2.g,
+      domain = _req$params2.domain,
       table = _req$params2.table;
 
-  db.getList({ g: g }, table, '*').then(function (data) {
-    //console.log('List Router recieves: ', data)
-    var collection = data.map(function (item, index) {
+  db.getList({ domain: domain }, table, '*').then(function (data) {
+    var collection = data.map(function (item) {
       if (item.hasOwnProperty('parent_id')) {
         return _defineProperty({}, item.parent_id, item);
       } else {
@@ -49,6 +47,8 @@ listRouter.get('/:table/:g', function (req, res, next) {
       }
     });
     res.status(200).json(collection);
+  }).catch(function (err) {
+    res.status(500).json({ errors: { global: err.message } });
   });
 });
 

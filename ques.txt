@@ -11,29 +11,42 @@ price integer default 0
 );
 
 CREATE TABLE category (
-cat_id integer NOT NULL UNIQUE PRIMARY KEY,
-name text NOT NULL,
-domain_id integer DEFAULT null,
-parent_id integer NOT NULL,
+uid integer NOT NULL UNIQUE PRIMARY KEY,
+en text NOT NULL,
+es text NOT NULL,
+c_owner integer DEFAULT 1,
+c_group integer DEFAULT 1,
+c_permis integer DEFAULT 500,
+c_status integer DEFAULT 4,
+domain integer DEFAULT null,
+parent_id integer DEFAULT null,
 active integer DEFAULT 1,
-FOREIGN KEY (domain_id) REFERENCES domains (domain_id) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (parent_id) REFERENCES category (cat_id)
+FOREIGN KEY (parent_id) REFERENCES category (uid)
 );
 
-INSERT INTO category (name,domain_id) VALUES ('clothing',1);
-INSERT INTO category (name,domain_id) VALUES ('clothing',2);
-INSERT INTO category (name,domain_id) VALUES ('footwear',1);
-INSERT INTO category (name,domain_id) VALUES ('footwear',2);
-INSERT INTO category (name,domain_id) VALUES ('accessory',1);
-INSERT INTO category (name,domain_id) VALUES ('accessory',2);
-INSERT INTO category (name,scat_id) VALUES ('shirt',1);
-INSERT INTO category (name,scat_id) VALUES ('shirt',2);
-INSERT INTO category (name,scat_id) VALUES ('trousers',1);
-INSERT INTO category (name,scat_id) VALUES ('trousers',2);
-INSERT INTO category (name,scat_id) VALUES ('jacket',1);
-INSERT INTO category (name,scat_id) VALUES ('jacket',2);
-INSERT INTO category (name,scat_id) VALUES ('suit',1);
-INSERT INTO category (name,scat_id) VALUES ('dress',2);
+INSERT INTO category (en,es,domain) VALUES
+('clothing','ropa',1),
+('clothing','ropa',2),
+('footwear','zapatos',1),
+('footwear','zapatos',2),
+('accessory','accesorios',1),
+('accessory','accesorios',2);
+
+INSERT INTO category (en,es,domain,parent_id) VALUES
+('tops','topes',1,1),
+('tops','topes',2,2),
+('shirts','camisas',1,1),
+('shirts','camisas',2,2),
+('trousers','pantalones',1,1),
+('trousers','pantalones',2,2),
+('skirts','faldas',1,1),
+('skirts','faldas',2,2),
+('swimsuits','playa',1,1),
+('swimsuits','playa',2,2),
+('shorts','pantalonetas',1,1),
+('shorts','pantalonetas',2,2);
+
+INSERT INTO category (name,domain_id,parent_id) VALUES ('shorts',1,1);
 
 
 CREATE TABLE proms (
@@ -67,19 +80,23 @@ VALUES (1,'All items discount');
 INSERT INTO rules (type, description)
 VALUES (2,'Discount on second purchased item. Tied to minimum total amount.');
 
-// ======= STORE ======= //
+CREATE TABLE coupons (
+coupon_id integer UNIQUE PRIMARY KEY NOT NULL,
+user_id integer UNIQUE,
+camp_id integer NOT NULL,
+taken_date text,
+used_date text,
+FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (camp_id) REFERENCES campaigns (camp_id) ON DELETE NO ACTION ON UPDATE CASCADE);
 
-create table products (
+// ======= STORE ===============================================================
 
 create table products (
 product_id integer PRIMARY KEY UNIQUE NOT NULL,
-category_id integer NOT NULL,
-domain_id integer NOT NULL,
 name text NOT NULL,
 description text,
-active integer DEFAULT 1,
-FOREIGN KEY (domain_id) REFERENCES domains (domain_id) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (category_id) REFERENCES categories (category_id) ON DELETE CASCADE ON UPDATE CASCADE,
+img integer,
+active integer DEFAULT 1
 );
 
 CREATE TABLE prod_props (
@@ -93,25 +110,34 @@ FOREIGN KEY (prod_id) REFERENCES products (prod_id) ON DELETE CASCADE ON UPDATE 
 CREATE TABLE items (
 item_id integer PRIMARY KEY UNIQUE NOT NULL,
 product_id integer NOT NULL,
+cat_id integer NOT NULL,
+domain_id integer NOT NULL,
 brand_id integer,
 price integer NOT NULL,
 name text NOT NULL,
 description text,
 store_id integer,
+FOREIGN KEY (domain_id) REFERENCES domains (domain_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (category_id) REFERENCES category (uid) ON DELETE CASCADE ON UPDATE NO ACTION,
 FOREIGN KEY (store_id) REFERENCES stores (store_id) ON DELETE CASCADE ON UPDATE NO ACTION,
 FOREIGN KEY (brand_id) REFERENCES brands (brand_id) ON DELETE CASCADE ON UPDATE NO ACTION,
-FOREIGN KEY (campaign_id) REFERENCES campaigns (campaign_id) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY (campaign_id) REFERENCES campaigns (campaign_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+FOREIGN KEY (product_id) REFERENCES products (product_id) ON DELETE CASCADE ON UPDATE NO ACTION,
 active integer DEFAULT 1,
 );
 
+// === USERS Table: ============================================================
 
 CREATE TABLE users (
-user_id integer PRIMARY KEY NOT NULL UNIQUE,
+uid integer PRIMARY KEY NOT NULL UNIQUE,
 email varchar NOT NULL UNIQUE,
 password varchar NOT NULL UNIQUE,
 verified integer DEFAULT 0,
-active integer DEFAULT 1,
+c_status integer DEFAULT 4,
+c_owner integer NOT NULL DEFAULT 1,
+c_group integer NOT NULL DEFAULT 1,
+c_permis integer integer DEFAULT 500,
+c_membership integer NOT NULL DEFAULT 32,
 username varchar,
 gender integer,
 language integer,
@@ -129,3 +155,607 @@ REFERENCES locations (location_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 SELECT * FROM promos WHERE domain_id = ?
+
+
+
+
+// =================================================================
+// = ROLE BASED ACCESS =============================================
+/* --- Object = row */
+/* --- Type = table of objects */
+
+// === HARDCODED ====================================================
+// === ARRAYS    ============
+
+// == ROLES: ================
+role = ['owner','owner_group','other']
+
+// == GROUPS: ================
+groups = ['root','officer','vip','fan','user','wheel']
+
+// == PRIVILEGES: ===========
+permiss = [
+'other_delete', 'other_write', 'other_read',
+'group_delete', 'group_write', 'group_read',
+'owner_delete', 'owner_write', 'owner_read'
+]
+
+// == STATUS: ================
+status = ['deleted','inactive','active','canceled','pending']
+
+
+// == ACTIONS: ===============
+
+// -- ACTIONS TABLE ----------
+// - Object: action applies to table or object(row)
+CREATE TABLE actions (
+title text PRIMARY KEY NOT NULL UNIQUE,
+apply_to integer NOT NULL
+)
+
+INSERT INTO actions (title,apply_to) VALUES
+('delete',1)
+('write',1)
+('read',1)
+('passwd',1)
+('activate',1)
+(list_all,0);
+
+// -- ACTIONS-IMPLEMENTED -------------------------------------------
+// - type: object type = table, e.g. item-object, user-object, promo-object
+// - UNIX style actions: delete/write/read,
+// - Other actions-privileges: join, buy, preview, wish...
+// - status 0: action is valid in any Object-state
+
+CREATE TABLE t_action_implement (
+type varchar NOT NULL,
+action text NOT NULL,
+status integer NOT NULL DEFAULT 0,
+PRIMARY KEY (type,action)
+)
+
+INSERT INTO t_action_implement (type,action,status) VALUES
+('users','delete',0),
+('users','write',0),
+('users','read',0),
+('products','delete',0),
+('products','write',0),
+('products','read',0),
+('items','delete',0),
+('items','write',0),
+('items','read',0),
+('proms','delete',0),
+('proms','write',0),
+('proms','read',0),
+('proms','activate',2);
+
+//
+
+
+
+1|clothing|1|0|1
+2|clothing|2|0|1
+3|footwear|1|0|1
+4|footwear|2|0|1
+5|accessories|1|0|1
+6|accessories|2|0|1
+
+7|tops|1|1|1
+8|tops|2|2|1
+9|shirts|1|1|1
+10|shirts|2|2|1
+11|trousers|1|1|1
+12|trousers|2|2|1
+13|suits|1|1|1
+14|dresses|2|2|1
+15|underwear|1|1|1
+16|underwear|2|2|1
+17|skirts|2|2|1
+
+18|oxford|1|3|1
+19|boots|1|3|1
+20|loafers|1|3|1
+21|moccasins|1|3|1
+22|sandals|1|3|1
+23|flip-flops|1|3|1
+24|boots|2|4|1
+25|heels|2|4|1
+26|straps|2|4|1
+27|platforms|2|4|1
+28|sandals|2|4|1
+29|flats|2|4|1
+30|sneakers|2|4|1
+31|sneakers|1|3|1
+32|flip-flops|2|4|1
+33|monks|1|3|1
+34|moccasins|2|4|1
+
+35|dress|1|9|1
+36|T-shirt|1|9|1
+37|polo|1|9|1
+38|casual|1|9|1
+39|sleeveless|1|9|1
+
+40|oxford|2|10|1
+41|tunic|2|10|1
+42|corset|2|10|1
+43|blouse|2|10|1
+44|gypsy|2|10|1
+45|tuxedo|2|10|1
+46|sweetheart|2|10|1
+47|western|2|10|1
+48|overskirt|2|10|1
+
+49|coats|1|7|1
+50|jackets|1|7|1
+51|sweaters|1|7|1
+52|cardigan|1|7|1
+
+53|coats|2|8|1
+54|jackets|2|8|1
+55|sweaters|2|8|1
+56|cardigan|2|8|1
+
+57|pea|2|53|1
+58|reefers|2|53|1
+59|trenches|2|53|1
+60|duffle|2|53|1
+61|wrap|2|53|1
+62|swing|2|53|1
+63|princes|2|53|1
+64|covert|1|49|1
+65|pea|1|49|1
+66|trench|1|49|1
+67|duffel|1|49|1
+68|British warm|1|49|1
+69|cape|2|53|1
+70|capelet|2|53|1
+71|quilted parka|2|53|1
+72|quilted parka|1|49|1
+73|frock|2|53|1
+74|frock|1|49|1
+75|blazer|1|7|1
+76|blazer|2|8|1
+77|shorts|1|1|1
+78|shorts|2|2|1
+
+
+// === REDUX Store Data Models: ================================================
+
+mannequin: {
+    id: 'vale',
+    head: {// category: accessory: scarf
+      top: {
+        index: 0,
+        library: [],
+        active: false
+      },
+      over: 0,// glasses
+      main: {// hat
+        index: 0,
+        library: [],
+        active: false
+      },
+      under: 0,// scarf/neckless
+      skin: 0,// earing
+    },
+    corp: {
+      top: 0,// clothes: top
+      over: 0,// top/shirt
+      main: 0,// shirt
+      under: 0,// shirt
+      skin: 0// swim/underwear
+    },
+    waist: {
+      top: 0,// accessory
+      over: 0,//
+      main: 0,//skirt/shorts
+      under: 0,//
+      skin: 0// underwear/swim
+    },
+    legs: {
+      top: 0,// scarf
+      over: 0,// skirt
+      main: 0,// trousers
+      under: 0// socks/underwear
+    },
+    foot: {
+      top: 0,access
+      over: 0,access
+      main: 0,// shoes
+      under: 0//socks
+    }
+  },
+  proms: [],
+  user: {}
+}
+
+
+
+
+
+
+Georgis-MacBook-Air:adricollection Valent$ gcloud app deploy
+Services to deploy:
+
+descriptor:      [/Users/Valent/Documents/sites/adricollection/app.yaml]
+source:          [/Users/Valent/Documents/sites/adricollection]
+target project:  [adricollection-224810]
+target service:  [default]
+target version:  [20181217t212539]
+target url:      [https://adricollection-224810.appspot.com]
+
+
+Do you want to continue (Y/n)?  y
+
+Beginning deployment of service [default]...
+Building and pushing image for service [default]
+Started cloud build [86f8b691-d863-4011-a04a-1b5a4a489ef9].
+To see logs in the Cloud Console: https://console.cloud.google.com/gcr/builds/86f8b691-d863-4011-a04a-1b5a4a489ef9?project=969382485633
+------------------------------------------------------ REMOTE BUILD OUTPUT -------------------------------------------------------
+starting build "86f8b691-d863-4011-a04a-1b5a4a489ef9"
+
+FETCHSOURCE
+Fetching storage object: gs://staging.adricollection-224810.appspot.com/us.gcr.io/adricollection-224810/appengine/default.20181217t212539:latest#1545074834462412
+Copying gs://staging.adricollection-224810.appspot.com/us.gcr.io/adricollection-224810/appengine/default.20181217t212539:latest#1545074834462412...
+- [1 files][  6.1 MiB/  6.1 MiB]
+Operation completed over 1 objects/6.1 MiB.
+BUILD
+Starting Step #0
+Step #0: Pulling image: gcr.io/gcp-runtimes/nodejs/gen-dockerfile@sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110: Pulling from gcp-runtimes/nodejs/gen-dockerfile
+Step #0: Digest: sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: Status: Downloaded newer image for gcr.io/gcp-runtimes/nodejs/gen-dockerfile@sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: Checking for Node.js.
+Step #0: WARNING:  Your package.json does not specify a supported Node.js version.  Please pin your application to a major version of the Node.js runtime.  To learn more, visit https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
+Finished Step #0
+Starting Step #1
+Step #1: Pulling image: gcr.io/kaniko-project/executor@sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870: Pulling from kaniko-project/executor
+Step #1: 042c12654203: Pulling fs layer
+Step #1: e623e7f7d83e: Pulling fs layer
+Step #1: 4a78c04d4eaa: Pulling fs layer
+Step #1: bf1e1a1d843a: Pulling fs layer
+Step #1: bde2bd8edab4: Pulling fs layer
+Step #1: 9c94fd449ba4: Pulling fs layer
+Step #1: c1edeb5aef20: Pulling fs layer
+Step #1: bf1e1a1d843a: Waiting
+Step #1: bde2bd8edab4: Waiting
+Step #1: 9c94fd449ba4: Waiting
+Step #1: c1edeb5aef20: Waiting
+Step #1: e623e7f7d83e: Verifying Checksum
+Step #1: e623e7f7d83e: Download complete
+Step #1: 4a78c04d4eaa: Verifying Checksum
+Step #1: 4a78c04d4eaa: Download complete
+Step #1: 042c12654203: Verifying Checksum
+Step #1: 042c12654203: Download complete
+Step #1: bde2bd8edab4: Verifying Checksum
+Step #1: bde2bd8edab4: Download complete
+Step #1: 9c94fd449ba4: Verifying Checksum
+Step #1: 9c94fd449ba4: Download complete
+Step #1: bf1e1a1d843a: Verifying Checksum
+Step #1: bf1e1a1d843a: Download complete
+Step #1: c1edeb5aef20: Verifying Checksum
+Step #1: c1edeb5aef20: Download complete
+Step #1: 042c12654203: Pull complete
+Step #1: e623e7f7d83e: Pull complete
+Step #1: 4a78c04d4eaa: Pull complete
+Step #1: bf1e1a1d843a: Pull complete
+Step #1: bde2bd8edab4: Pull complete
+Step #1: 9c94fd449ba4: Pull complete
+Step #1: c1edeb5aef20: Pull complete
+Step #1: Digest: sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: Status: Downloaded newer image for gcr.io/kaniko-project/executor@sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: INFO[0000] Removing ignored files from build context: [node_modules .dockerignore Dockerfile npm-debug.log yarn-error.log .git .hg .svn app.yaml]
+Step #1: INFO[0000] Downloading base image gcr.io/google-appengine/nodejs@sha256:ec29e2bb030f0ce3bf6832d9c6d6b548762e8974d7d0fec4a0b73d6f40eea127
+Step #1: INFO[0013] Taking snapshot of full filesystem...
+Step #1: INFO[0022] Using files from context: [/workspace]
+Step #1: INFO[0022] COPY . /app/
+Step #1: INFO[0022] Taking snapshot of files...
+Step #1: INFO[0022] RUN yarn install --production ||   ((if [ -f yarn-error.log ]; then       cat yarn-error.log;     fi) && false)
+Step #1: INFO[0022] cmd: /bin/sh
+Step #1: INFO[0022] args: [-c yarn install --production ||   ((if [ -f yarn-error.log ]; then       cat yarn-error.log;     fi) && false)]
+Step #1: yarn install v1.12.3
+Step #1: [1/4] Resolving packages...
+Step #1: [2/4] Fetching packages...
+Step #1: info fsevents@1.2.4: The platform "linux" is incompatible with this module.
+Step #1: info "fsevents@1.2.4" is an optional dependency and failed compatibility check. Excluding it from installation.
+Step #1: [3/4] Linking dependencies...
+Step #1: warning " > babel-loader@8.0.4" has unmet peer dependency "@babel/core@^7.0.0".
+Step #1: warning " > babel-loader@8.0.4" has unmet peer dependency "webpack@>=2".
+Step #1: [4/4] Building fresh packages...
+Step #1: success Saved lockfile.
+Step #1: Done in 9.80s.
+Step #1: INFO[0032] Taking snapshot of full filesystem...
+Step #1: INFO[0040] CMD yarn start
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:e090326868e62f90a2de276e5c915a2204db74b94e39366b6a667c43c146273c
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:0585a27157ef314d512d50f56205ca3901ccfef1a15ef17ef97f06ce6d1166b5
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:78fef9813931ffc7a89b03c01bf059e67b4792a7bc4f1403a8cced0e1c1bb6e7
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:0ad8a0a01df66ffd575edc6b34fd78f7d4014c0e84e656e06eb7e8e86f3d3894
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:0f3bb76fc39050f39722302e4e90894f704ec844aa67ba7609ce7190d948778a
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:3702376db2b7cf699b6a8e4ff155d05eb6b506e5f319b21deb0d8297e0357498
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:3c2cba919283a210665e480bcbf943eaaf4ed87a83f02e81bb286b8bdead0e75
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:d7dbd2191b7b0d23f477dc4509316213c521201ee41a3d06097dd3ec1d486ea5
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:72fe5860d558f1bc130358916afcdbdfe4e22997397546b5133e79349a3ee387
+Step #1: 2018/12/17 19:28:10 existing blob: sha256:75f546e73d8b1fa36e85508de5819396d52b75d98d85987fa2d2b511682c9dc1
+Step #1: 2018/12/17 19:28:13 pushed blob sha256:880de0b8e61020191c73e49d2b91a3a1ff85e855fe5d59c80a7c4f9291efc646
+Step #1: 2018/12/17 19:28:14 pushed blob sha256:ebd660bdd65c99c6f91874ae8a3fee0b1194f0e5b433b4c36396d56cf632249a
+Step #1: 2018/12/17 19:28:16 pushed blob sha256:89eae04d0d19e8933a0b67230f6fa4247f301ab59bb71f3466778855813ecbf6
+Step #1: 2018/12/17 19:28:17 us.gcr.io/adricollection-224810/appengine/default.20181217t212539:latest: digest: sha256:b7241601fe9585e2ba580c8fc1367723ed536e5fb5d0ec5183340ed771dea8bb size: 2220
+Finished Step #1
+PUSH
+DONE
+----------------------------------------------------------------------------------------------------------------------------------
+
+Updating service [default] (this may take several minutes)...done.
+Setting traffic split for service [default]...done.
+Stopping version [adricollection-224810/default/20181217t210812].
+Sent request to stop version [adricollection-224810/default/20181217t210812]. This operation may take some time to complete. If you would like to verify that it succeeded, run:
+  $ gcloud app versions describe -s default 20181217t210812
+until it shows that the version has stopped.
+Deployed service [default] to [https://adricollection-224810.appspot.com]
+
+You can stream logs from the command line by running:
+  $ gcloud app logs tail -s default
+
+To view your application in the web browser run:
+  $ gcloud app browse
+Georgis-MacBook-Air:adricollection Valent$ gcloud app deploy
+Services to deploy:
+
+descriptor:      [/Users/Valent/Documents/sites/adricollection/app.yaml]
+source:          [/Users/Valent/Documents/sites/adricollection]
+target project:  [adricollection-224810]
+target service:  [default]
+target version:  [20181218t160228]
+target url:      [https://adricollection-224810.appspot.com]
+
+
+Do you want to continue (Y/n)?  y
+
+Beginning deployment of service [default]...
+Building and pushing image for service [default]
+Started cloud build [11c5910d-a1ba-4afd-9264-95156b8154ec].
+To see logs in the Cloud Console: https://console.cloud.google.com/gcr/builds/11c5910d-a1ba-4afd-9264-95156b8154ec?project=969382485633
+------------------------------------------------------ REMOTE BUILD OUTPUT -------------------------------------------------------
+starting build "11c5910d-a1ba-4afd-9264-95156b8154ec"
+
+FETCHSOURCE
+Fetching storage object: gs://staging.adricollection-224810.appspot.com/us.gcr.io/adricollection-224810/appengine/default.20181218t160228:latest#1545141838303074
+Copying gs://staging.adricollection-224810.appspot.com/us.gcr.io/adricollection-224810/appengine/default.20181218t160228:latest#1545141838303074...
+/ [1 files][  6.2 MiB/  6.2 MiB]
+Operation completed over 1 objects/6.2 MiB.
+BUILD
+Starting Step #0
+Step #0: Pulling image: gcr.io/gcp-runtimes/nodejs/gen-dockerfile@sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110: Pulling from gcp-runtimes/nodejs/gen-dockerfile
+Step #0: Digest: sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: Status: Downloaded newer image for gcr.io/gcp-runtimes/nodejs/gen-dockerfile@sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: Checking for Node.js.
+Step #0: WARNING:  Your package.json does not specify a supported Node.js version.  Please pin your application to a major version of the Node.js runtime.  To learn more, visit https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
+Finished Step #0
+Starting Step #1
+Step #1: Pulling image: gcr.io/kaniko-project/executor@sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870: Pulling from kaniko-project/executor
+Step #1: 042c12654203: Pulling fs layer
+Step #1: e623e7f7d83e: Pulling fs layer
+Step #1: 4a78c04d4eaa: Pulling fs layer
+Step #1: bf1e1a1d843a: Pulling fs layer
+Step #1: bde2bd8edab4: Pulling fs layer
+Step #1: 9c94fd449ba4: Pulling fs layer
+Step #1: c1edeb5aef20: Pulling fs layer
+Step #1: bf1e1a1d843a: Waiting
+Step #1: bde2bd8edab4: Waiting
+Step #1: 9c94fd449ba4: Waiting
+Step #1: c1edeb5aef20: Waiting
+Step #1: 4a78c04d4eaa: Verifying Checksum
+Step #1: 4a78c04d4eaa: Download complete
+Step #1: e623e7f7d83e: Verifying Checksum
+Step #1: e623e7f7d83e: Download complete
+Step #1: 042c12654203: Verifying Checksum
+Step #1: 042c12654203: Download complete
+Step #1: bde2bd8edab4: Verifying Checksum
+Step #1: bde2bd8edab4: Download complete
+Step #1: bf1e1a1d843a: Verifying Checksum
+Step #1: bf1e1a1d843a: Download complete
+Step #1: 9c94fd449ba4: Verifying Checksum
+Step #1: 9c94fd449ba4: Download complete
+Step #1: c1edeb5aef20: Verifying Checksum
+Step #1: c1edeb5aef20: Download complete
+Step #1: 042c12654203: Pull complete
+Step #1: e623e7f7d83e: Pull complete
+Step #1: 4a78c04d4eaa: Pull complete
+Step #1: bf1e1a1d843a: Pull complete
+Step #1: bde2bd8edab4: Pull complete
+Step #1: 9c94fd449ba4: Pull complete
+Step #1: c1edeb5aef20: Pull complete
+Step #1: Digest: sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: Status: Downloaded newer image for gcr.io/kaniko-project/executor@sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: INFO[0000] Removing ignored files from build context: [node_modules .dockerignore Dockerfile npm-debug.log yarn-error.log .git .hg .svn app.yaml]
+Step #1: INFO[0000] Downloading base image gcr.io/google-appengine/nodejs@sha256:ec29e2bb030f0ce3bf6832d9c6d6b548762e8974d7d0fec4a0b73d6f40eea127
+Step #1: INFO[0011] Taking snapshot of full filesystem...
+Step #1: INFO[0019] Using files from context: [/workspace]
+Step #1: INFO[0019] COPY . /app/
+Step #1: INFO[0019] Taking snapshot of files...
+Step #1: INFO[0020] RUN yarn install --production ||   ((if [ -f yarn-error.log ]; then       cat yarn-error.log;     fi) && false)
+Step #1: INFO[0020] cmd: /bin/sh
+Step #1: INFO[0020] args: [-c yarn install --production ||   ((if [ -f yarn-error.log ]; then       cat yarn-error.log;     fi) && false)]
+Step #1: yarn install v1.12.3
+Step #1: [1/4] Resolving packages...
+Step #1: [2/4] Fetching packages...
+Step #1: info There appears to be trouble with your network connection. Retrying...
+Step #1: info fsevents@1.2.4: The platform "linux" is incompatible with this module.
+Step #1: info "fsevents@1.2.4" is an optional dependency and failed compatibility check. Excluding it from installation.
+Step #1: [3/4] Linking dependencies...
+Step #1: warning " > babel-loader@8.0.4" has unmet peer dependency "@babel/core@^7.0.0".
+Step #1: warning " > babel-loader@8.0.4" has unmet peer dependency "webpack@>=2".
+Step #1: [4/4] Building fresh packages...
+Step #1: success Saved lockfile.
+Step #1: Done in 9.79s.
+Step #1: INFO[0030] Taking snapshot of full filesystem...
+Step #1: INFO[0037] CMD yarn start
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:e090326868e62f90a2de276e5c915a2204db74b94e39366b6a667c43c146273c
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:78fef9813931ffc7a89b03c01bf059e67b4792a7bc4f1403a8cced0e1c1bb6e7
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:d7dbd2191b7b0d23f477dc4509316213c521201ee41a3d06097dd3ec1d486ea5
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:3c2cba919283a210665e480bcbf943eaaf4ed87a83f02e81bb286b8bdead0e75
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:0585a27157ef314d512d50f56205ca3901ccfef1a15ef17ef97f06ce6d1166b5
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:0f3bb76fc39050f39722302e4e90894f704ec844aa67ba7609ce7190d948778a
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:0ad8a0a01df66ffd575edc6b34fd78f7d4014c0e84e656e06eb7e8e86f3d3894
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:72fe5860d558f1bc130358916afcdbdfe4e22997397546b5133e79349a3ee387
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:3702376db2b7cf699b6a8e4ff155d05eb6b506e5f319b21deb0d8297e0357498
+Step #1: 2018/12/18 14:04:51 existing blob: sha256:75f546e73d8b1fa36e85508de5819396d52b75d98d85987fa2d2b511682c9dc1
+Step #1: 2018/12/18 14:04:53 pushed blob sha256:2ca10a85de65b43fccc0dd3e814a2d869137b2510787bbc49a4d6547c1611b56
+Step #1: 2018/12/18 14:04:54 pushed blob sha256:7c3eb7959d02097259794427bac78e8f8ce973cb82e0dd2f82daeddb98b2179b
+Step #1: 2018/12/18 14:04:55 pushed blob sha256:2ae01e469d8844778a4ef70d4652766e172c9c7cc173d20b36dabeb5d850d489
+Step #1: 2018/12/18 14:04:55 us.gcr.io/adricollection-224810/appengine/default.20181218t160228:latest: digest: sha256:a64afe3ed4ac1809961e51d7bea851e63eae72db846819d060d824841a598f5f size: 2220
+Finished Step #1
+PUSH
+DONE
+----------------------------------------------------------------------------------------------------------------------------------
+
+Updating service [default] (this may take several minutes)...done.
+Setting traffic split for service [default]...done.
+Stopping version [adricollection-224810/default/20181217t212539].
+Sent request to stop version [adricollection-224810/default/20181217t212539]. This operation may take some time to complete. If you would like to verify that it succeeded, run:
+  $ gcloud app versions describe -s default 20181217t212539
+until it shows that the version has stopped.
+Deployed service [default] to [https://adricollection-224810.appspot.com]
+
+You can stream logs from the command line by running:
+  $ gcloud app logs tail -s default
+
+To view your application in the web browser run:
+  $ gcloud app browse
+Georgis-MacBook-Air:adricollection Valent$
+  [Restored Dec 19, 2018 at 8:01:08 AM]
+Last login: Wed Dec 19 08:01:08 on ttys002
+Restored session: Wed Dec 19 07:33:06 EET 2018
+Georgis-MacBook-Air:adricollection Valent$ gcloud app deploy
+Services to deploy:
+
+descriptor:      [/Users/Valent/Documents/sites/adricollection/app.yaml]
+source:          [/Users/Valent/Documents/sites/adricollection]
+target project:  [adricollection-224810]
+target service:  [default]
+target version:  [20190116t164125]
+target url:      [https://adricollection-224810.appspot.com]
+
+
+Do you want to continue (Y/n)?  y
+
+Beginning deployment of service [default]...
+Building and pushing image for service [default]
+Started cloud build [2f58e6f7-e5d1-45fa-8c37-bc55a6a0bb80].
+To see logs in the Cloud Console: https://console.cloud.google.com/gcr/builds/2f58e6f7-e5d1-45fa-8c37-bc55a6a0bb80?project=969382485633
+------------------------------------------------------------------- REMOTE BUILD OUTPUT -------------------------------------------------------------------
+starting build "2f58e6f7-e5d1-45fa-8c37-bc55a6a0bb80"
+
+FETCHSOURCE
+Fetching storage object: gs://staging.adricollection-224810.appspot.com/us.gcr.io/adricollection-224810/appengine/default.20190116t164125:latest#1547649791986518
+Copying gs://staging.adricollection-224810.appspot.com/us.gcr.io/adricollection-224810/appengine/default.20190116t164125:latest#1547649791986518...
+- [1 files][  6.1 MiB/  6.1 MiB]
+Operation completed over 1 objects/6.1 MiB.
+BUILD
+Starting Step #0
+Step #0: Pulling image: gcr.io/gcp-runtimes/nodejs/gen-dockerfile@sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110: Pulling from gcp-runtimes/nodejs/gen-dockerfile
+Step #0: Digest: sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: Status: Downloaded newer image for gcr.io/gcp-runtimes/nodejs/gen-dockerfile@sha256:98d9069aa67a763de7e6fd81c41f937b171917f1e83a1afce30fc3d618a3c110
+Step #0: Checking for Node.js.
+Step #0: WARNING:  Your package.json does not specify a supported Node.js version.  Please pin your application to a major version of the Node.js runtime.  To learn more, visit https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
+Finished Step #0
+Starting Step #1
+Step #1: Pulling image: gcr.io/kaniko-project/executor@sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870: Pulling from kaniko-project/executor
+Step #1: 042c12654203: Pulling fs layer
+Step #1: e623e7f7d83e: Pulling fs layer
+Step #1: 4a78c04d4eaa: Pulling fs layer
+Step #1: bf1e1a1d843a: Pulling fs layer
+Step #1: bde2bd8edab4: Pulling fs layer
+Step #1: 9c94fd449ba4: Pulling fs layer
+Step #1: c1edeb5aef20: Pulling fs layer
+Step #1: bf1e1a1d843a: Waiting
+Step #1: bde2bd8edab4: Waiting
+Step #1: 9c94fd449ba4: Waiting
+Step #1: c1edeb5aef20: Waiting
+Step #1: 042c12654203: Verifying Checksum
+Step #1: 042c12654203: Download complete
+Step #1: 4a78c04d4eaa: Verifying Checksum
+Step #1: 4a78c04d4eaa: Download complete
+Step #1: e623e7f7d83e: Verifying Checksum
+Step #1: e623e7f7d83e: Download complete
+Step #1: bf1e1a1d843a: Download complete
+Step #1: bde2bd8edab4: Verifying Checksum
+Step #1: bde2bd8edab4: Download complete
+Step #1: 9c94fd449ba4: Verifying Checksum
+Step #1: 9c94fd449ba4: Download complete
+Step #1: c1edeb5aef20: Verifying Checksum
+Step #1: c1edeb5aef20: Download complete
+Step #1: 042c12654203: Pull complete
+Step #1: e623e7f7d83e: Pull complete
+Step #1: 4a78c04d4eaa: Pull complete
+Step #1: bf1e1a1d843a: Pull complete
+Step #1: bde2bd8edab4: Pull complete
+Step #1: 9c94fd449ba4: Pull complete
+Step #1: c1edeb5aef20: Pull complete
+Step #1: Digest: sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: Status: Downloaded newer image for gcr.io/kaniko-project/executor@sha256:f87c11770a4d3ed33436508d206c584812cd656e6ed08eda1cff5c1ee44f5870
+Step #1: INFO[0000] Removing ignored files from build context: [node_modules .dockerignore Dockerfile npm-debug.log yarn-error.log .git .hg .svn app.yaml]
+Step #1: INFO[0000] Downloading base image gcr.io/google-appengine/nodejs@sha256:14af35dcf0052bae64a5b75d154ab8ccd729e8745eadb060f8bf926f8bf149bb
+Step #1: INFO[0012] Taking snapshot of full filesystem...
+Step #1: INFO[0021] Using files from context: [/workspace]
+Step #1: INFO[0021] COPY . /app/
+Step #1: INFO[0021] Taking snapshot of files...
+Step #1: INFO[0021] RUN yarn install --production ||   ((if [ -f yarn-error.log ]; then       cat yarn-error.log;     fi) && false)
+Step #1: INFO[0021] cmd: /bin/sh
+Step #1: INFO[0021] args: [-c yarn install --production ||   ((if [ -f yarn-error.log ]; then       cat yarn-error.log;     fi) && false)]
+Step #1: yarn install v1.12.3
+Step #1: [1/4] Resolving packages...
+Step #1: [2/4] Fetching packages...
+Step #1: info fsevents@1.2.4: The platform "linux" is incompatible with this module.
+Step #1: info "fsevents@1.2.4" is an optional dependency and failed compatibility check. Excluding it from installation.
+Step #1: [3/4] Linking dependencies...
+Step #1: warning " > babel-loader@8.0.4" has unmet peer dependency "@babel/core@^7.0.0".
+Step #1: warning " > babel-loader@8.0.4" has unmet peer dependency "webpack@>=2".
+Step #1: [4/4] Building fresh packages...
+Step #1: success Saved lockfile.
+Step #1: Done in 9.20s.
+Step #1: INFO[0031] Taking snapshot of full filesystem...
+Step #1: INFO[0038] CMD yarn start
+Step #1: 2019/01/16 14:44:11 existing blob: sha256:3c2cba919283a210665e480bcbf943eaaf4ed87a83f02e81bb286b8bdead0e75
+Step #1: 2019/01/16 14:44:11 existing blob: sha256:75f546e73d8b1fa36e85508de5819396d52b75d98d85987fa2d2b511682c9dc1
+Step #1: 2019/01/16 14:44:11 existing blob: sha256:0f3bb76fc39050f39722302e4e90894f704ec844aa67ba7609ce7190d948778a
+Step #1: 2019/01/16 14:44:12 existing blob: sha256:933e315fdb00cc3c0b1eb86fb2c647c97c719457fce394b25166cd6d9a782928
+Step #1: 2019/01/16 14:44:12 existing blob: sha256:60789d76b8d3dedd27aae4aaecf9fb25f45733ab8384a27f9bd703559b1a994a
+Step #1: 2019/01/16 14:44:12 existing blob: sha256:43a1f63b9aee96b1247f24bd2049755601300869e314970f7b79885338aee0fc
+Step #1: 2019/01/16 14:44:12 existing blob: sha256:62f717a5c2556dd8316e5ca3f12cda6030ca88f68de79ad0bd1f975839750684
+Step #1: 2019/01/16 14:44:12 existing blob: sha256:ff7b84ff03bc73d40bb167c8dc2f86a7782f6ceaca28c10bc52bda320845f958
+Step #1: 2019/01/16 14:44:12 existing blob: sha256:d48c0bd179f175fed57b2e5195c8bf90f2dc2e7dd7dde46dcdeac481c83e6081
+Step #1: 2019/01/16 14:44:12 existing blob: sha256:8654524b93ae92e212138a6f46dc753924c076b9776bd0429965f6aadb4836d3
+Step #1: 2019/01/16 14:44:13 pushed blob sha256:f93a3c520b6eae9d080781c52f551a3a357cb2acdd759a3ada345cee3c181d7f
+Step #1: 2019/01/16 14:44:14 pushed blob sha256:0dd9f8016c7c25332487844b56d2fdd80944df1aa8b03916f64d03c356450111
+Step #1: 2019/01/16 14:44:15 pushed blob sha256:8bf037665ac7a0ee79dbe2317533dbc2e6e8b47480756506a8e42d84b65fdf27
+Step #1: 2019/01/16 14:44:17 us.gcr.io/adricollection-224810/appengine/default.20190116t164125:latest: digest: sha256:19475952fb6554f420c2f22838957484c0a8f90a0c73f6675935c77b2c607972 size: 2220
+Finished Step #1
+PUSH
+DONE
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Updating service [default] (this may take several minutes)...done.
+Setting traffic split for service [default]...done.
+Stopping version [adricollection-224810/default/20181218t160228].
+Sent request to stop version [adricollection-224810/default/20181218t160228]. This operation may take some time to complete. If you would like to verify that it succeeded, run:
+  $ gcloud app versions describe -s default 20181218t160228
+until it shows that the version has stopped.
+Deployed service [default] to [https://adricollection-224810.appspot.com]
+
+You can stream logs from the command line by running:
+  $ gcloud app logs tail -s default
+
+To view your application in the web browser run:
+  $ gcloud app browse
+
+
+Updates are available for some Cloud SDK components.  To install them,
+please run:
+  $ gcloud components update

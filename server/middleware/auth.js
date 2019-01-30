@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken'
 export const getUserId = (req,res,next) => {
   const token = req.get('Authorization')
   const decoded = jwt.decode(token)
+  console.log('Auth Middleware: ', decoded)
   req.email = decoded.email
-  console.log('Auth Middleware: ', req.email);
+
   next()
 }
 

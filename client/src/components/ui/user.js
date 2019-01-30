@@ -1,14 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Icon } from 'semantic-ui-react'
+import { Icon, Label } from 'semantic-ui-react'
 
-const User = props => {
+const UserAccount = ({ credit }) => {
   return (
     <div>
-      <Link to='/account'><Icon name='user' size='small' color='grey' /></Link> |
-      <Link to='/cart'><Icon name='cart' size='small' color='grey' /></Link>
+      <div className='user-icon right-border'>
+        <Link to='/account'>
+          <Icon name='user' size='small' color='grey' />
+          <span>{credit}</span>
+        </Link>
+      </div>
+      <div className='user-icon'>
+        <Link to='/cart'><Icon name='cart' size='small' color='grey' /></Link>
+        <span>2</span>
+      </div>
     </div>
   )
 }
 
-export default User
+export default UserAccount

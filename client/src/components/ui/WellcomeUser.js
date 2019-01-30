@@ -8,18 +8,24 @@ class WellcomeUser extends React.Component {
   state = {}
 
   text = {
-    en: ['Glad to have you back, ', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Windowshop', 'Welcome, ', 'Mannequin Game'],
-    es: ['Me alegra que volviste, ', 'o', 'o simple' , 'Ve las gangas', 'Recibe su Bono', 'Vitrinando', 'Bienvenido, ', 'Mannequin Game']
+    en: ['Glad to have you back, ', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Get some Credits', 'Windowshop', 'Welcome, ', 'Play that Mannequin', 'Support Us'],
+    es: ['Me alegra que volviste, ', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Gane Créditos', 'Vitrinando', 'Bienvenido, ', 'Juega el Mannequin' , 'Aportanos']
   }
 
   render() {
-    const { gender, gen, new_user, username, lan } = this.props
+    const { gender, gen,language, new_user, username, lan } = this.props
     const u_name = (username) ? username : 'Anon'
     const l = this.text[lan]
     return (
-      <div className='vintage small'>
-        <p>{new_user ? l[6] : l[0]} <b>{u_name}</b></p>
-        <Button as={Link} to='/mannequin' fluid color='black'>{l[6]}</Button>
+      <div className='vintage'>
+        <p className='paraf-mid'>{new_user ? l[6] : l[0]} <b>{u_name}</b></p>
+        <Button as={Link} to='/mannequin' fluid color='black'>{l[8]}</Button>
+          <Divider horizontal>{l[1]}</Divider>
+        {(!username || !gender || !language) &&
+          <Button as={Link} to='/' fluid color='black'>{l[5]}</Button>
+        }
+        <Divider horizontal>{l[2]}</Divider>
+        <Button as={Link} to='/' fluid color='black'>{l[9]}</Button>
       </div>
     )
   }
@@ -31,6 +37,7 @@ const mapStateToProps = state => {
     username: state.user.username,
     new_user: state.user.new_user,
     gender: state.user.gender,
+    language: state.user.language,
     lan: state.settings.language,
     gen: state.settings.gender
   }
