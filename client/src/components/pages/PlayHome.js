@@ -10,7 +10,7 @@ export default class PlayHome extends React.Component {
           <p className='paraf-big'>Mannequins</p>
           <Divider horizontal className='promo'> * * * </Divider>
           <Card.Group itemsPerRow={2}>
-            <Card raised className='main' as={Link} to='/mannequin/2/1'>
+            <Card raised className='main' as={Link} to='/mannequin/id'>
               <Card.Content>
                 <Card.Header>Mannequin.1</Card.Header>
                 <Card.Header><Icon name='image' size='huge' /></Card.Header>
