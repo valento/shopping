@@ -13,6 +13,7 @@ import GuestRoute from './components/routes/guestRoute'
 import ProductList from './components/product/ProductList'
 import AnyList from './components/ui/AnyList'
 import MannequinHome from './components/pages/MannequinHome'
+import PlayHome from './components/pages/PlayHome'
 import './App.css'
 
 const App = ({ location }) => {
@@ -26,7 +27,8 @@ const App = ({ location }) => {
       <Route location={location} path='/proms' exact component={PromoHome} />
       <Route location={location} path='/proms/:gender/:id' component={ProductList} />
       <Route location={location} path='/perks' exact component={PerksHome} />
-      <Route location={location} path='/mannequin' exact component={MannequinHome} />
+      <Route location={location} path='/mannequin' exact component={PlayHome} />
+      <Route location={location} path='/mannequin/:gender/:id' component={MannequinHome} />
     </div>
   )
 }

@@ -22,7 +22,7 @@ class WellcomeUser extends React.Component {
         <Button as={Link} to='/mannequin' fluid color='black'>{l[8]}</Button>
           <Divider horizontal>{l[1]}</Divider>
         {(!username || !gender || !language) &&
-          <Button as={Link} to='/' fluid color='black'>{l[5]}</Button>
+          <Button as={Link} to='/account' fluid color='black'>{l[5]}</Button>
         }
         <Divider horizontal>{l[2]}</Divider>
         <Button as={Link} to='/' fluid color='black'>{l[9]}</Button>

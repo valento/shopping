@@ -62,14 +62,14 @@ export default class UserDataForm extends React.Component {
       <div className='signup mail'>
         <p>Please help me with some data so my Proms suit you better!</p>
         <Form>
-          <Divider horizontal className='promo general'>Username</Divider>
+          <Divider horizontal className='promo'>Username</Divider>
           <Form.Input onChange={this.onChange} fluid inline centered focus
             name='username'
             type='username'
             disabled={this.props.username !== null}
             placeholder={this.props.username ? this.props.username : 'Username: Anon'}
           />
-          <Divider horizontal className='promo general'>Gender</Divider>
+          <Divider horizontal className='promo'>Gender</Divider>
           <Button.Group icon color='black'>
             <Button onClick={this.onClick} disabled={this.props.gender !== null} name='gender' index={1} >
               <Icon name='man' size='big' color={gender === 1 ? 'blue' : ''} />

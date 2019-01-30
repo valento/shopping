@@ -66,6 +66,7 @@ body {
   background-color: rgba(230, 220, 215, 1);
   z-index: 69;
   overflow: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .contents {
@@ -97,6 +98,9 @@ body {
 
 /* ========= MANNEQUIN ================================================= */
 /* -- inside App-content.mannequin : .CONTENTS -------------- */
+.main {
+  height: 46vw;
+}
 .mannequin-controls {
   position: absolute;
   top: 250px;
@@ -163,11 +167,11 @@ body {
 .controls-menu {
   max-width: 180px;
 }
-
 .controls-menu li {
   list-style: none;
   min-height: 40px;
 }
+
 .mannequin-thong {
   position: absolute;
   top: 60px;
@@ -180,6 +184,7 @@ body {
   padding-top: 5px;
   background-color: black;
 }
+
 .body-parts {
   position: absolute;
   max-width: 100vw;
@@ -192,6 +197,7 @@ body {
   position: relative;
   left: -43px;
 }
+
 .cursor {
   position: absolute;
   padding: 0 6px;
@@ -207,12 +213,12 @@ body {
   color: white;
 }
 .cursor-move {
-    -webkit-transition-property: left top;
-    -webkit-transition-duration: 1s;
-    -webkit-transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-    transition-property: left top;
-    transition-duration: 1s;
-    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  -webkit-transition-property: left top;
+  -webkit-transition-duration: 1s;
+  -webkit-transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition-property: left top;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .signup {
@@ -354,6 +360,15 @@ a.domain {
 }
 .category {
   padding: 1.5em 1.5em;
+}
+
+/* ---- Utils --------------------------------------------------------------- */
+.padded {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.labeled .ui.labeled.button:not(.icon) {
+  width: 100%;
 }
 
 /* ------------------------------------------------------------------ */

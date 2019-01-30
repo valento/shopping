@@ -25,7 +25,7 @@ class HomePage extends React.Component {
   }
 
   render() {
-    console.log(this.props.history)
+    //console.log(this.props.history)
     const lan = this.state[this.props.lan]
     return (
       <div className='App-content'>
