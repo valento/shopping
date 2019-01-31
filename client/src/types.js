@@ -11,5 +11,6 @@ export const PROMOS_LIST = 'PROMOS_LIST'
 // USER ACTION TYPES:
 
 export const USER_SIGNED = 'USER_SIGNED'
+export const USER_LOGGED_OUT = 'USER_LOGGED_OUT'
 export const USER_INIT = 'USER_INIT'
 export const USER_UPDATED = 'USER_UPDATED'

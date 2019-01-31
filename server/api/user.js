@@ -34,7 +34,7 @@ database.prototype.findOne = function(data={},table,scope=['email']) {
         console.log('Find User error: ', err.message);
         reject(err)
       } else {
-        console.log('DB get returns: ', row)
+        console.log('DB find One user returns: ', row)
         resolve(row)
       }
     })
