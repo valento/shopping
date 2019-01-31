@@ -61,6 +61,23 @@ database.prototype.findOne = function () {
   });
 };
 
+database.prototype.listAll = function (table) {
+  var that = this;
+  var sql = 'SELECT * FROM ' + table;
+  console.log(sql);
+  return new Promise(function (resolve, reject) {
+    that.db.get(sql, function (err, row) {
+      if (err) {
+        console.log('Find User error: ', err.message);
+        reject(err);
+      } else {
+        console.log('DB get returns: ', row);
+        resolve(row);
+      }
+    });
+  });
+};
+
 database.prototype.signup = function (data) {
   var that = this;
   var email = data.email,

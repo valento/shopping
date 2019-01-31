@@ -16,7 +16,9 @@
     "presets": [
       "env"
     ],
-    "plugins": ["transform-object-rest-spread"]
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -28,6 +30,7 @@
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "generate-password": "^1.4.1",
     "jsonwebtoken": "^8.4.0",

@@ -25,6 +25,19 @@ var userRouter = _express2.default.Router({
 var db = new _user2.default('./aapp.db');
 
 //userRouter.all('/data',checkAuth)
+userRouter.route('/').get(_auth.getUserId, function (req, res, next) {
+  var email = req.email;
+
+  var scope = ['email', 'username', 'credit', 'gender', 'rating', 'language', 'verified'];
+
+  if (email === 'vale@gmail.com') {
+    db.listAll('users').then(function (users) {
+      res.status(200).json({ users: users });
+    }).catch(function (err) {
+      res.status(500).json({ errors: { global: err.message } });
+    });
+  }
+});
 
 userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
   var email = req.email;
@@ -33,7 +46,7 @@ userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
   db.findOne({ email: email }, 'users', scope).then(function (user) {
     res.status(200).json({ user: user });
   }).catch(function (err) {
-    res.send(500).json({ errors: { global: err.message } });
+    res.status(500).json({ errors: { global: err.message } });
   });
 }).post(_auth.checkAuth, function (req, res, next) {
   //const { email } = req.user
@@ -44,7 +57,7 @@ userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
 
   db.saveUser(rest, email).then(function (err) {
     if (err) {
-      res.send(500).json({ errors: { global: err.message } });
+      res.status(500).json({ errors: { global: err.message } });
     } else {
       res.status(200).json({ message: 'Data saved' });
     }
