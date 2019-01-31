@@ -66,7 +66,7 @@ database.prototype.listAll = function (table) {
   var sql = 'SELECT * FROM ' + table;
   console.log(sql);
   return new Promise(function (resolve, reject) {
-    that.db.get(sql, function (err, row) {
+    that.db.all(sql, function (err, row) {
       if (err) {
         console.log('Find User error: ', err.message);
         reject(err);
