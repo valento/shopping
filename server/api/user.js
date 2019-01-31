@@ -41,6 +41,23 @@ database.prototype.findOne = function(data={},table,scope=['email']) {
   })
 }
 
+database.prototype.listAll = function( table ) {
+  const that = this
+  const sql = `SELECT * FROM ${table}`
+  console.log(sql)
+  return new Promise((resolve,reject) => {
+    that.db.get(sql, (err,row) => {
+      if(err) {
+        console.log('Find User error: ', err.message);
+        reject(err)
+      } else {
+        console.log('DB get returns: ', row)
+        resolve(row)
+      }
+    })
+  })
+}
+
 database.prototype.signup = function(data){
   const that = this
   const { email, password } = data

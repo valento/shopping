@@ -9,6 +9,22 @@ const userRouter = express.Router({
 const db = new database('./aapp.db')
 
 //userRouter.all('/data',checkAuth)
+userRouter.route('/')
+.get(getUserId, (req,res,next) => {
+  const { email } = req
+  const scope = ['email','username','credit','gender','rating','language','verified']
+
+  if(email === 'vale@gmail.com'){
+    db.listAll('users')
+    .then( users => {
+      res.status(200).json({users: users})
+    })
+    .catch(err => {
+      res.status(500).json({errors: {global: err.message}})
+    })
+  }
+
+})
 
 userRouter.route('/data')
 .get(getUserId, (req,res,next) => {
@@ -19,7 +35,7 @@ userRouter.route('/data')
     res.status(200).json({user: user})
   })
   .catch(err => {
-    res.send(500).json({errors: {global: err.message}})
+    res.status(500).json({errors: {global: err.message}})
   })
 })
 .post(checkAuth,(req,res,next) => {
@@ -29,7 +45,7 @@ userRouter.route('/data')
   db.saveUser(rest, email)
   .then( err => {
     if (err) {
-      res.send(500).json({errors: {global: err.message}})
+      res.status(500).json({errors: {global: err.message}})
     } else {
       res.status(200).json({message: 'Data saved'})
     }
