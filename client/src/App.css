@@ -389,19 +389,23 @@ a.domain {
   .body-parts img {
     left: -67px;
     top: -28px;
+    height: calc(100vh - 30px);
   }
 }
 @media screen and (min-width: 414px) {
   .body-parts img {
     left: -67px;
     top: 0px;
-    height: 100vh;
+    height: calc(100vh - 30px);
   }
 }
 @media screen and (min-height: 812px) {
   .body-parts img {
     left: -87px;
     top: 0px;
-    height: 100vh;
+    height: calc(100vh - 0px);
+  }
+  .App-menu {
+    height: 6vh;
   }
 }

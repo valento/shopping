@@ -21,7 +21,7 @@ class MannequinHome extends React.Component {
 // 360x740 (Samsung)
 // 375x667 (iPhone 6,7,8)
 // more ??
-      zone: [22,43,57,85,100],
+      zone: [25,45,60,82,100],
   // Controls coordinates:
       pointer: 250,
       item: ['head','corp','waist','legs','feet']
