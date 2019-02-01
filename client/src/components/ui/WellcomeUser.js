@@ -18,7 +18,7 @@ class WellcomeUser extends React.Component {
     const l = this.text[lan]
     return (
       <div className='vintage'>
-        <p className='paraf-mid'>{new_user ? l[6] : l[0]} <b>{u_name}</b></p>
+        <p className='paraf-mid'>{new_user ? l[7] : l[0]} <b>{u_name}</b></p>
         <Button as={Link} to='/mannequin' fluid color='black'>{l[8]}</Button>
           <Divider horizontal>{l[1]}</Divider>
         {(!username || !gender || !language) &&
