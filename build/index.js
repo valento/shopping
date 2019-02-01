@@ -24,10 +24,17 @@ var _lists = require('./routes/lists');
 
 var _lists2 = _interopRequireDefault(_lists);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = (0, _express2.default)();
+_dotenv2.default.config({ silent: true });
 
+var app = (0, _express2.default)();
+var PORT = process.env.PORT;
+var ENV = process.env.NODE_ENV || 'development';
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(_bodyParser2.default.json());
 
@@ -41,19 +48,19 @@ app.use('/auth', _auth2.default);
 app.use('/list', _lists2.default);
 
 app.get('/', function (req, res) {
-  console.log(req.headers);
+  //console.log(req.headers)
   var language = req.get('accept-language').split(',')[0];
   var lan = language.match(/^(es)/) ? 'es' : 'en';
   var mobile = req.get('user-agent').match(/(Mobile)/g) ? true : false;
   //res.send(`Hi, there, from Express! ${lan}, ${((mobile) ? 'mobile' : 'pc')}`)
-  if (process.env.NODE_ENV === 'production') {
+  if (ENV === 'production') {
     res.sendFile(_path2.default.join(__dirname, '../client/build/index.html'));
   } else {
     res.send('This is not a Web Page');
   }
 });
 
-var server = app.listen(8080, function () {
-  console.log('Server runnning!: ', process.env.NODE_ENV);
+var server = app.listen(PORT, function () {
+  console.log('Server runnning!: ', ENV, PORT);
 });
 //# sourceMappingURL=index.js.map

@@ -1,11 +1,12 @@
 import express from 'express'
 import database from '../api/product'
+import dotenv from 'dotenv'
 
 const listRouter = express.Router({
   mergeParams: true
 })
-
-const db = new database('aapp.db')
+dotenv.config({ silent: true })
+const db = new database(process.env.DB)
 
 listRouter.get('/:table/:domain/:cat', (req,res,next) => {
   const { table,domain,cat } = req.params

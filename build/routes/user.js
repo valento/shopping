@@ -14,6 +14,10 @@ var _user2 = _interopRequireDefault(_user);
 
 var _auth = require('../middleware/auth');
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -22,7 +26,8 @@ var userRouter = _express2.default.Router({
   mergeParams: true
 });
 //userRouter.use()
-var db = new _user2.default('./aapp.db');
+_dotenv2.default.config({ silent: true });
+var db = new _user2.default(process.env.DB);
 
 //userRouter.all('/data',checkAuth)
 userRouter.route('/').get(_auth.getUserId, function (req, res, next) {

@@ -12,6 +12,10 @@ var _product = require('../api/product');
 
 var _product2 = _interopRequireDefault(_product);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -19,8 +23,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var listRouter = _express2.default.Router({
   mergeParams: true
 });
-
-var db = new _product2.default('aapp.db');
+_dotenv2.default.config({ silent: true });
+var db = new _product2.default(process.env.DB);
 
 listRouter.get('/:table/:domain/:cat', function (req, res, next) {
   var _req$params = req.params,

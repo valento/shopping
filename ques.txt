@@ -146,10 +146,8 @@ last_log text DEFAULT (DATETIME('now','localtime')),
 credit integer DEFAULT 10,
 location_id integer,
 rating integer,
-lat REAL,
-lng real,
-fb_id INTEGER,
-payment integer,
+fb_id integer,
+indigo_id integer,
 FOREIGN KEY (location_id)
 REFERENCES locations (location_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );

@@ -3,12 +3,13 @@ import bodyParser from 'body-parser'
 import generator from 'generate-password'
 import bcrypt from 'bcrypt-nodejs'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
 import database from '../api/user'
 
 const authRouter = express.Router()
-
-const db = new database('./aapp.db')
+dotenv.config({ silent: true })
+const db = new database(process.env.DB)
 
 authRouter.use(bodyParser.json())
 
@@ -40,23 +41,18 @@ authRouter.post('/', (req,res,next) => {
         //signup user:
         const data = Object.assign({password: hash}, req.body.credentials)
         db.signup( data )
-        .then(
+        .then( data => {
           db.findOne( req.body.credentials, 'users', scope )
           .then( user => {
               const token = jwt.sign({
-                email: user.email,
-                username: user.username,
-                rating: user.rating,
-                gender: user.gender,
-                credit: user.credit,
-                language: user.language,
-                verified: user.verified
-              }, 'valeCollectionJWT')
+                email: user.email
+              }, process.env.JWT_SECRET)
 
-              res.status(200).json( { user: {token: token}} )
+              res.status(200).json( { user: {token: token, new_user: new_user}} )
             }
           )
-        )
+          .catch( err => console.log(err))
+        })
         .catch( err => res.status(500).json({errors: {global: err.message}}))
 
       })
@@ -70,9 +66,9 @@ authRouter.post('/', (req,res,next) => {
         credit: user.credit,
         language: user.language,
         verified: user.verified
-      }, 'valeCollectionJWT')
+      }, process.env.JWT_SECRET)
 
-      res.status(200).json({ user: { token: token }})
+      res.status(200).json({ user: { token: token, new_user: new_user }})
 
     }
   })

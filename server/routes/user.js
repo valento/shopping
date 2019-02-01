@@ -1,12 +1,14 @@
 import express from 'express'
 import database from '../api/user'
 import { checkAuth, getUserId } from '../middleware/auth'
+import dotenv from 'dotenv'
 
 const userRouter = express.Router({
   mergeParams: true
 })
 //userRouter.use()
-const db = new database('./aapp.db')
+dotenv.config({ silent: true })
+const db = new database(process.env.DB)
 
 //userRouter.all('/data',checkAuth)
 userRouter.route('/')

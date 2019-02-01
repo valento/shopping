@@ -24,6 +24,10 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _user = require('../api/user');
 
 var _user2 = _interopRequireDefault(_user);
@@ -31,8 +35,8 @@ var _user2 = _interopRequireDefault(_user);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var authRouter = _express2.default.Router();
-
-var db = new _user2.default('./aapp.db');
+_dotenv2.default.config({ silent: true });
+var db = new _user2.default(process.env.DB);
 
 authRouter.use(_bodyParser2.default.json());
 
@@ -60,19 +64,17 @@ authRouter.post('/', function (req, res, next) {
       _bcryptNodejs2.default.hash(pass, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
         //signup user:
         var data = Object.assign({ password: hash }, req.body.credentials);
-        db.signup(data).then(db.findOne(req.body.credentials, 'users', scope).then(function (user) {
-          var token = _jsonwebtoken2.default.sign({
-            email: user.email,
-            username: user.username,
-            rating: user.rating,
-            gender: user.gender,
-            credit: user.credit,
-            language: user.language,
-            verified: user.verified
-          }, 'valeCollectionJWT');
+        db.signup(data).then(function (data) {
+          db.findOne(req.body.credentials, 'users', scope).then(function (user) {
+            var token = _jsonwebtoken2.default.sign({
+              email: user.email
+            }, process.env.JWT_SECRET);
 
-          res.status(200).json({ user: { token: token } });
-        })).catch(function (err) {
+            res.status(200).json({ user: { token: token, new_user: new_user } });
+          }).catch(function (err) {
+            return console.log(err);
+          });
+        }).catch(function (err) {
           return res.status(500).json({ errors: { global: err.message } });
         });
       });
@@ -86,9 +88,9 @@ authRouter.post('/', function (req, res, next) {
         credit: user.credit,
         language: user.language,
         verified: user.verified
-      }, 'valeCollectionJWT');
+      }, process.env.JWT_SECRET);
 
-      res.status(200).json({ user: { token: token } });
+      res.status(200).json({ user: { token: token, new_user: new_user } });
     }
   }).catch(function (err) {
     res.status(200).json({ message: 'Welcome new one' });
