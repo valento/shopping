@@ -3,7 +3,7 @@ node_modules
 queries.txt
 ques.txt
 development
-.env
 config.json
 config.js
 app.yaml
+.env

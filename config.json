@@ -1,1 +1,7 @@
-//
+{
+  "GCLOUD_PROJECT": "catalista",
+  "DATA_BACKEND": "cloudsql",
+  "MYSQL_USER": "root",
+  "MYSQL_PASSWORD": "K0l0mbin0",
+  "INSTANCE_CONNECTION_NAME": "catalista:us-central1:aapp"
+}
