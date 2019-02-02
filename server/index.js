@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import userRouter from './routes/user'
 import authRouter from './routes/auth'
 import listRouter from './routes/lists'
+import gsqlRouter from './routes/gsqlRouter'
 import dotenv from 'dotenv'
 
 dotenv.config({ silent: true })
@@ -23,6 +24,7 @@ app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
 app.use('/user', userRouter)
 app.use('/auth', authRouter)
 app.use('/list', listRouter)
+app.use('/gsql', gsqlRouter)
 
 app.get('/', (req,res) => {
   //console.log(req.headers)

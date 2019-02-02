@@ -129,27 +129,26 @@ active integer DEFAULT 1,
 // === USERS Table: ============================================================
 
 CREATE TABLE users (
-uid integer PRIMARY KEY NOT NULL UNIQUE,
-email varchar NOT NULL UNIQUE,
-password varchar NOT NULL UNIQUE,
-verified integer DEFAULT 0,
-c_status integer DEFAULT 4,
-c_owner integer NOT NULL DEFAULT 1,
-c_group integer NOT NULL DEFAULT 1,
-c_permis integer integer DEFAULT 500,
-c_membership integer NOT NULL DEFAULT 32,
-username varchar,
-gender integer,
-language integer,
-timestamp text DEFAULT current_timestamp,
-last_log text DEFAULT (DATETIME('now','localtime')),
-credit integer DEFAULT 10,
-location_id integer,
-rating integer,
-fb_id integer,
-indigo_id integer,
-FOREIGN KEY (location_id)
-REFERENCES locations (location_id) ON DELETE CASCADE ON UPDATE NO ACTION
+uid INT NOT NULL UNIQUE PRIMARY KEY,
+email VARCHAR NOT NULL UNIQUE,
+password VARCHAR(60) NOT NULL UNIQUE,
+verified INT DEFAULT 0,
+c_status INT DEFAULT 4,
+c_owner INT NOT NULL DEFAULT 1,
+c_group INT NOT NULL DEFAULT 1,
+c_permis INT DEFAULT 500,
+membership INT NOT NULL DEFAULT 32,
+username VARCHAR,
+gender INT,
+language INT,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+lastlog DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+bday DATE,
+credit INT DEFAULT 10,
+location_id INT,
+rating INT,
+fb_id INT,
+indigo_id INT
 );
 
 SELECT * FROM promos WHERE domain_id = ?

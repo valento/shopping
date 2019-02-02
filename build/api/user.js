@@ -8,6 +8,10 @@ var _sqlite = require('sqlite3');
 
 var _sqlite2 = _interopRequireDefault(_sqlite);
 
+var _mysql = require('mysql');
+
+var _mysql2 = _interopRequireDefault(_mysql);
+
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);

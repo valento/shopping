@@ -24,6 +24,10 @@ var _lists = require('./routes/lists');
 
 var _lists2 = _interopRequireDefault(_lists);
 
+var _gsqlRouter = require('./routes/gsqlRouter');
+
+var _gsqlRouter2 = _interopRequireDefault(_gsqlRouter);
+
 var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
@@ -46,6 +50,7 @@ app.use('/img', _express2.default.static(_path2.default.join(__dirname, '../clie
 app.use('/user', _user2.default);
 app.use('/auth', _auth2.default);
 app.use('/list', _lists2.default);
+app.use('/gsql', _gsqlRouter2.default);
 
 app.get('/', function (req, res) {
   //console.log(req.headers)
