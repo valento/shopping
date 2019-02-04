@@ -30,15 +30,19 @@ if (config.get('INSTANCE_CONNECTION_NAME') && config.get('NODE_ENV') === 'produc
 console.log(options);
 
 var db = _mysql2.default.createConnection(options);
+console.log(db);
 
 var gsqlRouter = _express2.default.Router({
   mergeParams: true
 });
 
 gsqlRouter.route('/').get(function (req, res, next) {
-  db.query('SELECT * FROM `users`;', null, function (err, res) {
-    if (err) console.log(err);
-    if (res) console.log(res);
+  db.query('SELECT * FROM `users`', function (err, results) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.json(results);
   });
 });
 

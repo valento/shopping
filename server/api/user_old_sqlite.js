@@ -1,66 +1,28 @@
+import SQLite from 'sqlite3'
 import mysql from 'mysql'
+import fs from 'fs'
 
-const config = require('../../config')
-
-const options = {
-  user: config.get('MYSQL_USER'),
-  password: config.get('MYSQL_PASSWORD'),
-  database: 'aappdb'
-}
-
-if( config.get('INSTANCE_CONNECTION_NAME') && config.get('NODE_ENV') === 'production' ) {
-  options.socketPath = `/cloudsql/${config.get('INSTANCE_CONNECTION_NAME')}`
-} else {
-  options.host = 'localhost'
-  options.database = 'aappdb'
-}
-
-const db = mysql.createConnection(options)
-
-export default {
-  user: {
-    signup: data => {
-      let params = []
-      const { email, password } = data
-      params.push(email,password)
-      let entries = Object.keys(data).map( key => { return '?'})
-      const sql = `INSERT INTO users(email,password) VALUES(${entries})`;
-      return new Promise( (resolve, reject ) => {
-        db.query(sql, params, ( err ) => {
-          if(err) return reject(err)
-          resolve()
-        })
-      })
-    },
-    login: () => {},
-    getAll: () => {},
-    getOne: (data={},table,scope=['email']) => {
-      const s = Object.keys(data).map( key => data[key] )
-      const k = Object.keys(data)
-      const sql = `SELECT ${scope} from users where ${k}=?;`
-      return new Promise( (resolve,reject) => {
-        db.query( sql, s,( err,results ) => {
-          if(err) {
-            reject(err)
+function database ( url ) {
+  try {
+    fs.stat(url, ( err ) => {
+      if(!err) {
+        this.db = new SQLite.Database(url, err => {
+          if(!err) {
+            console.log('DB connected!')
           } else {
-            resolve(results)
+            throw err
           }
-        } )
-      } )
-    },
-    create: () => {},
-    save: () => {},
-    update: () => {},
-    delete: () => {},
+        })
+      } else {
+        throw err
+      }
+    })
+  }
+  catch(err) {
+    console.log('DB Problems : ', err)
   }
 }
 
-
-
-
-// ============================================================================
-// ============================================================================
-/*
 database.prototype.findOne = function(data={},table,scope=['email']) {
   const that = this
   const s = Object.keys(data).map( key => data[key] )
@@ -137,15 +99,7 @@ database.prototype.saveUser = function(data={}, q=[]) {
     })
   })
 }
-*/
 
-/*
-  db.query(
-    query,
-    params,
-    cb
-  )
-*/
 
 /*
 database.prototype.getUser = function( data={}, table='user', scope=['email']) {
@@ -167,4 +121,4 @@ database.prototype.getUser = function( data={}, table='user', scope=['email']) {
 */
 
 
-//export default database
+export default database

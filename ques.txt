@@ -129,33 +129,33 @@ active integer DEFAULT 1,
 // === USERS Table: ============================================================
 
 CREATE TABLE users (
-uid INT NOT NULL UNIQUE PRIMARY KEY,
-email VARCHAR NOT NULL UNIQUE,
+uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
+email VARCHAR(20) NOT NULL UNIQUE,
 password VARCHAR(60) NOT NULL UNIQUE,
-verified INT DEFAULT 0,
-c_status INT DEFAULT 4,
-c_owner INT NOT NULL DEFAULT 1,
-c_group INT NOT NULL DEFAULT 1,
-c_permis INT DEFAULT 500,
-membership INT NOT NULL DEFAULT 32,
-username VARCHAR,
-gender INT,
-language INT,
+verified TINYINT unsigned DEFAULT 0,
+c_status TINYINT unsigned DEFAULT 4,
+c_owner INT unsigned NOT NULL DEFAULT 1,
+c_group TINYINT unsigned NOT NULL DEFAULT 1,
+c_permis INT unsigned DEFAULT 500,
+membership INT unsigned NOT NULL DEFAULT 32,
+username VARCHAR(20),
+gender TINYINT unsigned,
+language TINYINT unsigned,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 lastlog DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 bday DATE,
-credit INT DEFAULT 10,
-location_id INT,
-rating INT,
-fb_id INT,
-indigo_id INT
+credit INT unsigned DEFAULT 10,
+location_id INT unsigned,
+rating TINYINT unsigned,
+fb_id INT unsigned,
+indigo_id INT unsigned
 );
-
-SELECT * FROM promos WHERE domain_id = ?
-
-
-
-
+INSERT INTO users (email,password,username,bday) VALUES (
+'valento@gmail.com',
+'sdfih23879osd98&^@£$C',
+'Valento',
+'2010-10-10'
+)
 // =================================================================
 // = ROLE BASED ACCESS =============================================
 /* --- Object = row */

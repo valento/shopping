@@ -3,10 +3,14 @@ import bodyParser from 'body-parser'
 import generator from 'generate-password'
 import bcrypt from 'bcrypt-nodejs'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
-import api from '../api/user'
+import database from '../api/user'
 
 const authRouter = express.Router()
+dotenv.config({ silent: true })
+const db = new database(process.env.DB)
+
 authRouter.use(bodyParser.json())
 
 authRouter.get('/check', (req,res,next) => {
@@ -24,34 +28,8 @@ authRouter.get('/check', (req,res,next) => {
 })
 
 authRouter.post('/', (req,res,next) => {
-  let new_user = true, user
+  let new_user = true
   const scope = ['email','gender','username','verified','credit','rating','language']
-  const { email } = req.body.credentials
-
-  api.user.getOne({ email }, 'users', scope)
-  .then( results => {
-    if (results.length == 0) {
-// Sign New User:
-      const pass = generator.generate({
-        length: 8,
-        numbers: true
-      })
-      bcrypt.hash( pass, bcrypt.genSalt(8,()=>{}), null, ( err,hash ) => {
-        const data = Object.assign( {password: hash}, req.body.credentials )
-        api.user.signup(data)
-        .then( () => {
-          const token = jwt.sign({
-            email: data.email
-          }, process.env.JWT_SECRET)
-          res.status(200).json( { user: {token: token, new_user: new_user}} )
-        })
-      })
-    } else {
-// Get Old User Data
-      //
-    }
-  })
-/*
   db.findOne( req.body.credentials, 'users', scope )
   .then( user => {
     if(!user || undefined) {
@@ -94,7 +72,6 @@ authRouter.post('/', (req,res,next) => {
 
     }
   })
-*/
   .catch( err => {
     res.status(200).json({ message: 'Welcome new one' })
   })
