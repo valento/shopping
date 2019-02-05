@@ -27,7 +27,7 @@ var userRouter = _express2.default.Router({
 });
 //userRouter.use()
 _dotenv2.default.config({ silent: true });
-var db = new _user2.default(process.env.DB);
+//const db = new database(process.env.DB)
 
 //userRouter.all('/data',checkAuth)
 userRouter.route('/').get(_auth.getUserId, function (req, res, next) {
@@ -35,21 +35,28 @@ userRouter.route('/').get(_auth.getUserId, function (req, res, next) {
 
   var scope = ['email', 'username', 'credit', 'gender', 'rating', 'language', 'verified'];
 
-  if (email === 'vale@gmail.com') {
-    db.listAll('users').then(function (users) {
-      res.status(200).json({ users: users });
-    }).catch(function (err) {
-      res.status(500).json({ errors: { global: err.message } });
-    });
-  }
+  //if(email === 'vale@gmail.com'){
+  //  db.listAll('users')
+  //  .then( users => {
+  //    res.status(200).json({users: users})
+  //  })
+  //  .catch(err => {
+  //    res.status(500).json({errors: {global: err.message}})
+  //  })
+  //}
 });
 
 userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
   var email = req.email;
 
-  var scope = ['email', 'username', 'credit', 'gender', 'rating', 'language', 'verified'];
-  db.findOne({ email: email }, 'users', scope).then(function (user) {
-    res.status(200).json({ user: user });
+  var scope = ['email', 'gender', 'username', 'verified', 'credit', 'rating', 'language'];
+  _user2.default.user.getOne({ email: email }, 'users', scope).then(function (results) {
+    if (results.length > 0) {
+      var user = Object.assign({}, results[0]);
+      res.status(200).json({ user: user });
+    } else {
+      throw new Error({ message: 'User lost' });
+    }
   }).catch(function (err) {
     res.status(500).json({ errors: { global: err.message } });
   });

@@ -12,12 +12,12 @@ export const userLoggedOut = () => ({
   type: USER_LOGGED_OUT
 })
 
-export const initateUser = user => ({
+export const userInit = user => ({
   type: USER_INIT,
   user
 })
 
-export const log = credentials => (dispatch) => {
+export const log = credentials => dispatch => {
   console.log('Action: ', credentials)
   api.user.log( credentials ).then( user => {
     localStorage.valeCollectionJWT = user.token
@@ -32,13 +32,14 @@ export const logout = () => dispatch => {
 }
 
 export const initUser = () => dispatch => {
-  api.user.getInitUser().then( user => {
-    if(user) {
-      dispatch(initateUser(user))
-    } else {
+  api.user.getInitUser()
+  .then( user => {
+    if( user ){
+      dispatch(userInit(user))
+    }
+    else {
       setAuthHeader()
       dispatch(logout())
     }
-    //dispatch(userSignedIn(user))
   })
 }

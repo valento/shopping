@@ -24,10 +24,6 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
-var _dotenv = require('dotenv');
-
-var _dotenv2 = _interopRequireDefault(_dotenv);
-
 var _user = require('../api/user');
 
 var _user2 = _interopRequireDefault(_user);
@@ -35,9 +31,6 @@ var _user2 = _interopRequireDefault(_user);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var authRouter = _express2.default.Router();
-_dotenv2.default.config({ silent: true });
-var db = new _user2.default(process.env.DB);
-
 authRouter.use(_bodyParser2.default.json());
 
 authRouter.get('/check', function (req, res, next) {
@@ -53,46 +46,83 @@ authRouter.get('/check', function (req, res, next) {
 });
 
 authRouter.post('/', function (req, res, next) {
-  var new_user = true;
+  var new_user = true,
+      user = void 0,
+      token = void 0;
   var scope = ['email', 'gender', 'username', 'verified', 'credit', 'rating', 'language'];
-  db.findOne(req.body.credentials, 'users', scope).then(function (user) {
-    if (!user || undefined) {
+  var email = req.body.credentials.email;
+
+
+  _user2.default.user.getOne({ email: email }, 'users', scope).then(function (results) {
+    if (results.length == 0) {
+      // Sign New User:
       var pass = _generatePassword2.default.generate({
         length: 8,
         numbers: true
       });
       _bcryptNodejs2.default.hash(pass, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
-        //signup user:
         var data = Object.assign({ password: hash }, req.body.credentials);
-        db.signup(data).then(function (data) {
-          db.findOne(req.body.credentials, 'users', scope).then(function (user) {
-            var token = _jsonwebtoken2.default.sign({
-              email: user.email
-            }, process.env.JWT_SECRET);
-
-            res.status(200).json({ user: { token: token, new_user: new_user } });
-          }).catch(function (err) {
-            return console.log(err);
-          });
-        }).catch(function (err) {
-          return res.status(500).json({ errors: { global: err.message } });
+        _user2.default.user.signup(data).then(function () {
+          token = _jsonwebtoken2.default.sign({
+            email: data.email
+          }, process.env.JWT_SECRET);
+          res.status(200).json({ user: { token: token, new_user: new_user } });
         });
       });
     } else {
+      // Send Old User Data
+      token = _jsonwebtoken2.default.sign({ email: email }, process.env.JWT_SECRET);
       new_user = false;
-      var token = _jsonwebtoken2.default.sign({
-        email: user.email,
-        username: user.username,
-        rating: user.rating,
-        gender: user.gender,
-        credit: user.credit,
-        language: user.language,
-        verified: user.verified
-      }, process.env.JWT_SECRET);
-
-      res.status(200).json({ user: { token: token, new_user: new_user } });
+      user = Object.assign({}, results[0], { token: token, new_user: new_user });
+      console.log(user);
+      res.status(200).json({ user: user });
     }
-  }).catch(function (err) {
+  })
+  /*
+    db.findOne( req.body.credentials, 'users', scope )
+    .then( user => {
+      if(!user || undefined) {
+        const pass = generator.generate({
+          length: 8,
+          numbers: true
+        })
+        bcrypt.hash(pass, bcrypt.genSalt(8,()=>{}), null, (err,hash) => {
+          //signup user:
+          const data = Object.assign({password: hash}, req.body.credentials)
+          db.signup( data )
+          .then( data => {
+            db.findOne( req.body.credentials, 'users', scope )
+            .then( user => {
+                const token = jwt.sign({
+                  email: user.email
+                }, process.env.JWT_SECRET)
+  
+                res.status(200).json( { user: {token: token, new_user: new_user}} )
+              }
+            )
+            .catch( err => console.log(err))
+          })
+          .catch( err => res.status(500).json({errors: {global: err.message}}))
+  
+        })
+      } else {
+        new_user = false
+        const token = jwt.sign({
+          email: user.email,
+          username: user.username,
+          rating: user.rating,
+          gender: user.gender,
+          credit: user.credit,
+          language: user.language,
+          verified: user.verified
+        }, process.env.JWT_SECRET)
+  
+        res.status(200).json({ user: { token: token, new_user: new_user }})
+  
+      }
+    })
+  */
+  .catch(function (err) {
     res.status(200).json({ message: 'Welcome new one' });
   });
 });

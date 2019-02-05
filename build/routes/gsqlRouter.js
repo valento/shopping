@@ -30,7 +30,7 @@ if (config.get('INSTANCE_CONNECTION_NAME') && config.get('NODE_ENV') === 'produc
 console.log(options);
 
 var db = _mysql2.default.createConnection(options);
-console.log(db);
+//console.log(db)
 
 var gsqlRouter = _express2.default.Router({
   mergeParams: true

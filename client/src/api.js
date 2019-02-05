@@ -4,7 +4,18 @@ export default {
   user: {
     log: credentials => axios.post('/auth', { credentials }).then( res => res.data.user ),
 
-    getInitUser: () => axios.get('/user/data').then( res => res.data.user ),
+    getInitUser: () => axios.get('/user/data')
+    .then( res => {
+      console.log('ResStatus: ',res.status)
+      if(res.status !== 200) {
+        console.log('Error User')
+      } else {
+        return res.data.user
+      }
+    })
+    .catch( err => {
+      console.log('ResStatus: ', err.message)
+    }),
 
     updateUser: user => axios.post('/user/data', { user }).then( res => {
       if(res.status !== 200) {

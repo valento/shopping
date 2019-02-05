@@ -17,25 +17,30 @@ userRouter.route('/')
   const { email } = req
   const scope = ['email','username','credit','gender','rating','language','verified']
 
-  if(email === 'vale@gmail.com'){
-    db.listAll('users')
-    .then( users => {
-      res.status(200).json({users: users})
-    })
-    .catch(err => {
-      res.status(500).json({errors: {global: err.message}})
-    })
-  }
+  //if(email === 'vale@gmail.com'){
+  //  db.listAll('users')
+  //  .then( users => {
+  //    res.status(200).json({users: users})
+  //  })
+  //  .catch(err => {
+  //    res.status(500).json({errors: {global: err.message}})
+  //  })
+  //}
 
 })
 
 userRouter.route('/data')
 .get(getUserId, (req,res,next) => {
-  const { email } = req.body
-  const scope = ['email','username','rating','credit']
+  const { email } = req
+  const scope = ['email','gender','username','verified','credit','rating','language']
   api.user.getOne({email}, 'users', scope)
   .then( (results) => {
-      res.status(200).send(results)
+    if(results.length > 0){
+      const user = Object.assign({}, results[0])
+      res.status(200).json({user})
+    } else {
+      throw new Error({message: 'User lost'})
+    }
   })
   .catch(err => {
     res.status(500).json({errors: {global: err.message}})

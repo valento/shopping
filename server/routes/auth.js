@@ -24,7 +24,7 @@ authRouter.get('/check', (req,res,next) => {
 })
 
 authRouter.post('/', (req,res,next) => {
-  let new_user = true, user
+  let new_user = true, user, token
   const scope = ['email','gender','username','verified','credit','rating','language']
   const { email } = req.body.credentials
 
@@ -40,15 +40,19 @@ authRouter.post('/', (req,res,next) => {
         const data = Object.assign( {password: hash}, req.body.credentials )
         api.user.signup(data)
         .then( () => {
-          const token = jwt.sign({
+          token = jwt.sign({
             email: data.email
           }, process.env.JWT_SECRET)
           res.status(200).json( { user: {token: token, new_user: new_user}} )
         })
       })
     } else {
-// Get Old User Data
-      //
+// Send Old User Data
+      token = jwt.sign({email}, process.env.JWT_SECRET)
+      new_user = false
+      user = Object.assign({},results[0],{token: token, new_user: new_user})
+      console.log(user)
+      res.status(200).json({user})
     }
   })
 /*

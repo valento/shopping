@@ -92,6 +92,7 @@ const store = createStore(
 )
 
 if(localStorage.valeCollectionJWT){
+  console.log('User Authenticated Token')
   const jtoken = decode(localStorage.valeCollectionJWT)
   const user = {
     new_user: false,
