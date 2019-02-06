@@ -39,11 +39,11 @@ authRouter.post('/', (req,res,next) => {
       bcrypt.hash( pass, bcrypt.genSalt(8,()=>{}), null, ( err,hash ) => {
         const data = Object.assign( {password: hash}, req.body.credentials )
         api.user.signup(data)
-        .then( () => {
-          token = jwt.sign({
-            email: data.email
-          }, process.env.JWT_SECRET)
-          res.status(200).json( { user: {token: token, new_user: new_user}} )
+        .then( () => api.user.getOne({ email }, 'users', scope))
+        .then( results => {
+          token = jwt.sign({email}, process.env.JWT_SECRET)
+          user = Object.assign({},results[0],{token: token, new_user: new_user})
+          res.status(200).json( {user} )
         })
       })
     } else {

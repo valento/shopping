@@ -6,7 +6,6 @@ export default {
 
     getInitUser: () => axios.get('/user/data')
     .then( res => {
-      console.log('ResStatus: ',res.status)
       if(res.status !== 200) {
         console.log('Error User')
       } else {

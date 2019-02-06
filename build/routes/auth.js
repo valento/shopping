@@ -63,10 +63,11 @@ authRouter.post('/', function (req, res, next) {
       _bcryptNodejs2.default.hash(pass, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
         var data = Object.assign({ password: hash }, req.body.credentials);
         _user2.default.user.signup(data).then(function () {
-          token = _jsonwebtoken2.default.sign({
-            email: data.email
-          }, process.env.JWT_SECRET);
-          res.status(200).json({ user: { token: token, new_user: new_user } });
+          return _user2.default.user.getOne({ email: email }, 'users', scope);
+        }).then(function (results) {
+          token = _jsonwebtoken2.default.sign({ email: email }, process.env.JWT_SECRET);
+          user = Object.assign({}, results[0], { token: token, new_user: new_user });
+          res.status(200).json({ user: user });
         });
       });
     } else {
