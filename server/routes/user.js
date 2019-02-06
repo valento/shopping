@@ -34,7 +34,7 @@ userRouter.route('/data')
   const { email } = req
   const scope = ['email','gender','username','verified','credit','rating','language']
   api.user.getOne({email}, 'users', scope)
-  .then( (results) => {
+  .then( results => {
     if(results.length > 0){
       const user = Object.assign({}, results[0])
       res.status(200).json({user})
@@ -47,10 +47,9 @@ userRouter.route('/data')
   })
 })
 .post(checkAuth,(req,res,next) => {
-  //const { email } = req.user
-  const { user } = req.body
-  const { email, ...rest} = user
-  db.saveUser(rest, email)
+  let { user } = req.body
+  const { email, ...data} = user
+  api.user.save({data}, email)
   .then( err => {
     if (err) {
       res.status(500).json({errors: {global: err.message}})
@@ -58,8 +57,17 @@ userRouter.route('/data')
       res.status(200).json({message: 'Data saved'})
     }
   })
+  .then( ({email}) => {
+    api.user.getOne({email},'users',scope)
+  })
+  .then( results => {
+    if(results.length > 0){
+      user = results[0]
+      res.status(200).json({user})
+    }
+  })
   .catch(err => {
-    //
+    console.log(err.message)
   })
 })
 

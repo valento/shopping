@@ -231,6 +231,15 @@ input, select, textarea {
   display: flex;
   justify-content: center;
 }
+.signup .ui.basic.red.label {
+  background-color:  rgba(230, 220, 215,.8)!important;
+  border-color: #418acd!important;
+  border-radius: 1.3em;
+}
+.signup .ui.labels a.label:hover, a.ui.basic.red.label:hover {
+  background-color: rgba(230, 220, 215,.8)!important;
+  border-color: #418acd!important;
+}
 .signup .ui.form input, .signup .ui.form input:focus, .signup .ui.form input>input {
   border: 1px solid black;
   border-radius: 1em;
@@ -272,6 +281,10 @@ input, select, textarea {
 .vintage {
   font-family: 'Cormorant', serif;
   font-style: italic;
+}
+.vintage p {
+  text-align: left;
+  font-size: 1.2em;
 }
 .vintage.title {
   line-height: 1em;

@@ -49,7 +49,22 @@ export default {
       } )
     },
     create: () => {},
-    save: () => {},
+    save: (user={}, email) => {
+      const {data} = user
+      let params = []
+      const upd = Object.keys(data).map( k => {
+        params.push(data[k])
+        return `${k}=?`
+      })
+      params.push(email)
+      const sql = `UPDATE users set ${upd} WHERE email=?`
+      return new Promise( (resolve,reject ) => {
+        db.query(sql,params, (err,results) => {
+          if (err) return reject(err)
+          resolve()
+        })
+      })
+    },
     update: () => {},
     delete: () => {},
   }

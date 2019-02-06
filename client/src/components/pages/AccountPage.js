@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Icon, Divider } from 'semantic-ui-react'
+import { Button, Icon, Form, Divider, Label } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { updateUser } from '../../actions'
 import PropTypes from 'prop-types'
@@ -22,12 +22,10 @@ class AccountHome extends React.Component {
     return (
       <div className='App-content'>
         <div className='home-page vintage padded labeled'>
-          <h2 className='paraf-mid'>{lan[0] + uname + ':'}</h2>
+          <p className='paraf-mid'>{lan[0] + uname + ':'}</p>
           <Button basic color='blue' fluid content={lan[1]} icon='dollar' label={credit} label-position='right' />
-          <Divider horizontal className='promo'> * * * </Divider>
-          <Button basic color='blue' fluid content={lan[2]} icon='gratipay' label={r} label-position='right' />
-          <Divider horizontal className='promo'>{lan[3]}</Divider>
-          <Button as={Link} to='/credits' fluid color='black'>{'+' + lan[1]}</Button>
+          <Button basic color='blue' fluid content={lan[2]} icon='gratipay' label={r} label-position='right' />          <Divider horizontal className='promo'>{lan[3]}</Divider>
+          <Button as={Link} to='/account/user' fluid color='black'>{'+' + lan[1]}</Button>
           <Divider horizontal className='promo'> * </Divider>
           <Button as={Link} to='/rating' fluid color='black'>{'+' + lan[2]}</Button>
         </div>

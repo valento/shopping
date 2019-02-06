@@ -25,7 +25,7 @@ class WellcomeUser extends React.Component {
           <Button as={Link} to='/account' fluid color='black'>{l[5]}</Button>
         }
         <Divider horizontal>{l[2]}</Divider>
-        <Button as={Link} to='/' fluid color='black'>{l[9]}</Button>
+        <Button as={Link} to='/' fluid color='blue' icon='undo' content={l[9]} />
       </div>
     )
   }

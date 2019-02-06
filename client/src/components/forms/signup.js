@@ -13,10 +13,12 @@ export default class SignupForm extends React.Component {
   }
 
   onSubmit = () => {
-    const errors = this.validate(this.state.data)
+    const {data} = this.state
+    const errors = this.validate(data)
     this.setState({ errors })
-    if(Object.keys(errors).length === 0) this.props.submit(this.state.data)
+    if(Object.keys(errors).length === 0) this.props.submit(data)
   }
+
   validate(data) {
     const errors = {}
     if (!Validator.isEmail(data.email)) errors.email = 'Invalid email! Try again...'

@@ -69,7 +69,25 @@ exports.default = {
       });
     },
     create: function create() {},
-    save: function save() {},
+    save: function save() {
+      var user = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var email = arguments[1];
+      var data = user.data;
+
+      var params = [];
+      var upd = Object.keys(data).map(function (k) {
+        params.push(data[k]);
+        return k + '=?';
+      });
+      params.push(email);
+      var sql = 'UPDATE users set ' + upd + ' WHERE email=?';
+      return new Promise(function (resolve, reject) {
+        db.query(sql, params, function (err, results) {
+          if (err) return reject(err);
+          resolve();
+        });
+      });
+    },
     update: function update() {},
     delete: function _delete() {}
   }
