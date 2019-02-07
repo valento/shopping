@@ -276,6 +276,40 @@ input, select, textarea {
 .right-border {
   border-right: 1px solid white;
 }
+.main-icon {
+  margin: 0 20px;
+  display: inline-grid;
+}
+.asset-icon {
+  font-size: 1.2em;
+  font-family: Lato;
+  font-weight: 300;
+  font-style: normal;
+}
+.asset-icon .ui.label {
+  position: relative;
+  top: 12px;
+}
+.asset-icon .ui.basic.label {
+  background-color: rgba(230, 220, 215,.8)!important;
+  border: 2px solid #888888!important;
+}
+.asset-icon .dot {
+  width: 25vw;
+  height: 25vw;
+  display: flex!important;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  border: 8px solid white;
+  font-size: 3em;
+  font-weight: 700;
+}
+.asset-icon span {
+  position: relative;
+}
+.iconic {
+}
 
 /* Wellcome, Fashion Pages*/
 .vintage {
@@ -385,6 +419,10 @@ a.domain {
 }
 .labeled .ui.labeled.button:not(.icon) {
   width: 100%;
+}
+.dot {
+  display: inline-block;
+  border-radius: 50%;
 }
 
 /* ------------------------------------------------------------------ */
