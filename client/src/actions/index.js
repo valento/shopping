@@ -1,6 +1,6 @@
 import {
   CATEGORY_CHANGED, CATEGORY_TREE,
-  USER_UPDATED, PROMOS_LIST, DOMAIN_CHANGED
+  USER_UPDATED, PROMOS_LIST, DOMAIN_CHANGED, LANGUAGE
 } from '../types'
 import api from '../api'
 
@@ -12,6 +12,9 @@ export const ch_cat = category => ({
 
 export const switchDomain = domain => dispatch =>
   dispatch({ type: DOMAIN_CHANGED, domain })
+
+export const switchLanguage = language => dispatch =>
+  dispatch({ type: LANGUAGE, language })
 
 export const promos = proms => ({
   type: PROMOS_LIST,
@@ -38,4 +41,7 @@ export const userUpdated = user => ({
 export const changeCategory = category => dispatch => dispatch(ch_cat(category))
 
 export const updateUser = user => dispatch =>
-  api.user.updateUser(user).then( res => dispatch(userUpdated(user)) )
+  api.user.updateUser(user).then( res => {
+    dispatch(userUpdated(user))
+    if(user.language && user.language !== 'de') dispatch(switchLanguage(user.language))
+  } )

@@ -16,18 +16,22 @@ class AccountHome extends React.Component {
     }
   }
   render() {
-    const { username,credit,gender,email,rating } = this.props.user
+    const { username,credit,gender,email,rating,language } = this.props.user
     const r = (rating) ? rating : '0'
     const uname = username ? username : 'Anon'
-    const { language } = this.props
-    const lan = this.state.ui[language]
+    const lan = this.state.ui[this.props.language]
     return (
       <div className='App-content'>
         <div className='home-page vintage padded labeled'>
           <p className='paraf-mid'>{lan[0] + uname + ':'}</p>
-          <AssetIcon value={credit} main={true} name={lan[1]} />
-          <AssetIcon value={r} main={true} name={lan[2]} />
-          {gender && <PropIcon gender={gender} lan={this.props.language} />}
+          <div className='ui grid'>
+            <div className='six wide column'><AssetIcon value={credit} main={true} name={lan[1]} /></div>
+            <div className='six wide column'><AssetIcon value={r} main={true} name={lan[2]} /></div>
+            <div className='four wide column'>
+              <div className="row">{gender && <PropIcon gender={gender} lan={this.props.language} />}</div>
+              <div className="row">{language && <PropIcon language={language} lan={this.props.language} />}</div>
+            </div>
+          </div>
           <Divider horizontal className='promo'>{lan[3]}</Divider>
           <Button as={Link} to='/account/user' fluid color='black'>{'+' + lan[1]}</Button>
           <Divider horizontal className='promo'> * </Divider>
@@ -41,6 +45,7 @@ class AccountHome extends React.Component {
 AccountHome.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
     gender: PropTypes.number.isRequired,
     language: PropTypes.string.isRequired,
     credit: PropTypes.number.isRequired,

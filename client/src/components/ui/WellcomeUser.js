@@ -9,7 +9,7 @@ class WellcomeUser extends React.Component {
 
   text = {
     en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Get some Credits', 'Windowshop', 'Welcome, ', 'Play that Mannequin', 'Support Us'],
-    es: ['Me alegra que volviste', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Gane Créditos', 'Vitrinando', 'Bienvenid', 'Juega el Mannequin' , 'Aportanos']
+    es: ['Me alegra que volviste', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Gane Créditos', 'Vitrinando', 'Bienvenid', 'Juega el Mannequin' , 'Apóyenos']
   }
 
   render() {
@@ -26,7 +26,7 @@ class WellcomeUser extends React.Component {
           <Button as={Link} to='/account' fluid color='black'>{l[5]}</Button>
         }
         <Divider horizontal>{l[2]}</Divider>
-        <Button as={Link} to='/' fluid color='blue' icon='undo' content={l[9]} />
+        <Button as={Link} to='/crowdfunding' fluid color='blue' icon='undo' content={l[9]} />
       </div>
     )
   }

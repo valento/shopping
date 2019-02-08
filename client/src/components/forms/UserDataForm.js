@@ -1,44 +1,112 @@
 import React from 'react'
-import { Form, Button, Icon, Divider } from 'semantic-ui-react'
+import { Form, Input, Label, Button, Icon, Divider } from 'semantic-ui-react'
+import Validator from 'validator'
 
 export default class UserDataForm extends React.Component {
 
     state = {
       lan: {
-        es: ['Porfavor, ayudame conocerle mejor','usuario','genero'],
-        en: ['Please, help me know you better','username','gender']
+        es: ['Porfavor, ayudame conocerle mejor', 'usuario',' genero', 'lenguaje:',
+          'cumpleanos:', 'AAAA','MM','DD','Ano','Mes','Dia'
+          ],
+        en: ['Please, help me know you better', 'username', 'gender',
+          'language:', 'bday:','yyyy','mm','dd','Year','Month','Day'
+          ]
       },
       ns: 0,
       ss: 0,
+      ls: 0,
+      bs: 0,
       sex: false,
       uname: false,
+      bday: false,
+      lng: false,
       min: 6,
       data: {},
-      price: 3
+      price: 3,
+      errors: {}
     }
 
   onClick = (e, {name, index}) => {
     const {price} = this.state
-    this.setState({
-      data: {...this.state.data, [name]: index},
-      sex: true,
-      ss: price
-    })
+    if(this.props.main_data){
+      this.setState({
+        data: {...this.state.data, [name]: index},
+        sex: true,
+        ss: price
+      })
+    } else {
+      this.setState({
+        data: {...this.state.data, [name]: index},
+        lng: true,
+        ls: price
+      })
+    }
   }
 
   onChange = (e, {name,value}) => {
-    const {price} = this.state
-    let username_long_enough = false
-    if(value.length > 6) {
-      username_long_enough = true
-    } else {
-      username_long_enough = false
-    }
     this.setState({
       data: {...this.state.data, [name]: value},
-      uname: username_long_enough,
-      ns: username_long_enough ? price : 0
     })
+    this.validate(name,value)
+  }
+
+  validate(name,value) {
+    const {price} = this.state
+    const {main_data} = this.props
+    let username_long_enough = false, min, max
+    console.log( name, value )
+    if(!main_data){
+      switch(name){
+        case 'year':
+          min = 4
+        break
+        case 'month':
+          min = 1
+          max = 12
+        break
+        case 'day':
+          min = 1
+          max = 31
+        break
+      }
+    }
+    if(main_data) {
+      min = 6
+      max = 20
+      username_long_enough = (Validator.isLength(value,{min: min, max: max})) ? true : false
+      this.setState({
+        uname: username_long_enough,
+        ns: username_long_enough ? price : 0,
+        errors: {message: 'Invalid: ' + name}
+      })
+    } else {
+      switch(name){
+        case 'year' :
+          if(Validator.isLength(value, {min: min} )) {
+            this.setState({
+              bday: true,
+              bs: price,
+              errors: {}
+            })
+          } else {this.setState(
+            {errors: {message: 'Invalid: ' + name}}
+          )}
+        break
+        default :
+          console.log(name + ' limits: '+ min + ' : ' + max);
+          if(value > min && value < max) {
+            this.setState({
+              bday: true,
+              bs: price,
+              errors: {}
+            })
+          } else {this.setState(
+            this.setState({errors: {message: 'Invalid: ' + name}})
+          )}
+      }
+    }
+
   }
 
   onSave = () => {
@@ -55,39 +123,73 @@ export default class UserDataForm extends React.Component {
   }
 
   render() {
-    const l = this.state.lan[this.props.language]
-    const {ns,ss,min,price} = this.state// uname,sex
-    const score = ns + ss
+    const l = this.state.lan[this.props.lan]
+    const {ns,ss,ls,bs,min,price} = this.state// uname,sex
     const { gender } = this.state.data
-    const { user } = this.props
+    const { user, main_data } = this.props
+    const score = main_data ? (ns + ss) : (bs + ls)
     let nless = (user.username === null || user.username === 'indefined') ? price : 0
     let sless = (user.gender === null || user.gender === 'undefined') ? price : 0
     let minimum = min - nless - sless
     //console.log(minimum)
     //const { email } = this.props
     return(
-      <div className='signup mail'>
+      <div className='signup'>
         <p>{l[0]}</p>
-        <Form>
-          <Divider horizontal className='promo'>{l[1]}</Divider>
-          <Form.Input onChange={this.onChange} fluid inline centered focus
-            name='username'
-            type='username'
-            disabled={user.username !== null}
-            placeholder={user.username ? user.username : 'Username: Anon'}
-          />
-          <Divider horizontal className='promo'>{l[2]}</Divider>
-          <Button.Group icon color='black'>
-            <Button onClick={this.onClick} disabled={user.gender !== null} name='gender' index={1} >
-              <Icon name='man' size='big' color={gender === 1 || user.gender === 1 ? 'blue' : ''} />
-            </Button>
-            <Button onClick={this.onClick} disabled={user.gender !== null} name='gender' index={2} >
-              <Icon name='woman' size='big' color={gender === 2 || user.gender === 2 ? 'blue' : ''} />
-            </Button>
-          </Button.Group>
-          <Divider horizontal />
-          <Button onClick={this.onSave} fluid color='black' disabled={score < min}>Save | +{score} Credits</Button>
-        </Form>
+        {main_data ? (
+          <Form>
+            <Divider horizontal className='promo'>{l[1]}</Divider>
+            <Form.Input onChange={this.onChange} fluid inline centered focus
+              name='username'
+              type='username'
+              disabled={user.username !== null}
+              placeholder={user.username ? user.username : 'Username: Anon'}
+            />
+            <Divider horizontal className='promo'>{l[2]}</Divider>
+            <Button.Group icon color='black'>
+              <Button onClick={this.onClick} disabled={user.gender !== null} name='gender' index={1} >
+                <Icon name='man' size='big' color={gender === 1 || user.gender === 1 ? 'blue' : ''} />
+              </Button>
+              <Button onClick={this.onClick} disabled={user.gender !== null} name='gender' index={2} >
+                <Icon name='woman' size='big' color={gender === 2 || user.gender === 2 ? 'blue' : ''} />
+              </Button>
+            </Button.Group>
+            <Divider horizontal />
+            <Button onClick={this.onSave} fluid color='black' disabled={score < min}>Save | +{score} Credits</Button>
+            <Divider horizontal> * * * </Divider>
+          </Form>
+
+        ) : (
+          <div>
+            <div>
+              <Divider horizontal className='promo'>{l[3]}</Divider>
+              <Button.Group fluid color='black'>
+                <Button onClick={this.onClick} name='language' index='en'>ENG</Button>
+                <Button.Or />
+                <Button onClick={this.onClick} name='language' index='es'>ESP</Button>
+                <Button.Or />
+                <Button onClick={this.onClick} name='language' index='de'>DEU</Button>
+              </Button.Group>
+            </div>
+            <Divider horizontal className='promo'>{l[4]}</Divider>
+            <Form className='bday'>
+              <Form.Group inline>
+                <Form.Field>
+                  <Input onChange={this.onChange} name='year' type='number' placeholder={l[5]} />
+                </Form.Field>
+                <Form.Field>
+                  <Input onChange={this.onChange} name='month' type='number' placeholder={l[6]} />
+                </Form.Field>
+                <Form.Field>
+                  <Input onChange={this.onChange} name='day' type='number' placeholder={l[7]} />
+                </Form.Field>
+              </Form.Group>
+            </Form>
+            <Divider horizontal />
+            <Button onClick={this.onSave} fluid color='black' disabled={score < min}>Save | +{score} Credits</Button>
+
+          </div>
+        )}
       </div>
     )
   }

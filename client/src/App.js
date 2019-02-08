@@ -15,6 +15,7 @@ import AnyList from './components/ui/AnyList'
 import MannequinHome from './components/pages/MannequinHome'
 import PlayHome from './components/pages/PlayHome'
 import UserData from './components/pages/UserData'
+import CrowdfundHome from './components/pages/CrowdfundHome'
 import './App.css'
 
 const App = ({ location }) => {
@@ -25,6 +26,7 @@ const App = ({ location }) => {
       <Route location={location} path='/fashion/:gender' component={FashionHome} />
       <UserRoute location={location} path='/account/user' exact component={UserData}/>
       <UserRoute location={location} path='/account' exact component={AccountHome}/>
+      <UserRoute location={location} path='/crowdfunding' exact component={CrowdfundHome}/>
       <UserRoute location={location} path='/cart' exact component={CartHome}/>
       <Route location={location} path='/proms' exact component={PromoHome} />
       <Route location={location} path='/proms/:gender/:id' component={ProductList} />

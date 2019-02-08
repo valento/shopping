@@ -277,7 +277,7 @@ input, select, textarea {
   border-right: 1px solid white;
 }
 .main-icon {
-  margin: 0 20px;
+  margin: 0 10px;
   display: inline-grid;
 }
 .asset-icon {
@@ -309,7 +309,21 @@ input, select, textarea {
   position: relative;
 }
 .iconic {
+  margin-top: 10px;
 }
+
+.bday.ui.form .inline.fields {
+  display: inline-flex;
+}
+.bday.ui.form .inline.fields .field {
+  max-width: 30vw;
+  margin: 1px;
+}
+.bday.ui.form .inline.fields .field:not(.wide) .ui.input {
+  width: 28vw;
+}
+
+/* ============================================================= */
 
 /* Wellcome, Fashion Pages*/
 .vintage {
