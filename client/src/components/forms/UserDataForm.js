@@ -24,7 +24,11 @@ export default class UserDataForm extends React.Component {
       min: 6,
       data: {},
       price: 3,
-      errors: {}
+      date: {
+        year: '',
+        month: '',
+        day: ''
+      }
     }
 
   onClick = (e, {name, index}) => {
@@ -45,9 +49,15 @@ export default class UserDataForm extends React.Component {
   }
 
   onChange = (e, {name,value}) => {
-    this.setState({
-      data: {...this.state.data, [name]: value},
-    })
+    if(this.state.main_data) {
+      this.setState({
+        data: {...this.state.data, [name]: value},
+      })
+    } else {
+      this.setState({
+        date: {...this.state.date, [name]: value},
+      })
+    }
     this.validate(name,value)
   }
 
@@ -55,64 +65,30 @@ export default class UserDataForm extends React.Component {
     const {price} = this.state
     const {main_data} = this.props
     let username_long_enough = false, min, max
-    console.log( name, value )
-    if(!main_data){
-      switch(name){
-        case 'year':
-          min = 4
-        break
-        case 'month':
-          min = 1
-          max = 12
-        break
-        case 'day':
-          min = 1
-          max = 31
-        break
-      }
-    }
+
     if(main_data) {
+// Validate: USERNAME - GENDER form:
       min = 6
       max = 20
       username_long_enough = (Validator.isLength(value,{min: min, max: max})) ? true : false
       this.setState({
         uname: username_long_enough,
-        ns: username_long_enough ? price : 0,
-        errors: {message: 'Invalid: ' + name}
+        ns: username_long_enough ? price : 0
       })
     } else {
-      switch(name){
-        case 'year' :
-          if(Validator.isLength(value, {min: min} )) {
-            this.setState({
-              bday: true,
-              bs: price,
-              errors: {}
-            })
-          } else {this.setState(
-            {errors: {message: 'Invalid: ' + name}}
-          )}
-        break
-        default :
-          console.log(name + ' limits: '+ min + ' : ' + max);
-          if(value > min && value < max) {
-            this.setState({
-              bday: true,
-              bs: price,
-              errors: {}
-            })
-          } else {this.setState(
-            this.setState({errors: {message: 'Invalid: ' + name}})
-          )}
-      }
+// Validate: LANGUAGE - B-day form: ISO valid date
+      const { year, month, day } = this.state.date
+      const d = year.concat('-')
+      console.log(year)
+
     }
 
   }
 
   onSave = () => {
     const { credit,email } = this.props.user
-    const {ns,ss} = this.state// uname,sex
-    const score = ns + ss + credit
+    const {ns,ss,bs,ls} = this.state// uname,sex
+    const score = ns + ss + bs + ls + credit
     const data = Object.assign(this.state.data, {credit: score, email: email})
     //console.log(data)
     this.props.addCredits(this.state.data)

@@ -104,6 +104,7 @@ input, select, textarea {
 .main {
   height: 46vw;
 }
+
 .mannequin-controls {
   position: absolute;
   top: 250px;
@@ -320,9 +321,11 @@ input, select, textarea {
   margin: 1px;
 }
 .bday.ui.form .inline.fields .field:not(.wide) .ui.input {
-  width: 28vw;
+  width: 20vw;
 }
-
+.bday.ui.form .field .ui.input input, .ui.form .fields .field .ui.input input {
+  text-align: center;
+}
 /* ============================================================= */
 
 /* Wellcome, Fashion Pages*/

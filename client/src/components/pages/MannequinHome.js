@@ -93,19 +93,23 @@ class MannequinHome extends React.Component {
     return (
       <div className='App-content'>
         <div className='home-mannequin' onClick={this.onClick}>
-          <Mannequin active={true} humman='base' id={mannequin.id} />
+
+          <Mannequin focus={true} human='base' id={mannequin.id} />
           {Object.keys(mannequin).map( k => {
             if(k !== 'id') {
               return (<Mannequin key={k}
+                        id={mannequin.id}
                         focus={this.state.part === k ? true : false}
                         count={mannequin[k].index}
-                        humman={k}
-                        library={mannequin[k]}
+                        human={k}
+                        store={mannequin[k]}
                       />)
             }
           })}
         </div>
+
         <Controls disable={this.state.part === ''} pointer={this.state.settings.pointer}/>
+
         <Options
           lng={this.props.lan}
           mannequin={mannequin}
@@ -113,6 +117,7 @@ class MannequinHome extends React.Component {
           menuHome={this.menuHome}
           position={this.state.part}
         />
+
       </div>
     )
   }

@@ -26,55 +26,40 @@ const initState = {
     head: {
       main: {// hat
         index: 0,
-        library: ['','vale_head_1001.png','vale_head_1002.png'],
+        library: ['','vale_head_main_1001.png','vale_head_main_1002.png'],
         active: false
       }
     },
     corp: {
-    top: {
-      index: 0,
-      library: ['','vale_corp_1001.png','vale_corp_1002.png'],
-      active: false
-    },
       over: {
         index: 0,
-        library: ['','vale_corp_1003.png'],
-        active: false
-      },
-      main: {
-        index: 0,
-        library: ['','vale_corp_1001.png','vale_corp_1002.png'],
+        library: ['','vale_corp_over_1001.png'],
         active: false
       },
       under: {
         index: 0,
-        library: ['','vale_corp_1001.png','vale_corp_1002.png'],
-        active: false
-      },
-      skin: {
-        index: 0,
-        library: ['','vale_corp_1001.png','vale_corp_1002.png'],
+        library: ['','vale_corp_under_1001.png','vale_corp_under_1002.png'],
         active: false
       }
     },
     waist: {
       main: {
         index: 0,
-        library: ['','vale_waist_1001.png','vale_waist_1002.png'],
+        library: ['','vale_waist_main_1001.png','vale_waist_main_1002.png'],
         active: false
       }
     },
     legs: {
       under: {
         index: 0,
-        library: ['0','vale_legs_1001.png','vale_legs_1002.png'],
+        library: ['','vale_legs_under_1001.png','vale_legs_under_1002.png'],
         active: false
       }// socks/underwear
     },
     feet: {
       main: {
         index: 0,
-        library: ['0','vale_foot_1001.png','vale_foot_1002.png'],
+        library: ['','vale_feet_main_1001.png','vale_feet_main_1002.png'],
         active: false,
       }
     }
