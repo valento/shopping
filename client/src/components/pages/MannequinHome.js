@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { changeLayer, changeBody } from '../../actions/mann'
 
 import Mannequin from '../mannequin/Mannequin'
 import Controls from '../ui/mannequin/controls'
@@ -9,22 +10,15 @@ class MannequinHome extends React.Component {
   state = {
   //Active body part:
     part: '',
-  // What's available for tihs mannequin:
-  // ???
-
+    level: 0,
   // Dresses On Stage
-    dresson: [],
-
     settings: {
-// Mouse Zones in % for:
-// 412x736 (iPhone X,8+,7+)
-// 360x740 (Samsung)
-// 375x667 (iPhone 6,7,8)
-// more ??
+// Mouse Zones in % for: 412x736 (iPhone X,8+,7+) || 360x740 (Samsung) || 375x667 (iPhone 6,7,8) || more ??
       zone: [25,45,60,82,100],
   // Controls coordinates:
       pointer: 250,
-      item: ['head','corp','waist','legs','feet']
+      item: ['head','corp','waist','legs','feet'],
+      layer: ['top','over','main','under','skin']
     },
     ui: {
       es: ['Vista tu ', 'Ajustar'],
@@ -32,17 +26,13 @@ class MannequinHome extends React.Component {
     }
   }
 
-  onOption = (o) => {
-    this.onClick(null, o)
-  }
-
-  onClick = ( e, menu_option ) => {
+  onOption = ( e, o ) => {
     let f, i
     const { zone, item } = this.state.settings
     const H = window.screen.height
 
-    if(menu_option) {
-      i =  menu_option
+    if(o) {
+      i =  o
       f = H*zone[i]/100
     } else {
       i = zone.findIndex( el => {
@@ -58,6 +48,8 @@ class MannequinHome extends React.Component {
         pointer: f - 80 - zone[i]
       }
     })
+
+    this.props.changeBody({body: item[i]})
     // addItem:
     // editItem:
   }
@@ -71,38 +63,36 @@ class MannequinHome extends React.Component {
         pointer: 250
       }
     })
+    this.props.changeBody({body: ''})
+    this.props.changeLayer({layer: 0})
+  }
+
+  onSubmenu = l => {
+    //console.log('Submenu active: ',l)
+    this.setState({level: l})
+    console.log(this.state.part)
+    this.props.changeLayer({layer: this.state.settings.layer[l]})
   }
 
   addItem = e => {
     let indx
-//    let lngt = this.props.mannequin[item[i]].length
-//    if(lngt - 1  > this.state.mannequin[item[i]]) {
-//      indx = this.state.mannequin[item[i]] + 1
-//    } else {
-//      indx = 0
-//    }
-//    this.setState({
-//      mannequin: { ...this.state.mannequin, [item[i]]: indx},
-//      part: item[i],
-//      pointer: f - 80 - zone[i]
-//    })
   }
 
   render() {
-    const { mannequin } = this.props
+    const { id,body,item,layer,...rest } = this.props.mannequin
     return (
       <div className='App-content'>
-        <div className='home-mannequin' onClick={this.onClick}>
+        <div className='home-mannequin' onClick={this.onOption}>
 
-          <Mannequin focus={true} human='base' id={mannequin.id} />
-          {Object.keys(mannequin).map( k => {
+          <Mannequin focus={true} human='base' id={id} />
+          {Object.keys(rest).map( k => {
             if(k !== 'id') {
               return (<Mannequin key={k}
-                        id={mannequin.id}
-                        focus={this.state.part === k ? true : false}
-                        count={mannequin[k].index}
+                        focus={body === k ? true : false}
+                        layer={layer || 0}
+                        count={rest[k].index}
                         human={k}
-                        store={mannequin[k]}
+                        store={rest[k]}
                       />)
             }
           })}
@@ -112,7 +102,8 @@ class MannequinHome extends React.Component {
 
         <Options
           lng={this.props.lan}
-          mannequin={mannequin}
+          mannequin={rest}
+          onSubmenu={this.onSubmenu}
           onOption={this.onOption}
           menuHome={this.menuHome}
           position={this.state.part}
@@ -125,7 +116,7 @@ class MannequinHome extends React.Component {
 
 const mapStateToProps = state => ({
   mannequin: state.mannequin,
-  lan: state.settings.language
+  lan: state.user.language || state.settings.language
 })
 
-export default connect(mapStateToProps,null)(MannequinHome)
+export default connect(mapStateToProps,{ changeLayer, changeBody })(MannequinHome)

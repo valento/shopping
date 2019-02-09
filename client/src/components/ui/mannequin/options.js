@@ -14,11 +14,14 @@ class Options extends React.Component {
   }
 
   onMainClick = (e, {name}) => {
-    this.props.onOption(name.split('_')[1])
+    this.props.onOption(null,name.split('_')[1])
   }
 
   onSubmenu = (e, {name}) => {
-    console.log(name)
+    const lev = this.state._layers.findIndex( el => {
+      return el === name
+    })
+    this.props.onSubmenu(lev)
   }
 
   render() {

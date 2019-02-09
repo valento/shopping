@@ -25,41 +25,41 @@ const initState = {
     id: 'vale',
     head: {
       main: {// hat
-        index: 0,
-        library: ['','vale_head_main_1001.png','vale_head_main_1002.png'],
+        index: 0, // index of Item from array of items
+        items: ['','vale_head_main_1001.png','vale_head_main_1002.png'],
         active: false
       }
     },
     corp: {
       over: {
         index: 0,
-        library: ['','vale_corp_over_1001.png'],
+        items: ['','vale_corp_over_1001.png'],
         active: false
       },
       under: {
         index: 0,
-        library: ['','vale_corp_under_1001.png','vale_corp_under_1002.png'],
+        items: ['','vale_corp_under_1001.png','vale_corp_under_1002.png'],
         active: false
       }
     },
     waist: {
       main: {
         index: 0,
-        library: ['','vale_waist_main_1001.png','vale_waist_main_1002.png'],
+        items: ['','vale_waist_main_1001.png','vale_waist_main_1002.png'],
         active: false
       }
     },
     legs: {
       under: {
         index: 0,
-        library: ['','vale_legs_under_1001.png','vale_legs_under_1002.png'],
+        items: ['','vale_legs_under_1001.png','vale_legs_under_1002.png'],
         active: false
       }// socks/underwear
     },
     feet: {
       main: {
         index: 0,
-        library: ['','vale_feet_main_1001.png','vale_feet_main_1002.png'],
+        items: ['','vale_feet_main_1001.png','vale_feet_main_1002.png'],
         active: false,
       }
     }

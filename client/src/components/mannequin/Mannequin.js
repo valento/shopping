@@ -1,10 +1,14 @@
 import React from 'react'
+import Mann from './Mann'
 
-export default class Mannequin extends React.Component {
-  state = {
-    level: ['skin','under','main','over','top'],
-    index: ['head','legs','waist','corp','feet'],
-    path: '/img/mannequin/'
+class Mannequin extends React.Component {
+  constructor(props) {
+    super()
+    this.state = {
+      level: ['skin','under','main','over','top'],
+      index: ['head','legs','waist','corp','feet'],
+      path: '/img/mannequin/'
+    }
   }
   render() {
     let image, z
@@ -17,8 +21,7 @@ export default class Mannequin extends React.Component {
         return i === human
       })
     }
-//<div className='body-parts'><img src={path + k.library[count]} /></div>
-console.log(store)
+
     return (
       <div>
         {(human === 'base')? (
@@ -34,10 +37,14 @@ console.log(store)
             const style = {
               zIndex: z*10+ind
             }
-            return (<div className='body-parts' style={style}><img src={path + store[k].library[1]} /></div>)
+            return (
+              <Mann key={human+'_'+k} style={style} store={store} k={k} focus={ind === this.props.level} lib={0}/>
+            )
           })
         )}
       </div>
     )
   }
 }
+
+export default Mannequin

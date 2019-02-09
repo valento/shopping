@@ -1,7 +1,8 @@
 import {
   LANGUAGE, GENDER, LOCATION, PROMOS_LIST,
   DOMAIN_CHANGED, CATEGORY_CHANGED, CATEGORY_TREE,
-  USER_INIT, USER_SIGNED, USER_UPDATED, USER_LOGGED_OUT
+  USER_INIT, USER_SIGNED, USER_UPDATED, USER_LOGGED_OUT,
+  BODY_ACTIVATED, LAYER_ACTIVATED, MANN_UPDATED
 } from '../types'
 
 export const settings = (state={}, action) => {
@@ -33,9 +34,20 @@ export const proms = (state={}, action) => {
     default: return state
   }
 }
+
 export const mannequin = ( state={}, action ) => {
-  return state
+  switch (action.type) {
+    case BODY_ACTIVATED :
+      return {...state, ...action.body}
+    case LAYER_ACTIVATED :
+      return {...state, ...action.layer}
+    case MANN_UPDATED :
+      return {...state, ...action.mannequin}
+    default: return state
+
+  }
 }
+
 export const user = (state={}, action) => {
   switch (action.type) {
     case USER_SIGNED :
