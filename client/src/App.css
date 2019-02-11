@@ -63,6 +63,12 @@ input, select, textarea {
   min-height: 100vh;
   background-color: rgba(230, 220, 215,.8);
 }
+.mann-page {
+  /*background: url(/img/mann_1001.png);
+  background-size: cover;*/
+  min-height: 100vh;
+  background-color: rgba(230, 220, 215, 1);
+}
 .home-mannequin {
   position: relative;
   height: 100vh;
@@ -104,7 +110,41 @@ input, select, textarea {
 .main {
   height: 46vw;
 }
-
+.mann-page div {
+  float: left;
+}
+.mann-page ul {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+}
+.mann-page li {
+  min-height: 280px;
+  margin-bottom: 6px;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+  list-style: none;
+  clear: both;
+  background-color: rgba(250,250,250,.8);
+}
+.mann-page li:last-child {
+  min-height: 0;
+  list-style: none;
+  clear: both;
+  border-top: 0;
+  border-bottom: 0;
+  background-color: rgba(230, 220, 215, 1);
+}
+.mann-page img {
+  float: right;
+}
+.mann-overlay {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 10vh;
+  min-height: 100vh;
+  background-color: rgba(255,212,212,.5);
+}
 .mannequin-controls {
   position: absolute;
   top: 250px;
@@ -440,6 +480,9 @@ a.domain {
 .dot {
   display: inline-block;
   border-radius: 50%;
+}
+.clear {
+  clear: both;
 }
 
 /* ------------------------------------------------------------------ */

@@ -34,15 +34,17 @@ var authRouter = _express2.default.Router();
 authRouter.use(_bodyParser2.default.json());
 
 authRouter.get('/check', function (req, res, next) {
-  db.findOne(req.query, 'users').then(function (user) {
-    if (!user || undefined) {
-      res.json({ message: 'User is new' });
-    } else {
-      res.json({ user: user });
-    }
-  }).catch(function (err) {
-    res.json({ message: 'Something went wrong' });
-  });
+  //db.findOne( req.query, 'users' )
+  //.then(user => {
+  //  if(!user || undefined) {
+  //    res.json({message: 'User is new'})
+  //  } else {
+  //    res.json({user})
+  //  }
+  //})
+  //.catch (err => {
+  //  res.json({message: 'Something went wrong'})
+  //})
 });
 
 authRouter.post('/', function (req, res, next) {

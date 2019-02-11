@@ -21,49 +21,7 @@ const initState = {
     gender: 0,// 0-none, 1-male, 2-female
     taxonomy: []
   },
-  mannequin: {
-    id: 'vale',
-    head: {
-      main: {// hat
-        index: 0, // index of Item from array of items
-        items: ['','vale_head_main_1001.png','vale_head_main_1002.png'],
-        active: false
-      }
-    },
-    corp: {
-      over: {
-        index: 0,
-        items: ['','vale_corp_over_1001.png'],
-        active: false
-      },
-      under: {
-        index: 0,
-        items: ['','vale_corp_under_1001.png','vale_corp_under_1002.png'],
-        active: false
-      }
-    },
-    waist: {
-      main: {
-        index: 0,
-        items: ['','vale_waist_main_1001.png','vale_waist_main_1002.png'],
-        active: false
-      }
-    },
-    legs: {
-      under: {
-        index: 0,
-        items: ['','vale_legs_under_1001.png','vale_legs_under_1002.png'],
-        active: false
-      }// socks/underwear
-    },
-    feet: {
-      main: {
-        index: 0,
-        items: ['','vale_feet_main_1001.png','vale_feet_main_1002.png'],
-        active: false,
-      }
-    }
-  },
+  mannequin: [],
   proms: [],
   user: {}
 }
@@ -102,3 +60,50 @@ ReactDOM.render(Root, document.getElementById('root'))
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 //serviceWorker.unregister()
+
+// ========= STATIC MANNEQUIN Object ==========================================
+/*
+{
+  id: 'vale',
+  head: {
+    main: {// hat
+      index: 0, // index of Item from array of items
+      items: ['','vale_head_main_1001.png','vale_head_main_1002.png'],
+      active: false
+    }
+  },
+  corp: {
+    over: {
+      index: 0,
+      items: ['','vale_corp_over_1001.png'],
+      active: false
+    },
+    under: {
+      index: 0,
+      items: ['','vale_corp_under_1001.png','vale_corp_under_1002.png'],
+      active: false
+    }
+  },
+  waist: {
+    main: {
+      index: 0,
+      items: ['','vale_waist_main_1001.png','vale_waist_main_1002.png'],
+      active: false
+    }
+  },
+  legs: {
+    under: {
+      index: 0,
+      items: ['','vale_legs_under_1001.png','vale_legs_under_1002.png'],
+      active: false
+    }// socks/underwear
+  },
+  feet: {
+    main: {
+      index: 0,
+      items: ['','vale_feet_main_1001.png','vale_feet_main_1002.png'],
+      active: false,
+    }
+  }
+}
+*/

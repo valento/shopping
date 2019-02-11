@@ -27,5 +27,8 @@ export default {
   collection: {
     getPromos: domain => axios.get('list/proms/'+domain).then( res => res.data),
     getCategories: domain => axios.get('../list/category/'+domain).then( res => res.data)
+  },
+  mann: {
+    listMann: gender => axios.get('list/mann/'+gender).then( res => res.data )
   }
 }

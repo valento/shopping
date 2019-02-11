@@ -10,17 +10,17 @@ const authRouter = express.Router()
 authRouter.use(bodyParser.json())
 
 authRouter.get('/check', (req,res,next) => {
-  db.findOne( req.query, 'users' )
-  .then(user => {
-    if(!user || undefined) {
-      res.json({message: 'User is new'})
-    } else {
-      res.json({user})
-    }
-  })
-  .catch (err => {
-    res.json({message: 'Something went wrong'})
-  })
+  //db.findOne( req.query, 'users' )
+  //.then(user => {
+  //  if(!user || undefined) {
+  //    res.json({message: 'User is new'})
+  //  } else {
+  //    res.json({user})
+  //  }
+  //})
+  //.catch (err => {
+  //  res.json({message: 'Something went wrong'})
+  //})
 })
 
 authRouter.post('/', (req,res,next) => {

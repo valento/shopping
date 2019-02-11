@@ -8,9 +8,13 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _product = require('../api/product');
+var _bodyParser = require('body-parser');
 
-var _product2 = _interopRequireDefault(_product);
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
+var _mann = require('../api/mann');
+
+var _mann2 = _interopRequireDefault(_mann);
 
 var _dotenv = require('dotenv');
 
@@ -18,39 +22,40 @@ var _dotenv2 = _interopRequireDefault(_dotenv);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var listRouter = _express2.default.Router({
   mergeParams: true
 });
-_dotenv2.default.config({ silent: true });
-var db = new _product2.default(process.env.DB);
+listRouter.use(_bodyParser2.default.json());
 
-listRouter.get('/:table/:domain/:cat', function (req, res, next) {
+//listRouter.get('/:table/:gender/:cat', (req,res,next) => {
+//  const { table,gender,cat } = req.params
+//  api.mann.getList( { gender,cat }, table, '*').then( rows => console.log(rows))
+//})
+
+listRouter.get('/:table/:gender', function (req, res, next) {
   var _req$params = req.params,
-      table = _req$params.table,
-      domain = _req$params.domain,
-      cat = _req$params.cat;
+      gender = _req$params.gender,
+      table = _req$params.table;
 
-  db.getList({ domain: domain, cat: cat }, table, '*').then(function (rows) {
-    return console.log(rows);
-  });
-});
-
-listRouter.get('/:table/:domain', function (req, res, next) {
-  var _req$params2 = req.params,
-      domain = _req$params2.domain,
-      table = _req$params2.table;
-
-  db.getList({ domain: domain }, table, '*').then(function (data) {
-    var collection = data.map(function (item) {
-      if (item.hasOwnProperty('parent_id')) {
-        return _defineProperty({}, item.parent_id, item);
-      } else {
-        return item;
-      }
-    });
-    res.status(200).json(collection);
+  var scope = ['uid', 'title_en', 'title_es', 'dscr_en', 'dscr_es', 'head', 'corp', 'waist', 'legs', 'feet', 'c_status', 'img_base', 'img_tumb', 'price', 'likes', 'rating'];
+  _mann2.default.mann.getList({ gender: 2 }, table, scope).then(function (results) {
+    if (results.length > 0) {
+      var data = results.map(function (obj) {
+        return obj;
+      });
+      //const data = Object.assign({}, results[0])
+      res.status(200).json(data);
+    } else {
+      throw new Error({ message: 'User lost' });
+    }
+    //const collection = data.map( item => {
+    //  if( item.hasOwnProperty('parent_id') ) {
+    //    return { [item.parent_id]:item }
+    //  } else {
+    //    return item
+    //  }
+    //})
+    //res.status(200).json(collection)
   }).catch(function (err) {
     res.status(500).json({ errors: { global: err.message } });
   });

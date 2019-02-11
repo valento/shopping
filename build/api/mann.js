@@ -34,8 +34,20 @@ exports.default = {
       var table = arguments[1];
       var scope = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '*';
 
-      console.log(gender);
+      console.log(table);
+      var s = Object.keys(gender).map(function (key) {
+        return gender[key];
+      });
+      var k = Object.keys(gender);
+      var sql = 'SELECT ' + scope + ' from ' + table + ' where ' + k + '=?;';
+      return new Promise(function (resolve, reject) {
+        db.query(sql, s, function (err, results) {
+          console.log('Mann DB: ', results);
+          if (err) return reject;
+          resolve(results);
+        });
+      });
     }
   }
 };
-//# sourceMappingURL=product.js.map
+//# sourceMappingURL=mann.js.map

@@ -130,7 +130,7 @@ active integer DEFAULT 1,
 
 CREATE TABLE users (
 uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
-email VARCHAR(20) NOT NULL UNIQUE,
+email VARCHAR(40) NOT NULL UNIQUE,
 password VARCHAR(60) NOT NULL UNIQUE,
 verified TINYINT unsigned DEFAULT 0,
 c_status TINYINT unsigned DEFAULT 4,
@@ -150,12 +150,58 @@ rating TINYINT unsigned,
 fb_id INT unsigned,
 indigo_id INT unsigned
 );
+
 INSERT INTO users (email,password,username,bday) VALUES (
 'valento@gmail.com',
 'sdfih23879osd98&^@£$C',
 'Valento',
 '2010-10-10'
 )
+
+CREATE TABLE mann (
+uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
+c_owner INT unsigned NOT NULL DEFAULT 1,
+c_group TINYINT unsigned NOT NULL DEFAULT 1,
+c_status TINYINT unsigned DEFAULT 16,
+c_permis INT unsigned DEFAULT 500,
+gender TINYINT unsigned DEFAULT 2,
+title_en text,
+title_es text,
+img_base VARCHAR(512),
+img_tumb VARCHAR(512),
+dscr_en text,
+dscr_es text,
+head INT unsigned,
+corp INT unsigned,
+waist INT unsigned,
+legs INT unsigned,
+feet INT unsigned,
+likes INT unsigned,
+rating INT unsigned,
+price INT DEFAULT 6
+);
+
+UPDATE mann SET dscr_es='Nosotras, las Mujeres, hacemos el futuro posible. Este Mannequin lo hace visible.' WHERE uid=3;
+
+INSERT INTO mann (c_status,title_en,title_es,dscr_en,dscr_es,head,corp,waist,legs,feet) VALUES (
+16,
+'Tayrona',
+'Tayrona',
+'Colombia is the new land of opportunity. "Tayrona" is the new Cote d\'Azur...',
+'Colombia es la Nueva Tierra de oportunidades. "Tayrona" es la nueva Costa Azul...',
+4,
+4,
+4,
+4,
+4
+);
+
+
+// =================================================================
+echo $PATH
+/Users/Valent/Downloads/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export PATH=$PATH:/usr/local/mysql/bin
+
 // =================================================================
 // = ROLE BASED ACCESS =============================================
 /* --- Object = row */
@@ -165,6 +211,10 @@ INSERT INTO users (email,password,username,bday) VALUES (
 // === ARRAYS    ============
 
 // == ROLES: ================
+role = ['owner','owner_group','other']
+role = ['owner','owner_group','other']
+role = ['owner','owner_group','other']
+role = ['owner','owner_group','other']
 role = ['owner','owner_group','other']
 
 // == GROUPS: ================
@@ -176,6 +226,7 @@ permiss = [
 'group_delete', 'group_write', 'group_read',
 'owner_delete', 'owner_write', 'owner_read'
 ]
+
 
 // == STATUS: ================
 status = ['deleted','inactive','active','canceled','pending']

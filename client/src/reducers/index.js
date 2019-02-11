@@ -42,7 +42,7 @@ export const mannequin = ( state={}, action ) => {
     case LAYER_ACTIVATED :
       return {...state, ...action.layer}
     case MANN_UPDATED :
-      return {...state, ...action.mannequin}
+      return action.mannequin
     default: return state
 
   }

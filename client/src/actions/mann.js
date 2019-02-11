@@ -1,9 +1,8 @@
 import { BODY_ACTIVATED, MANN_UPDATED, LAYER_ACTIVATED, ITEM_CHANGED} from '../types'
+import api from '../api'
 
-export const updateMann = ( mannequin, layer, body ) => ({
+export const updateMann = mannequin => ({
   type: MANN_UPDATED,
-  layer: layer,
-  body: body,
   mannequin
 })
 
@@ -21,3 +20,9 @@ export const changeItem = item => ({
   type: ITEM_CHANGED,
   item
 })
+
+export const getListMann = gender => dispatch => {
+  api.mann.listMann(gender).then( res => {
+    dispatch(updateMann(res))
+  })
+}
