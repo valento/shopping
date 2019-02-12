@@ -2,7 +2,7 @@ import {
   LANGUAGE, GENDER, LOCATION, PROMOS_LIST,
   DOMAIN_CHANGED, CATEGORY_CHANGED, CATEGORY_TREE,
   USER_INIT, USER_SIGNED, USER_UPDATED, USER_LOGGED_OUT,
-  BODY_ACTIVATED, LAYER_ACTIVATED, MANN_UPDATED
+  BODY_ACTIVATED, LAYER_ACTIVATED, MANN_UPDATED, DATA_UPDATED, MANN_ACTIVATED
 } from '../types'
 
 export const settings = (state={}, action) => {
@@ -35,16 +35,26 @@ export const proms = (state={}, action) => {
   }
 }
 
-export const mannequin = ( state={}, action ) => {
+export const mannequins = ( state={}, action ) => {
   switch (action.type) {
     case BODY_ACTIVATED :
       return {...state, ...action.body}
     case LAYER_ACTIVATED :
       return {...state, ...action.layer}
     case MANN_UPDATED :
-      return action.mannequin
+      return action.data
+    case MANN_ACTIVATED :
+      return action.man
     default: return state
 
+  }
+}
+
+export const data = ( state={}, action ) => {
+  switch (action.type) {
+    case DATA_UPDATED :
+    return action.data
+    default: return state
   }
 }
 

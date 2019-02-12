@@ -13,18 +13,14 @@ listRouter.use(bodyParser.json())
 //  api.mann.getList( { gender,cat }, table, '*').then( rows => console.log(rows))
 //})
 
-listRouter.get('/:table/:gender', (req,res,next) => {
+listRouter.get('/m/:table/:gender', (req,res,next) => {
   let { gender, table } = req.params
   const scope = ['uid','title_en','title_es','dscr_en','dscr_es',
     'head','corp','waist','legs','feet','c_status','img_base','img_tumb','price','likes','rating']
   api.mann.getList({gender:2}, table, scope)
   .then( results => {
     if(results.length > 0){
-      const data = results.map( obj => {
-        return obj
-      })
-      //const data = Object.assign({}, results[0])
-      res.status(200).json(data)
+      res.status(200).json(results)
     } else {
       throw new Error({message: 'User lost'})
     }

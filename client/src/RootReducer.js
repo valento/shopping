@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux'
 
 //import user from './reducers/user'
-import { settings, location, user, proms, mannequin } from './reducers/'
+import { settings, location, user, proms, mannequins, data } from './reducers/'
 
 export default combineReducers({
   settings,
   location,
   user,
-  mannequin,
+  mannequins,
+  data,
   proms
 })

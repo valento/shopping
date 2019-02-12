@@ -42,7 +42,7 @@ exports.default = {
       var sql = 'SELECT ' + scope + ' from ' + table + ' where ' + k + '=?;';
       return new Promise(function (resolve, reject) {
         db.query(sql, s, function (err, results) {
-          console.log('Mann DB: ', results);
+          //console.log('Mann DB: ',results)
           if (err) return reject;
           resolve(results);
         });

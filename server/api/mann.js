@@ -26,7 +26,7 @@ export default {
       const sql = `SELECT ${scope} from ${table} where ${k}=?;`
       return new Promise( (resolve,reject) => {
         db.query(sql,s, (err,results) => {
-          console.log('Mann DB: ',results)
+          //console.log('Mann DB: ',results)
           if(err) return reject
             resolve(results)
         })

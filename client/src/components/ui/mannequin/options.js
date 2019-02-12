@@ -4,10 +4,12 @@ import { Button, Icon } from 'semantic-ui-react'
 class Options extends React.Component {
   state = {
     en: {
-      body: ['head','corp','waist','legs','feet']
+      body: ['head','corp','waist','legs','feet'],
+      layer: ['top','over','main','under','skin']
     },
     es: {
-      body: ['cabeza','cuerpo','cintura','piernas','pies']
+      body: ['cabeza','cuerpo','cintura','piernas','pies'],
+      layer: ['tope','over','mitad','debajo','piel']
     },
     _keys: ['head','corp','waist','legs','feet'],
     _layers: ['top','over','main','under','skin']
@@ -25,9 +27,8 @@ class Options extends React.Component {
   }
 
   render() {
-    const { body } = this.state[this.props.lng]
-    const { mannequin } = this.props
-    const { id, ...man } = mannequin
+    const { body,layer } = this.state[this.props.lng]
+    const { mann } = this.props
     let name, ind, position
 
     let _position = this.state._keys.findIndex( _pos => {
@@ -39,16 +40,18 @@ class Options extends React.Component {
       left: `-${position*window.screen.width}px`
     }
 
-    const menu = Object.keys(man).map( k => {
+    const menu = Object.keys(mann).map( k => {
       let i = this.state._keys.findIndex( _k => {
         return _k === k
       })
       return body[i]
     })
-    const sub_menus = Object.entries(man).map( entry => {
-      return Object.keys(entry[1])
-    })
 
+    const sub_menus = Object.entries(mann).map( entry => {
+
+      return entry[1]
+    })
+console.log(sub_menus)
     return (
       <div className='mnq-menu'>
         <div className='carrousel move' style={trans}>
@@ -68,26 +71,26 @@ class Options extends React.Component {
               })}
             </Button.Group>
           </div>
-
-          {sub_menus.map( (en,indx) => {
-              return (
-                <div key={indx} className='body-part-menu'>
-                  <Button.Group >
-                    <Button icon basic onClick={this.props.menuHome}><Icon name='home' size='large' /></Button>
-                    {en.map( ( e, indx ) => {
-                      return (<Button key={e+'_'+indx.toString()}
-                        onClick={this.onSubmenu}
-                        color='grey'
-                        name={e}
-                      >
-                        {e}
-                      </Button>)
-                    })}
-                  </Button.Group>
-                </div>
-              )
-            })
-          }
+          {sub_menus.map( (sbm,n) => {
+            return (
+              <div className='body-part-menu'>
+                <Button.Group key={n}>
+                  <Button icon basic onClick={this.props.menuHome}><Icon name='home' size='large' /></Button>
+                  {
+                    sbm.map( (op,i) => {
+                      if(Number(op)>0){
+                        return (
+                          <Button key={op+'_'+i} onClick={this.onSubmenu} color='grey' name={op} >
+                            {layer[i]}
+                          </Button>
+                        )
+                      }
+                    })
+                  }
+                </Button.Group>
+              </div>
+            )
+          })}
         </div>
       </div>
     )

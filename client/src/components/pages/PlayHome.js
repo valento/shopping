@@ -1,32 +1,47 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { Divider, Button, Icon } from 'semantic-ui-react'
- import { getListMann } from '../../actions/mann'
+ import { getListMann, activateMann } from '../../actions/mann'
 
 class PlayHome extends React.Component {
+  state = {
+    loading: false
+  }
 
   componentDidMount(){
     const gender = this.props.gender
-    console.log(gender)
     this.props.getListMann(gender)
   }
 
   render() {
+    const { mannequins, language } = this.props
     return (
       <div className='App-content'>
         <div className='mann-page'>
           <div className='mann-overlay vintage labeled'>
             <p className='paraf-big'>Mannequins</p>
             <ul>
-              <li>
-                <div>Title</div>
-                <img src='/img/mannequin/l_1001.png'/>
-              </li>
-              <li>
-                <div>Title</div>
-                <img src='/img/mannequin/l_1002.png'/>
-              </li>
+              {
+                mannequins.map( (entry,i) => {
+                  const ttl_style = (i % 2)? 'left' : 'right'
+                  const img_style = (i % 2)? 'right' : 'left'
+                  const title = 'title_'+language
+                  const img = `/img/mannequin/l_100${entry.uid}.png`
+                  return (
+                    <li key={entry.uid}>
+                        <div className={ttl_style}>
+                          {entry.rest[title]}
+                          <Button id={entry.uid} as={Link} to={'/mannequin/'+entry.uid}>
+                            Watch this
+                          </Button>
+                        </div>
+                        <img className={img_style} src={img}/>
+                    </li>
+                  )
+                })
+              }
               <li></li>
             </ul>
           </div>
@@ -35,7 +50,14 @@ class PlayHome extends React.Component {
     )
   }
 }
+
+PlayHome.propTypes = {
+  data: PropTypes.array.isRequired
+}
+
  const mapStateToProps = state => ({
-   gender: state.user.gender || state.settings.gender
+   gender: state.user.gender || state.settings.gender,
+   language: state.settings.language,
+   mannequins: state.data
  })
-export default connect(mapStateToProps, { getListMann })(PlayHome)
+export default connect(mapStateToProps, { getListMann,activateMann })(PlayHome)

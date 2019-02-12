@@ -29,6 +29,6 @@ export default {
     getCategories: domain => axios.get('../list/category/'+domain).then( res => res.data)
   },
   mann: {
-    listMann: gender => axios.get('list/mann/'+gender).then( res => res.data )
+    listMann: gender => axios.get('list/m/mann/'+gender).then( res => res.data )
   }
 }

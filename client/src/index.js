@@ -21,7 +21,8 @@ const initState = {
     gender: 0,// 0-none, 1-male, 2-female
     taxonomy: []
   },
-  mannequin: [],
+  mannequins: [],
+  data: [],
   proms: [],
   user: {}
 }

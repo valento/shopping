@@ -32,7 +32,7 @@ const App = ({ location }) => {
       <Route location={location} path='/proms/:gender/:id' component={ProductList} />
       <Route location={location} path='/perks' exact component={PerksHome} />
       <Route location={location} path='/mannequin' exact component={PlayHome} />
-      <Route location={location} path='/mannequin/id' exact component={MannequinHome} />
+      <Route location={location} path='/mannequin/:uid' exact component={MannequinHome} />
     </div>
   )
 }

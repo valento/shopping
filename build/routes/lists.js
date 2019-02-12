@@ -32,7 +32,7 @@ listRouter.use(_bodyParser2.default.json());
 //  api.mann.getList( { gender,cat }, table, '*').then( rows => console.log(rows))
 //})
 
-listRouter.get('/:table/:gender', function (req, res, next) {
+listRouter.get('/m/:table/:gender', function (req, res, next) {
   var _req$params = req.params,
       gender = _req$params.gender,
       table = _req$params.table;
@@ -40,11 +40,7 @@ listRouter.get('/:table/:gender', function (req, res, next) {
   var scope = ['uid', 'title_en', 'title_es', 'dscr_en', 'dscr_es', 'head', 'corp', 'waist', 'legs', 'feet', 'c_status', 'img_base', 'img_tumb', 'price', 'likes', 'rating'];
   _mann2.default.mann.getList({ gender: 2 }, table, scope).then(function (results) {
     if (results.length > 0) {
-      var data = results.map(function (obj) {
-        return obj;
-      });
-      //const data = Object.assign({}, results[0])
-      res.status(200).json(data);
+      res.status(200).json(results);
     } else {
       throw new Error({ message: 'User lost' });
     }

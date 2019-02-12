@@ -11,6 +11,12 @@ class MannequinHome extends React.Component {
   //Active body part:
     part: '',
     level: 0,
+    mannequin: {
+      uid: 0,
+      layer: 0,
+      index: 0,
+      body: -1
+    },
   // Dresses On Stage
     settings: {
 // Mouse Zones in % for: 412x736 (iPhone X,8+,7+) || 360x740 (Samsung) || 375x667 (iPhone 6,7,8) || more ??
@@ -78,31 +84,56 @@ class MannequinHome extends React.Component {
     let indx
   }
 
+  activeMann = e => {
+
+  }
+
+  componentDidMount() {
+    const { match,mann } = this.props
+    let mannequin = {}
+    mann.forEach( entry => {
+      const { uid,...man } = entry
+      if(uid === Number(match.params.uid)) {
+        mannequin.uid = uid
+        mannequin.body = -1
+        mannequin.layer = 0
+        mannequin.index = 0
+        for( const key in man ) {
+          mannequin[key] = []
+          const val = man[key].toString(2).split('')
+          for(let i=0;i<5;i++){
+            if(!val[i]) {
+              val.unshift('0')
+            }
+          }
+          mannequin[key] = val
+        }
+      }
+    })
+    this.setState({mannequin: mannequin})
+  }
+
   render() {
-    const { id,body,item,layer,...rest } = this.props.mannequin
+    const { mannequin, part, level } = this.state
+    const { uid,body,layer,index,...mann} = mannequin
+
     return (
       <div className='App-content'>
         <div className='home-mannequin' onClick={this.onOption}>
-
-          <Mannequin focus={true} human='base' id={id} />
-          {Object.keys(rest).map( k => {
-            if(k !== 'id') {
-              return (<Mannequin key={k}
-                        focus={body === k ? true : false}
-                        layer={layer || 0}
-                        count={rest[k].index}
-                        human={k}
-                        store={rest[k]}
-                      />)
-            }
+          <Mannequin focus={true} human='base' id={uid} />
+          {
+            Object.keys(mann).map( k => {
+              return (
+                <div>{k}</div>
+              )
           })}
         </div>
 
-        <Controls disable={this.state.part === ''} pointer={this.state.settings.pointer}/>
+        <Controls disable={part === ''} pointer={this.state.settings.pointer}/>
 
         <Options
           lng={this.props.lan}
-          mannequin={rest}
+          mann={mann}
           onSubmenu={this.onSubmenu}
           onOption={this.onOption}
           menuHome={this.menuHome}
@@ -115,8 +146,38 @@ class MannequinHome extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  mannequin: state.mannequin,
+  mann: state.mannequins,
   lan: state.user.language || state.settings.language
 })
 
 export default connect(mapStateToProps,{ changeLayer, changeBody })(MannequinHome)
+
+
+
+/*
+<div className='home-mannequin' onClick={this.onOption}>
+  <Mannequin focus={true} human='base' id={mann.uid} />
+  {Object.keys(mann).map( k => {
+    if(k !== 'uid') {
+      return (<Mannequin key={k}
+                focus={body === k ? true : false}
+                layer={layer || 0}
+                count={rest[k].index}
+                human={k}
+                store={rest[k]}
+              />)
+    }
+  })}
+</div>
+
+<Controls disable={this.state.part === ''} pointer={this.state.settings.pointer}/>
+
+<Options
+  lng={this.props.lan}
+  mannequin={rest}
+  onSubmenu={this.onSubmenu}
+  onOption={this.onOption}
+  menuHome={this.menuHome}
+  position={this.state.part}
+/>
+*/

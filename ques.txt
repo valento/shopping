@@ -184,17 +184,22 @@ price INT DEFAULT 6
 UPDATE mann SET dscr_es='Nosotras, las Mujeres, hacemos el futuro posible. Este Mannequin lo hace visible.' WHERE uid=3;
 
 INSERT INTO mann (c_status,title_en,title_es,dscr_en,dscr_es,head,corp,waist,legs,feet) VALUES (
-16,
-'Tayrona',
-'Tayrona',
+4,'La Catalista','La Catalista',
+'The Catalist is the new image of lifestyle. This Mannequin shows the free spirit in controversy and braveness.',
+'La Catalista es una onda nueva. Este Mannequin representa el vuelo libre del innovador atrevido.',
+4,10,4,4,4),
+(16,'Altered Carbon','Altered Carbon',
+'We, Women, make the future available. This Mannequin makes it foreseeable.',
+'Las Mujeres, somos el futuro. Este Mannequin abre una vista hacia aquello.',
+4,4,4,4,4),
+(16,'Ibiza','Ibiza',
+'"No-clothes" is hard to style. This Mannequin makes it easy.',
+'"Sin-ropa" es un estilo sofisticado. Este Mannequin lo vuelve facil',
+4,4,4,4,4),
+(16,'Tayrona','Tayrona',
 'Colombia is the new land of opportunity. "Tayrona" is the new Cote d\'Azur...',
 'Colombia es la Nueva Tierra de oportunidades. "Tayrona" es la nueva Costa Azul...',
-4,
-4,
-4,
-4,
-4
-);
+4,4,4,4,4);
 
 
 // =================================================================

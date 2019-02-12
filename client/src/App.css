@@ -110,7 +110,10 @@ input, select, textarea {
 .main {
   height: 46vw;
 }
-.mann-page div {
+.mann-page .right {
+  float: right;
+}
+.mann-page .left {
   float: left;
 }
 .mann-page ul {
