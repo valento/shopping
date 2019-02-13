@@ -19,39 +19,35 @@ class Options extends React.Component {
     this.props.onOption(null,name.split('_')[1])
   }
 
-  onSubmenu = (e, {name}) => {
-    const lev = this.state._layers.findIndex( el => {
-      return el === name
-    })
-    this.props.onSubmenu(lev)
+  onSubmenu = (e,{nm}) => {
+    //const lev = this.state._layers.findIndex( el => {
+    //  return el === name
+    //})
+    console.log(nm)
+    this.props.onSubmenu(nm)
   }
 
   render() {
     const { body,layer } = this.state[this.props.lng]
     const { mann } = this.props
     let name, ind, position
-
     let _position = this.state._keys.findIndex( _pos => {
       return _pos === (this.props.position)
     })
     position = (this.props.position === '')? 0 : (_position + 1)
-
     const trans = {
       left: `-${position*window.screen.width}px`
     }
-
     const menu = Object.keys(mann).map( k => {
       let i = this.state._keys.findIndex( _k => {
         return _k === k
       })
       return body[i]
     })
-
     const sub_menus = Object.entries(mann).map( entry => {
-
       return entry[1]
     })
-console.log(sub_menus)
+
     return (
       <div className='mnq-menu'>
         <div className='carrousel move' style={trans}>
@@ -80,7 +76,7 @@ console.log(sub_menus)
                     sbm.map( (op,i) => {
                       if(Number(op)>0){
                         return (
-                          <Button key={op+'_'+i} onClick={this.onSubmenu} color='grey' name={op} >
+                          <Button key={op+'_'+i} onClick={this.onSubmenu} color='grey' nm={i} >
                             {layer[i]}
                           </Button>
                         )

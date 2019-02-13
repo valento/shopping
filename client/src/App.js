@@ -13,6 +13,7 @@ import GuestRoute from './components/routes/guestRoute'
 import ProductList from './components/product/ProductList'
 import AnyList from './components/ui/AnyList'
 import MannequinHome from './components/pages/MannequinHome'
+import MannequinComming from './components/mannequin/comming'
 import PlayHome from './components/pages/PlayHome'
 import UserData from './components/pages/UserData'
 import CrowdfundHome from './components/pages/CrowdfundHome'
@@ -33,6 +34,7 @@ const App = ({ location }) => {
       <Route location={location} path='/perks' exact component={PerksHome} />
       <Route location={location} path='/mannequin' exact component={PlayHome} />
       <Route location={location} path='/mannequin/:uid' exact component={MannequinHome} />
+      <Route location={location} path='/mannequin/comming/:uid' exact component={MannequinComming} />
     </div>
   )
 }

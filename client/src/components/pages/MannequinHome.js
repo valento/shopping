@@ -77,7 +77,7 @@ class MannequinHome extends React.Component {
     //console.log('Submenu active: ',l)
     this.setState({level: l})
     console.log(this.state.part)
-    this.props.changeLayer({layer: this.state.settings.layer[l]})
+    this.props.changeLayer({layer: l})
   }
 
   addItem = e => {
