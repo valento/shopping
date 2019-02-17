@@ -172,7 +172,14 @@ input, select, textarea {
   height: 180px;
   z-index: 79;
 }
-
+.mnq-arrows {
+  position: absolute;
+  width: 100vw;
+  z-index: 89;
+  top: 98px;
+  left: 14px;
+  display: flex;
+}
 .mnq-menu {
   position: absolute;
   width: 100vw;
@@ -500,6 +507,9 @@ a.domain {
   display: inline-block;
   border-radius: 50%;
 }
+.right {
+  float: right;
+}
 .clear {
   clear: both;
 }
@@ -534,12 +544,18 @@ a.domain {
     top: 0px;
     height: calc(100vh - 10px);
   }
+  .mnq-arrows {
+    top: 98px;
+  }
 }
 @media screen and (min-height: 812px) {
   .body-parts img {
     left: -87px;
     top: 0px;
     height: calc(100vh - 0px);
+  }
+  .mnq-arrows {
+    top: 105px;
   }
   .App-menu {
     height: 6vh;

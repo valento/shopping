@@ -3,14 +3,20 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Divider, Button, Icon } from 'semantic-ui-react'
- import { getListMann, activateMann } from '../../actions/mann'
+ import { getListMann, activateMann, getMannResources } from '../../actions/mann'
 
 class PlayHome extends React.Component {
   state = {
     loading: false,
     lan: {
-      en: ['Play'],
-      es: ['Jugarlo']
+      en: ['Play it'],
+      es: ['Play']
+    }
+  }
+
+  onMann = (e,{id,status}) => {
+    if(status) {
+      this.props.getMannResources(id)
     }
   }
 
@@ -43,10 +49,16 @@ class PlayHome extends React.Component {
                     <li key={entry.uid} style={bkg}>
                         <div className={ttl_style + ' grid list'}>
                           <p>{entry.rest[title]}</p>
-                          <Button fluid color='black' id={entry.uid} as={Link}
-                            to={entry.rest.c_status===4 ? '/mannequin/'+entry.uid : '/mannequin/comming/'+entry.uid}>
-                            {lan[0]}
-                          </Button>
+                            <Button icon fluid color='black'
+                              onClick={this.onMann}
+                              id={entry.uid} as={Link}
+                              status={entry.rest.c_status===4}
+                              to={entry.rest.c_status===4 ? '/mannequin/'+entry.uid :
+                              '/mannequin/comming/'+entry.uid}
+                              >
+                              <Icon name='play circle outline'/>
+                              {lan[0]}
+                            </Button>
                           <span>{entry.rest[dscr]}</span>
                         </div>
                     </li>
@@ -71,4 +83,4 @@ PlayHome.propTypes = {
    language: state.user.language || state.settings.language,
    mannequins: state.data
  })
-export default connect(mapStateToProps, { getListMann,activateMann })(PlayHome)
+export default connect(mapStateToProps, { getListMann,activateMann,getMannResources })(PlayHome)

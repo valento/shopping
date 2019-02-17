@@ -19,11 +19,25 @@ const db = mysql.createConnection(options)
 
 export default {
   mann: {
-    getList: (gender={},table,scope='*') => {
+    getList: (data={},table,scope='*') => {
       console.log(table)
-      const s = Object.keys(gender).map( key => gender[key] )
-      const k = Object.keys(gender)
+      const s = Object.keys(data).map( key => data[key] )
+      const k = Object.keys(data)
       const sql = `SELECT ${scope} from ${table} where ${k}=?;`
+      return new Promise( (resolve,reject) => {
+        db.query(sql,s, (err,results) => {
+          //console.log('Mann DB: ',results)
+          if(err) return reject
+            resolve(results)
+        })
+      })
+    },
+    getListResources: (data={},table,scope='*') => {
+      console.log(table)
+      const s = Object.keys(data).map( key => data[key] )
+      const k = Object.keys(data)
+      const sql = `SELECT ${scope} from ${table} where ${k}=?;`
+      console.log(sql,s)
       return new Promise( (resolve,reject) => {
         db.query(sql,s, (err,results) => {
           //console.log('Mann DB: ',results)

@@ -19,11 +19,26 @@ export const checkAuth = (req,res,next) => {
         return res.status(401).json({errors: {global: 'Unauthorized request'}})
       } else {
         req.user = verified
-        next()
       }
     }
     catch(err) {
       return res.status(401).json({errors: {global: 'Auth failed: Invalid token'}})
     }
+    next()
+  }
+}
+
+export const getAuth = (req,res,next) => {
+  const token = req.get('Authorization')
+  if(token){
+    try {
+      const verified = jwt.verify(token, 'valeCollectionJWT')
+    }
+    catch(err) {
+      return res.status(401).json({errors: {global: 'Auth failed: Invalid token'}})
+    }
+    next()
+  } else {
+    return res.status(401).json({errors: {global: 'Unauthorized request'}})
   }
 }

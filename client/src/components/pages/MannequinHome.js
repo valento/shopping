@@ -1,22 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { changeLayer, changeBody } from '../../actions/mann'
+import { changeLayer, changeBody, getResource } from '../../actions/mann'
 
 import Mannequin from '../mannequin/Mannequin'
 import Controls from '../ui/mannequin/controls'
 import Options from '../ui/mannequin/options'
+import Arrows from '../ui/mannequin/arrows'
 
 class MannequinHome extends React.Component {
   state = {
   //Active body part:
     part: '',
-    level: 0,
+    level: -1,
     mannequin: {
       uid: 0,
-      layer: 0,
+      layer: -1,
       index: 0,
       body: -1
     },
+    body: {},
   // Dresses On Stage
     settings: {
 // Mouse Zones in % for: 412x736 (iPhone X,8+,7+) || 360x740 (Samsung) || 375x667 (iPhone 6,7,8) || more ??
@@ -55,29 +57,47 @@ class MannequinHome extends React.Component {
       }
     })
 
-    this.props.changeBody({body: item[i]})
+    //this.props.changeBody(body: {
+    //  [item[i]]: {}
+    //})
     // addItem:
     // editItem:
   }
 
+  onNext = arrow => {
+    const { level } = this.state
+    let add = (arrow === 'prev') ? -1 : 1
+    this.setState({
+      counter: add
+    })
+    //let count = (this.state.body[this.state.part][this.state.settings.layer[level]]+1)
+    //this.setState({
+    //  ...this.state, body: {
+    //    ...this.state.body,
+    //    [this.state.part]:
+    //    {[this.state.settings.layer[level]]: count}
+    //  }
+    //})
+  }
+
   menuHome = e => {
-    console.log('Triggered: menuHome');
+    console.log('Triggered: menuHome')
     this.setState({
       part: '',
+      level: -1,
       settings: {
         ...this.state.settings,
         pointer: 250
       }
     })
-    this.props.changeBody({body: ''})
-    this.props.changeLayer({layer: 0})
+    //this.props.changeBody({body: ''})
+    //this.props.changeLayer({layer: 0})
   }
 
   onSubmenu = l => {
-    //console.log('Submenu active: ',l)
     this.setState({level: l})
-    console.log(this.state.part)
-    this.props.changeLayer({layer: l})
+    //console.log('Submenu active: ',l)
+    //this.props.changeLayer({body: this.state.body})
   }
 
   addItem = e => {
@@ -96,7 +116,7 @@ class MannequinHome extends React.Component {
       if(uid === Number(match.params.uid)) {
         mannequin.uid = uid
         mannequin.body = -1
-        mannequin.layer = 0
+        mannequin.layer = -1
         mannequin.index = 0
         for( const key in man ) {
           mannequin[key] = []
@@ -114,22 +134,23 @@ class MannequinHome extends React.Component {
   }
 
   render() {
-    const { mannequin, part, level } = this.state
+    const { mannequin,part,counter } = this.state
     const { uid,body,layer,index,...mann} = mannequin
 
     return (
       <div className='App-content'>
         <div className='home-mannequin' onClick={this.onOption}>
-          <Mannequin focus={true} human='base' id={uid} />
+          <Mannequin focus={true} base={true} id={uid} />
           {
             Object.keys(mann).map( k => {
               return (
-                <div>{k}</div>
+                <Mannequin focus={part === k} body={part} count={counter} key={k} store={mann[k]} id={uid} />
               )
-          })}
+            })
+          }
         </div>
 
-        <Controls disable={part === ''} pointer={this.state.settings.pointer}/>
+        <Controls disable={part === ''} base={false} pointer={this.state.settings.pointer}/>
 
         <Options
           lng={this.props.lan}
@@ -138,6 +159,12 @@ class MannequinHome extends React.Component {
           onOption={this.onOption}
           menuHome={this.menuHome}
           position={this.state.part}
+        />
+
+        <Arrows
+          hidden={this.state.level < 0}
+          lng={this.props.lan}
+          onNext={this.onNext}
         />
 
       </div>
@@ -150,34 +177,4 @@ const mapStateToProps = state => ({
   lan: state.user.language || state.settings.language
 })
 
-export default connect(mapStateToProps,{ changeLayer, changeBody })(MannequinHome)
-
-
-
-/*
-<div className='home-mannequin' onClick={this.onOption}>
-  <Mannequin focus={true} human='base' id={mann.uid} />
-  {Object.keys(mann).map( k => {
-    if(k !== 'uid') {
-      return (<Mannequin key={k}
-                focus={body === k ? true : false}
-                layer={layer || 0}
-                count={rest[k].index}
-                human={k}
-                store={rest[k]}
-              />)
-    }
-  })}
-</div>
-
-<Controls disable={this.state.part === ''} pointer={this.state.settings.pointer}/>
-
-<Options
-  lng={this.props.lan}
-  mannequin={rest}
-  onSubmenu={this.onSubmenu}
-  onOption={this.onOption}
-  menuHome={this.menuHome}
-  position={this.state.part}
-/>
-*/
+export default connect(mapStateToProps,{ changeLayer, changeBody, getResource })(MannequinHome)

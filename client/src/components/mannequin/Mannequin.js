@@ -2,44 +2,48 @@ import React from 'react'
 import Mann from './Mann'
 
 class Mannequin extends React.Component {
-  constructor(props) {
-    super()
-    this.state = {
-      level: ['skin','under','main','over','top'],
-      index: ['head','legs','waist','corp','feet'],
-      path: '/img/mannequin/'
-    }
+  state = {
+    level: ['skin','under','main','over','top'],
+    index: ['head','legs','waist','corp','feet'],
+    path: '/img/mannequin/'
   }
+
   render() {
     let image, z
     const { path, level, index } = this.state
-    const { human,count,store,focus,id } = this.props
-    if( human === 'base' ) {
+    const { store, key, focus, id, base } = this.props
+    if( base ) {
       image = path + id + '_base.png'
     } else {
         z = index.findIndex( i => {
-        return i === human
+        return i === key
       })
     }
 
     return (
       <div>
-        {(human === 'base')? (
+        { base ? (
           <div className='body-parts'>
             <img src={image} />
           </div>
         ) : (
           Object.keys(store).map( k => {
             //console.log(store[k].library[1])
-            const ind = level.findIndex(el => {
-              return el === k
-            })
-            const style = {
-              zIndex: z*10+ind
+            if(store[k]>0) {
+
+              const style = {
+                zIndex: z*10+k
+              }
+              return (
+                <Mann key={z+'_'+k}
+                  style={style}
+                  k={k}
+                  body={this.props.body}
+                  count={this.props.count}
+                  focus={k === this.props.level}
+                  lib={0}/>
+              )
             }
-            return (
-              <Mann key={human+'_'+k} style={style} store={store} k={k} focus={ind === this.props.level} lib={0}/>
-            )
           })
         )}
       </div>
