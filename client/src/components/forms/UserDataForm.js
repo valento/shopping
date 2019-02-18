@@ -49,7 +49,7 @@ export default class UserDataForm extends React.Component {
   }
 
   onChange = (e, {name,value}) => {
-    if(this.state.main_data) {
+    if(this.props.main_data) {
       this.setState({
         data: {...this.state.data, [name]: value},
       })
@@ -91,7 +91,7 @@ export default class UserDataForm extends React.Component {
     const score = ns + ss + bs + ls + credit
     const data = Object.assign(this.state.data, {credit: score, email: email})
     //console.log(data)
-    this.props.addCredits(this.state.data)
+    this.props.saveUser(this.state.data)
     this.setState({
       ns: 0,
       ss: 0

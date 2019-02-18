@@ -57,15 +57,15 @@ userRouter.route('/data')
       res.status(200).json({message: 'Data saved'})
     }
   })
-  .then( ({email}) => {
-    api.user.getOne({email},'users',scope)
-  })
-  .then( results => {
-    if(results.length > 0){
-      user = results[0]
-      res.status(200).json({user})
-    }
-  })
+  //.then( ({email}) => {
+  //  api.user.getOne({email},'users',scope)
+  //})
+  //.then( results => {
+  //  if(results.length > 0){
+  //    user = results[0]
+  //    res.status(200).json({user})
+  //  }
+  //})
   .catch(err => {
     console.log(err.message)
   })

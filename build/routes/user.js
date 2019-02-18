@@ -8,9 +8,9 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _user2 = require('../api/user');
+var _user = require('../api/user');
 
-var _user3 = _interopRequireDefault(_user2);
+var _user2 = _interopRequireDefault(_user);
 
 var _auth = require('../middleware/auth');
 
@@ -50,7 +50,7 @@ userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
   var email = req.email;
 
   var scope = ['email', 'gender', 'username', 'verified', 'credit', 'rating', 'language'];
-  _user3.default.user.getOne({ email: email }, 'users', scope).then(function (results) {
+  _user2.default.user.getOne({ email: email }, 'users', scope).then(function (results) {
     if (results.length > 0) {
       var user = Object.assign({}, results[0]);
       res.status(200).json({ user: user });
@@ -63,26 +63,26 @@ userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
 }).post(_auth.checkAuth, function (req, res, next) {
   var user = req.body.user;
 
-  var _user = user,
-      email = _user.email,
-      data = _objectWithoutProperties(_user, ['email']);
+  var email = user.email,
+      data = _objectWithoutProperties(user, ['email']);
 
-  _user3.default.user.save({ data: data }, email).then(function (err) {
+  _user2.default.user.save({ data: data }, email).then(function (err) {
     if (err) {
       res.status(500).json({ errors: { global: err.message } });
     } else {
       res.status(200).json({ message: 'Data saved' });
     }
-  }).then(function (_ref) {
-    var email = _ref.email;
-
-    _user3.default.user.getOne({ email: email }, 'users', scope);
-  }).then(function (results) {
-    if (results.length > 0) {
-      user = results[0];
-      res.status(200).json({ user: user });
-    }
-  }).catch(function (err) {
+  })
+  //.then( ({email}) => {
+  //  api.user.getOne({email},'users',scope)
+  //})
+  //.then( results => {
+  //  if(results.length > 0){
+  //    user = results[0]
+  //    res.status(200).json({user})
+  //  }
+  //})
+  .catch(function (err) {
     console.log(err.message);
   });
 });
