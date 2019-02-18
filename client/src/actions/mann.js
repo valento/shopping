@@ -33,9 +33,9 @@ export const changeItem = item => ({
   item
 })
 
-export const getResource = index => ({
+export const getResource = resources => ({
   type: RESOURCE_CHANGED,
-  index
+  resources
 })
 
 export const getListMann = gender => dispatch => {
@@ -47,11 +47,26 @@ export const getListMann = gender => dispatch => {
       return({uid,rest})
     })
     console.log('Mann Actions: ',mann)
-    dispatch(updateData(mnqs))
-    dispatch(updateMann(mann))
+    dispatch( updateData(mnqs) )
+    dispatch( updateMann(mann) )
   })
 }
 
+const body = ['feet','legs','waist','corp','head']
+const lyr = ['skin','under','main','over','top']
+
 export const getMannResources = id => dispatch => {
-  api.mann.getResources(id).then( res => console.log(res))
+  api.mann.getResources(id).then( res => {
+    const resources = {}
+    body.forEach( b => {
+      resources[b]={}
+      lyr.forEach( l => {
+        resources[b][l] = []
+      })
+    })
+    res.forEach( entry => {
+      resources[body[Math.log2(entry.body)]][lyr[Math.log2(entry.layer)]].push(entry.name)
+    })
+    dispatch(getResource(resources))
+  })
 }

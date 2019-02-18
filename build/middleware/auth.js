@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.checkAuth = exports.getUserId = undefined;
+exports.getAuth = exports.checkAuth = exports.getUserId = undefined;
 
 var _jsonwebtoken = require('jsonwebtoken');
 
@@ -31,11 +31,25 @@ var checkAuth = exports.checkAuth = function checkAuth(req, res, next) {
         return res.status(401).json({ errors: { global: 'Unauthorized request' } });
       } else {
         req.user = verified;
-        next();
       }
     } catch (err) {
       return res.status(401).json({ errors: { global: 'Auth failed: Invalid token' } });
     }
+    next();
+  }
+};
+
+var getAuth = exports.getAuth = function getAuth(req, res, next) {
+  var token = req.get('Authorization');
+  if (token) {
+    try {
+      var verified = _jsonwebtoken2.default.verify(token, 'valeCollectionJWT');
+    } catch (err) {
+      return res.status(401).json({ errors: { global: 'Auth failed: Invalid token' } });
+    }
+    next();
+  } else {
+    return res.status(401).json({ errors: { global: 'Unauthorized request' } });
   }
 };
 //# sourceMappingURL=auth.js.map

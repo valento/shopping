@@ -69,7 +69,7 @@ class Options extends React.Component {
           </div>
           {sub_menus.map( (sbm,n) => {
             return (
-              <div className='body-part-menu'>
+              <div key={(n+10)} className='body-part-menu'>
                 <Button.Group key={n}>
                   <Button icon basic onClick={this.props.menuHome}><Icon name='home' size='large' /></Button>
                   {

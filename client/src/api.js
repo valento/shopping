@@ -30,6 +30,6 @@ export default {
   },
   mann: {
     listMann: gender => axios.get('list/m/mann/'+gender).then( res => res.data ),
-    getResources: uid => axios.get('../list/mann/resources/'+uid).then( res => console.log(res.data) )
+    getResources: uid => axios.get('../list/mann/resources/'+uid).then( res => res.data )
   }
 }

@@ -16,6 +16,8 @@ var _mann = require('../api/mann');
 
 var _mann2 = _interopRequireDefault(_mann);
 
+var _auth = require('../middleware/auth');
+
 var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
@@ -32,9 +34,19 @@ listRouter.use(_bodyParser2.default.json());
 //  api.mann.getList( { gender,cat }, table, '*').then( rows => console.log(rows))
 //})
 
-listRouter.get('/m/:table/:gender', function (req, res, next) {
+listRouter.route('/mann/resources/:mann_id').get(_auth.getAuth, function (req, res, next) {
+  var mann_id = req.params.mann_id;
+
+  _mann2.default.mann.getListResources({ mann_id: mann_id }, 'resources').then(function (results) {
+    res.status(200).json(results);
+  }).catch(function (err) {
+    res.status(500).json({ errors: { global: err.message } });
+  });
+});
+
+listRouter.get('/m/:table/:kay', function (req, res, next) {
   var _req$params = req.params,
-      gender = _req$params.gender,
+      kay = _req$params.kay,
       table = _req$params.table;
 
   var scope = ['uid', 'title_en', 'title_es', 'dscr_en', 'dscr_es', 'head', 'corp', 'waist', 'legs', 'feet', 'c_status', 'img_base', 'img_tumb', 'price', 'likes', 'rating'];

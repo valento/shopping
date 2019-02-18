@@ -75,7 +75,7 @@ class PlayHome extends React.Component {
 }
 
 PlayHome.propTypes = {
-  data: PropTypes.array.isRequired
+  mannequins: PropTypes.array.isRequired
 }
 
  const mapStateToProps = state => ({

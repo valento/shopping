@@ -12,13 +12,11 @@ class MannequinHome extends React.Component {
   //Active body part:
     part: '',
     level: -1,
+    count: 0,
+    index: 0,
     mannequin: {
-      uid: 0,
-      layer: -1,
-      index: 0,
-      body: -1
+      uid: 0
     },
-    body: {},
   // Dresses On Stage
     settings: {
 // Mouse Zones in % for: 412x736 (iPhone X,8+,7+) || 360x740 (Samsung) || 375x667 (iPhone 6,7,8) || more ??
@@ -68,7 +66,8 @@ class MannequinHome extends React.Component {
     const { level } = this.state
     let add = (arrow === 'prev') ? -1 : 1
     this.setState({
-      counter: add
+      count: add,
+      index: this.state.index + add
     })
     //let count = (this.state.body[this.state.part][this.state.settings.layer[level]]+1)
     //this.setState({
@@ -85,6 +84,8 @@ class MannequinHome extends React.Component {
     this.setState({
       part: '',
       level: -1,
+      index: 0,
+      count: 0,
       settings: {
         ...this.state.settings,
         pointer: 250
@@ -95,7 +96,11 @@ class MannequinHome extends React.Component {
   }
 
   onSubmenu = l => {
-    this.setState({level: l})
+    this.setState({
+      level: l,
+      index: 0,
+      count: 0,
+    })
     //console.log('Submenu active: ',l)
     //this.props.changeLayer({body: this.state.body})
   }
@@ -115,9 +120,6 @@ class MannequinHome extends React.Component {
       const { uid,...man } = entry
       if(uid === Number(match.params.uid)) {
         mannequin.uid = uid
-        mannequin.body = -1
-        mannequin.layer = -1
-        mannequin.index = 0
         for( const key in man ) {
           mannequin[key] = []
           const val = man[key].toString(2).split('')
@@ -134,19 +136,23 @@ class MannequinHome extends React.Component {
   }
 
   render() {
-    const { mannequin,part,counter } = this.state
-    const { uid,body,layer,index,...mann} = mannequin
+    const { mannequin,part,count,level,index } = this.state
+    const { uid,...mann} = mannequin
 
     return (
       <div className='App-content'>
         <div className='home-mannequin' onClick={this.onOption}>
           <Mannequin focus={true} base={true} id={uid} />
           {
-            Object.keys(mann).map( k => {
-              return (
-                <Mannequin focus={part === k} body={part} count={counter} key={k} store={mann[k]} id={uid} />
-              )
-            })
+      Object.keys(mann).map( k => {
+        return ( <Mannequin level={level}
+          focus={part === k}
+          body={k}
+          count={count}
+          index={index}
+          key={k} shelf={mann[k]} id={uid} />
+        )
+      })
           }
         </div>
 

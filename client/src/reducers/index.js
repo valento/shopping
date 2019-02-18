@@ -64,7 +64,7 @@ export const resources = ( state={}, action ) => {
     case 'RESOURCES_SET':
      return state
     case 'RESOURCE_CHANGED':
-     return state
+     return action.resources
     default: return state
   }
 }
