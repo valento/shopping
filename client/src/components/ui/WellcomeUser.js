@@ -20,13 +20,15 @@ class WellcomeUser extends React.Component {
     return (
       <div className='vintage'>
         <p className='paraf-mid'>{wellcome}<b>, {u_name}</b></p>
-        <Button as={Link} to='/mannequin' fluid color='black'>{l[8]}</Button>
-          <Divider horizontal>{l[1]}</Divider>
-        {(!username || !gender || !language) &&
-          <Button as={Link} to='/account' fluid color='black'>{l[5]}</Button>
-        }
+          <Button as={Link} to='/mannequin' fluid color='black'>{l[8]}</Button>
+        <Divider horizontal>{l[1]}</Divider>
+          <Button as={Link} to='/crowdfunding' fluid color='blue' icon='undo' content={l[9]} />
+
         <Divider horizontal>{l[2]}</Divider>
-        <Button as={Link} to='/crowdfunding' fluid color='blue' icon='undo' content={l[9]} />
+          {(!username || !gender || !language) &&
+            <Button as={Link} to='/account' fluid color='black'>{l[5]}</Button>
+          }
+
       </div>
     )
   }

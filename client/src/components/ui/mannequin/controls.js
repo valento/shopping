@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Sidebar, Segment } from 'semantic-ui-react'
+import { Icon, Sidebar, List } from 'semantic-ui-react'
 
 export default class Controls extends React.Component {
   state = {
@@ -13,15 +13,16 @@ export default class Controls extends React.Component {
     })
   }
 
-  Control = e => {
-    //
+  onControl = (e, {name}) => {
+    this.props.onControl(name)
   }
 
   render() {
     const { visible } = this.state
     const { pointer } = this.props
+    let p = (pointer > window.screen.height/2)? window.screen.height/3 : window.screen.height*2/3
     let transition = {
-      top: `${pointer}px`
+      top: `${p-80}px`
     }
     return (
       <div className='mannequin-controls cursor-move' style={transition}>
@@ -35,12 +36,12 @@ export default class Controls extends React.Component {
             inverted='true'
           >
             <div className='controls-menu'>
-              <div className='options'>
-                <li onClick={this.Control} name='up'><Icon size='large' name='arrow alternate circle up outline' /></li>
-                <li onClick={this.Control} name='down'><Icon size='large' name='arrow alternate circle down outline' /></li>
-                <li onClick={this.Control} name='clear'><Icon size='large' name='window close' /></li>
-                <li onClick={this.Control} name='view'><Icon size='large' name='eye' /></li>
-              </div>
+                <List>
+  <List.Item onClick={ this.onControl } name='clear'><List.Icon name='window close' size='large' /></List.Item>
+  <List.Item onClick={ this.onControl } name='view'><List.Icon name='eye' size='large' /></List.Item>
+  <List.Item onClick={ this.onControl } name='save'><List.Icon name='save outline' size='large' /></List.Item>
+  <List.Item onClick={ this.onControl } name='share'><List.Icon name='share' size='large' /></List.Item>
+                </List>
             </div>
           </Sidebar>
           <Sidebar.Pusher>

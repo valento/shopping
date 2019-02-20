@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Button, Modal, Icon } from 'semantic-ui-react'
 import { changeLayer, changeBody, getResource } from '../../actions/mann'
 
 import Mannequin from '../mannequin/Mannequin'
@@ -24,11 +25,20 @@ class MannequinHome extends React.Component {
   // Controls coordinates:
       pointer: 250,
       item: ['head','corp','waist','legs','feet'],
-      layer: ['top','over','main','under','skin']
+      layer: ['top','over','main','under','skin'],
+      modal: false
     },
+    modal_mode: -1,
     ui: {
-      es: ['Vista tu ', 'Ajustar'],
-      en: ['Dress up your ', 'Adjust these']
+      modal_modes: ['save','share','clear'],
+      es: [
+        'Guardar este Mannequin?', 'Enviar tu Mannequin a nuestro Instagram?',
+        'Limpiar que cosa?','Si', 'No'
+      ],
+      en: [
+        'Save this Mannequin?', 'Share this on our Instagram?', 'Clear what?',
+        'Yes', 'No'
+      ]
     }
   }
 
@@ -60,6 +70,24 @@ class MannequinHome extends React.Component {
     //})
     // addItem:
     // editItem:
+  }
+
+  onControl = name => {
+    if(name === 'view') return
+    let mode = this.state.ui.modal_modes.findIndex( entry => {
+      return entry === name
+    })
+    this.setState({
+      modal_mode: mode,
+      modal: true
+    })
+  }
+
+  onModal = e => {
+    this.setState({
+      modal_mode: -1,
+      modal: false
+    })
   }
 
   onNext = arrow => {
@@ -136,7 +164,8 @@ class MannequinHome extends React.Component {
   }
 
   render() {
-    const { mannequin,part,count,level,index } = this.state
+    const { mannequin,part,count,level,index, modal_mode, settings } = this.state
+    const ui = this.state.ui[this.props.lan]
     const { uid,...mann} = mannequin
 
     return (
@@ -156,7 +185,7 @@ class MannequinHome extends React.Component {
           }
         </div>
 
-        <Controls disable={part === ''} base={false} pointer={this.state.settings.pointer}/>
+        <Controls disable={part === ''} onControl={this.onControl} base={false} pointer={settings.pointer}/>
 
         <Options
           lng={this.props.lan}
@@ -168,10 +197,29 @@ class MannequinHome extends React.Component {
         />
 
         <Arrows
+          pointer={settings.pointer}
           hidden={this.state.level < 0}
           lng={this.props.lan}
           onNext={this.onNext}
         />
+
+        <Modal open={this.state.modal} centered basic size='tiny'>
+          <Modal.Content>
+            <p>
+              {ui[modal_mode]}
+            </p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button.Group widths='2'>
+              <Button onClick={this.onModal} name='n' secondary basic inverted>
+                <Icon name='remove' /> {ui[4]}
+              </Button>
+              <Button onClick={this.onModal} name='y' primary>
+                <Icon name='checkmark' /> {ui[3]}
+              </Button>
+            </Button.Group>
+          </Modal.Actions>
+        </Modal>
 
       </div>
     )

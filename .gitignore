@@ -7,3 +7,6 @@ config.json
 config.js
 app.yaml
 .env
+*.png
+*.svg
+*.jpg

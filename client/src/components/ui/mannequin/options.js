@@ -29,14 +29,14 @@ class Options extends React.Component {
 
   render() {
     const { body,layer } = this.state[this.props.lng]
-    const { mann } = this.props
-    let name, ind, position
+    const { mann, position, menuHome } = this.props
+    let name, ind, pos
     let _position = this.state._keys.findIndex( _pos => {
-      return _pos === (this.props.position)
+      return _pos === (position)
     })
-    position = (this.props.position === '')? 0 : (_position + 1)
+    pos = (position === '')? 0 : (_position + 1)
     const trans = {
-      left: `-${position*window.screen.width}px`
+      left: `-${pos*window.screen.width}px`
     }
     const menu = Object.keys(mann).map( k => {
       let i = this.state._keys.findIndex( _k => {
@@ -71,7 +71,7 @@ class Options extends React.Component {
             return (
               <div key={(n+10)} className='body-part-menu'>
                 <Button.Group key={n}>
-                  <Button icon basic onClick={this.props.menuHome}><Icon name='home' size='large' /></Button>
+                  <Button icon basic onClick={menuHome}><Icon name='home' size='large' /></Button>
                   {
                     sbm.map( (op,i) => {
                       if(Number(op)>0){

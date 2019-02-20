@@ -22,6 +22,7 @@ const initState = {
     taxonomy: []
   },
   mannequins: [],
+  mstate: [],
   resources: {},
   data: [],
   proms: [],

@@ -112,6 +112,7 @@ input, select, textarea {
 }
 .comming {
   background-size: cover!important;
+  background-color: rgb(230,215,220)
 }
 .mann-page .list {
   max-width: 45vw;
@@ -240,6 +241,9 @@ input, select, textarea {
 .controls-menu li {
   list-style: none;
   min-height: 40px;
+}
+.controls-menu .ui.list>.item {
+  margin: 10px 0;
 }
 
 .mannequin-thong {
@@ -415,6 +419,12 @@ input, select, textarea {
 .paraf-mid {
   font-size: 1.2em;
   font-weight: 300;
+}
+.paraf-narative {
+  text-align: justify;
+  font-family: 'Lato', sans-serif;
+  font-size: 1em;
+  font-style: normal;
 }
 
 .promo {
