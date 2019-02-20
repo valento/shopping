@@ -7,7 +7,7 @@ export default class Controls extends React.Component {
   }
 
   onSidebar = e => {
-    if(this.props.disable) return
+    //if(this.props.disable) return
     this.setState({
       visible: (!this.state.visible)
     })
@@ -41,6 +41,7 @@ export default class Controls extends React.Component {
   <List.Item onClick={ this.onControl } name='view'><List.Icon name='eye' size='large' /></List.Item>
   <List.Item onClick={ this.onControl } name='save'><List.Icon name='save outline' size='large' /></List.Item>
   <List.Item onClick={ this.onControl } name='share'><List.Icon name='share' size='large' /></List.Item>
+  <List.Item onClick={ this.onControl } name='help'><List.Icon name='help circle' size='large' /></List.Item>
                 </List>
             </div>
           </Sidebar>

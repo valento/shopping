@@ -11,7 +11,7 @@ export default class CrowdFundUs extends React.Component {
           'El Mannequin es el proyecto piloto de ua serie de applicaciones entorno personalidades \
           catalizadoras. Con este proyecto intento poner el inicio del Club Catalista, \
           y entretener, provocar, revelar y catalizar con la energia que siempre he podido \
-          irradiar alrededor mío. Bienvenido, espero que lo disfrute!'
+          irradiar alrededor mío. Bienvenido! y espero que lo disfrute...'
         ],
         faq: [
           {
@@ -22,7 +22,7 @@ export default class CrowdFundUs extends React.Component {
                   lo más exitante. Es un pequeno esfuerzo y... No se arepentirá!'},
 
           {
-            q: 'Andar en mis zapatos!',
+            q: 'Ponte en mis zapatos!',
             ans: 'Si deseas compartir mis dias, mis ilusiones y visiones, mis vuelos del alma - \
                   estas en el sitio correcto - apóyenos para seguir este paseo'},
 
@@ -35,8 +35,34 @@ export default class CrowdFundUs extends React.Component {
         ]
       },
       en: {
-        ui: ['Support Us','Click here, please to keep this project alive','Why should I do that?'],
-        faq: []
+        ui: ['Support Us','Click here, please to keep this project alive','Why should I do that?',
+            'This Mannequin Doll is just the pilot project in a serie of appliations dedicated to \
+            "La Catalista" movement. It is also the beginning of The Catalist Club. More exciting \
+            services are to be published. To follow me - click below and support this project!'
+        ],
+        faq: [
+          {
+            q:'It\'s the only way',
+            ans: 'The Catalist Club is new, it\'s exclusive and it\'s growing.\
+            You\'ve just got in, congratulations! Catalists are coming from all over the globe. \
+            But: you are still a regular member! You need to become a "Fan" to see what\'s coming next \
+            and you\'ll need a "VIP" membership if you don\'t want to miss the most exciding stuff. \
+            So hurry up - supporting us will rise your rating! It won\'t harm you \
+            it will be worth of every cent'
+
+          },
+          {
+            q: 'To walk into my shoes...',
+            ans: 'Walk with me across the globe. Sharing my days, my visions, my inspirations - \
+            you are on the right place. Support us to keep that walk together!'
+          },
+          {
+            q:'Make the Catalist',
+            ans: 'Fashion, photography, video, partying or resting... you will have it all in here - \
+            but it will be my way, "La Catalista" way! Support us to keep my thrilling productions \
+            coming and to stay in touch'
+          }
+        ]
       }
     }
   }
@@ -71,7 +97,7 @@ export default class CrowdFundUs extends React.Component {
           <Accordion fluid styled>
             {faq.map((f, i) => {
               return (
-                <div>
+                <div className='faq'>
                   <Accordion.Title active={activeIndex === i+1}
                     index={i+1}
                     onClick={this.handleClick}

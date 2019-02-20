@@ -7,6 +7,7 @@ import Mannequin from '../mannequin/Mannequin'
 import Controls from '../ui/mannequin/controls'
 import Options from '../ui/mannequin/options'
 import Arrows from '../ui/mannequin/arrows'
+import MannHelp from '../ui/mannequin/helper'
 
 class MannequinHome extends React.Component {
   state = {
@@ -24,20 +25,21 @@ class MannequinHome extends React.Component {
       zone: [25,45,60,82,100],
   // Controls coordinates:
       pointer: 250,
+      helper: false,
       item: ['head','corp','waist','legs','feet'],
       layer: ['top','over','main','under','skin'],
-      modal: false
+      modal: false,
+      modal_mode: -1
     },
-    modal_mode: -1,
     ui: {
-      modal_modes: ['save','share','clear'],
+      modal_modes: ['save','share','clear','help'],
       es: [
         'Guardar este Mannequin?', 'Enviar tu Mannequin a nuestro Instagram?',
-        'Limpiar que cosa?','Si', 'No'
+        'Limpiar que cosa?', 'Si', 'No', 'Lo tengo claro!'
       ],
       en: [
         'Save this Mannequin?', 'Share this on our Instagram?', 'Clear what?',
-        'Yes', 'No'
+        'Yes', 'No', 'Got it!'
       ]
     }
   }
@@ -59,17 +61,12 @@ class MannequinHome extends React.Component {
 
     this.setState({
       part: item[i],
+      layer: -1,
       settings: {
         ...this.state.settings,
         pointer: f - 80 - zone[i]
       }
     })
-
-    //this.props.changeBody(body: {
-    //  [item[i]]: {}
-    //})
-    // addItem:
-    // editItem:
   }
 
   onControl = name => {
@@ -78,15 +75,18 @@ class MannequinHome extends React.Component {
       return entry === name
     })
     this.setState({
-      modal_mode: mode,
-      modal: true
+      settings: {
+        ...this.state.settings,  modal_mode: mode, modal: true, helper: mode === 3
+      }
     })
   }
 
-  onModal = e => {
+  onModal = (e, {name}) => {
+    console.log('Modal: ',name)
     this.setState({
-      modal_mode: -1,
-      modal: false
+      settings: {
+        ...this.state.settings,  modal_mode: -1, modal: false, helper: false
+      }
     })
   }
 
@@ -97,14 +97,6 @@ class MannequinHome extends React.Component {
       count: add,
       index: this.state.index + add
     })
-    //let count = (this.state.body[this.state.part][this.state.settings.layer[level]]+1)
-    //this.setState({
-    //  ...this.state, body: {
-    //    ...this.state.body,
-    //    [this.state.part]:
-    //    {[this.state.settings.layer[level]]: count}
-    //  }
-    //})
   }
 
   menuHome = e => {
@@ -133,14 +125,6 @@ class MannequinHome extends React.Component {
     //this.props.changeLayer({body: this.state.body})
   }
 
-  addItem = e => {
-    let indx
-  }
-
-  activeMann = e => {
-
-  }
-
   componentDidMount() {
     const { match,mann } = this.props
     let mannequin = {}
@@ -164,7 +148,8 @@ class MannequinHome extends React.Component {
   }
 
   render() {
-    const { mannequin,part,count,level,index, modal_mode, settings } = this.state
+    const { mannequin,part,count,level,index, settings } = this.state
+    const { helper, modal_mode, modal } = settings
     const ui = this.state.ui[this.props.lan]
     const { uid,...mann} = mannequin
 
@@ -203,21 +188,26 @@ class MannequinHome extends React.Component {
           onNext={this.onNext}
         />
 
-        <Modal open={this.state.modal} centered basic size='tiny'>
+        <Modal open={modal} centered basic size='tiny'>
           <Modal.Content>
             <p>
-              {ui[modal_mode]}
+              { helper ? <MannHelp lan={this.props.lan} /> : ui[modal_mode] }
             </p>
           </Modal.Content>
           <Modal.Actions>
-            <Button.Group widths='2'>
-              <Button onClick={this.onModal} name='n' secondary basic inverted>
-                <Icon name='remove' /> {ui[4]}
-              </Button>
-              <Button onClick={this.onModal} name='y' primary>
-                <Icon name='checkmark' /> {ui[3]}
-              </Button>
-            </Button.Group>
+            { helper ?
+              <Button onClick={this.onModal} fluid name='o'>
+                <Icon name='checkmark' /> {ui[5]}
+              </Button> :
+              <Button.Group widths='2'>
+                <Button onClick={this.onModal} name='n' secondary basic inverted>
+                  <Icon name='remove' /> {ui[4]}
+                </Button>
+                <Button onClick={this.onModal} name='y' primary>
+                  <Icon name='checkmark' /> {ui[3]}
+                </Button>
+              </Button.Group>
+            }
           </Modal.Actions>
         </Modal>
 

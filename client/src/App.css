@@ -170,7 +170,7 @@ input, select, textarea {
   top: 250px;
   left: 0;
   width: 24vw;
-  height: 180px;
+  height: 200px;
   z-index: 79;
 }
 .mnq-arrows {
@@ -248,7 +248,7 @@ input, select, textarea {
 
 .mannequin-thong {
   position: absolute;
-  top: 60px;
+  top: 80px;
   left: -1px;
   min-width: 30px;
   max-width: 45px;
@@ -293,6 +293,17 @@ input, select, textarea {
   transition-property: left top;
   transition-duration: 1s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.ui.styled.accordion, .ui.styled.accordion .accordion {
+  background-color: rgba(230, 220, 215, 0);
+  box-shadow: none;
+}
+.ui.styled.accordion .title {
+  text-align: left;
+  border: none;
+  font-size: 1.2em;
+  color: #444;
 }
 
 .signup {
@@ -420,8 +431,8 @@ input, select, textarea {
   font-size: 1.2em;
   font-weight: 300;
 }
-.paraf-narative {
-  text-align: justify;
+.paraf-narative, .paraf-narative span {
+  text-align: justify!important;
   font-family: 'Lato', sans-serif;
   font-size: 1em;
   font-style: normal;
