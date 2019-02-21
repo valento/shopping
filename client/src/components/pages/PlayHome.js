@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Divider, Button, Icon } from 'semantic-ui-react'
- import { getListMann, activateMann, getMannResources } from '../../actions/mann'
+import { getListMann, activateMann, getMannResources } from '../../actions/mann'
+import SocialBar from '../ui/social'
 
 class PlayHome extends React.Component {
   state = {
     loading: false,
     lan: {
-      en: ['Play it'],
-      es: ['Play']
+      en: ['Play it','Like it','Support it','Rate it'],
+      es: ['Play','Like','Aporte','']
     }
   }
 
@@ -32,12 +33,12 @@ class PlayHome extends React.Component {
       <div className='App-content'>
         <div className='mann-page'>
           <div className='mann-overlay vintage labeled'>
-            <p className='paraf-big'>Mannequins:</p>
+            <p className='paraf-big'>Mannequin Dolls:</p>
             <ul>
               {
                 mannequins.map( (entry,i) => {
-                  const ttl_style = (i % 2)? 'left' : 'right'
-                  const img_style = (i % 2)? 'right' : 'left'
+                  const ttl_style = (i % 2)? 'l' : 'r'
+                  const img_style = (i % 2)? 'r' : 'l'
                   const title = 'title_'+language
                   const dscr = 'dscr_'+language
                   const bkg = {
@@ -60,6 +61,7 @@ class PlayHome extends React.Component {
                               {lan[0]}
                             </Button>
                           <span>{entry.rest[dscr]}</span>
+                          <SocialBar likes={entry.rest.likes} rating={entry.rest.rating} lan={language} />
                         </div>
                     </li>
                   )

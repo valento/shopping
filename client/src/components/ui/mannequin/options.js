@@ -5,11 +5,21 @@ class Options extends React.Component {
   state = {
     en: {
       body: ['head','corp','waist','legs','feet'],
-      layer: ['top','over','main','under','skin']
+      layer: ['top','over','main','under','skin'],
+      head: ['scarfs','hats','eyes','earing','jewelry'],
+      corp: ['top','over','shirt','under','skin'],
+      waist: ['top','belts','main','under','skin'],
+      legs: ['top','skirt','trousers','under','skin'],
+      feet: ['top','over','shoes','under','skin']
     },
     es: {
       body: ['cabeza','cuerpo','cintura','piernas','pies'],
-      layer: ['tope','over','mitad','debajo','piel']
+      layer: ['tope','over','mitad','debajo','piel'],
+      head: ['tope','gorros','gafas','under','joyería'],
+      corp: ['tope','over','camisas','debajo','interior'],
+      waist: ['tope','adorno','principal','debajo','interior'],
+      legs: ['tope','falda','pantalon','debajo','medias'],
+      feet: ['tope','over','calzado','debajo','piel']
     },
     _keys: ['head','corp','waist','legs','feet'],
     _layers: ['top','over','main','under','skin']
@@ -77,7 +87,7 @@ class Options extends React.Component {
                       if(Number(op)>0){
                         return (
                           <Button key={op+'_'+i} onClick={this.onSubmenu} color='grey' nm={i} >
-                            {layer[i]}
+                            {this.state[this.props.lng][this.state.en.body[n]][i]}
                           </Button>
                         )
                       }
@@ -96,3 +106,5 @@ class Options extends React.Component {
 }
 
 export default Options
+
+// {layer[i]}

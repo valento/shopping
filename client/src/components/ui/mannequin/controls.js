@@ -42,6 +42,12 @@ export default class Controls extends React.Component {
   <List.Item onClick={ this.onControl } name='save'><List.Icon name='save outline' size='large' /></List.Item>
   <List.Item onClick={ this.onControl } name='share'><List.Icon name='share' size='large' /></List.Item>
   <List.Item onClick={ this.onControl } name='help'><List.Icon name='help circle' size='large' /></List.Item>
+  <List.Item onClick={ this.onControl } name='bkg'>
+    <Icon.Group size='small'>
+      <Icon size='big' color='black' name='square full' />
+      <Icon name='user' color='grey' inverted size=''/>
+  </Icon.Group>
+  </List.Item>
                 </List>
             </div>
           </Sidebar>

@@ -1,15 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button, Divider } from 'semantic-ui-react'
+import { Button, Divider, Icon } from 'semantic-ui-react'
 
 class WellcomeUser extends React.Component {
 
   state = {}
 
   text = {
-    en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Get some Credits', 'Windowshop', 'Welcome, ', 'Play that Mannequin', 'Support Us'],
-    es: ['Me alegra que volviste', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Gane Créditos', 'Vitrinando', 'Bienvenid', 'Juega el Mannequin' , 'Apóyenos']
+    en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Get some Credits', 'Windowshop', 'Welcome, ', 'Play that Mannequin Doll', 'Support Us'],
+    es: ['Me alegra que volviste', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Gane Créditos', 'Vitrinando', 'Bienvenid', 'Juega este Mannequin' , 'Apóyenos']
   }
 
   render() {
@@ -20,7 +20,7 @@ class WellcomeUser extends React.Component {
     return (
       <div className='vintage'>
         <p className='paraf-mid'>{wellcome}<b>, {u_name}</b></p>
-          <Button as={Link} to='/mannequin' fluid color='black'>{l[8]}</Button>
+          <Button as={Link} to='/mannequin' fluid color='black' icon='play circle outline' content={l[8]} />
         <Divider horizontal>{l[1]}</Divider>
           <Button as={Link} to='/crowdfunding' fluid color='blue' icon='undo' content={l[9]} />
 

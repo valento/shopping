@@ -32,13 +32,13 @@ class MannequinHome extends React.Component {
       modal_mode: -1
     },
     ui: {
-      modal_modes: ['save','share','clear','help'],
+      modal_modes: ['save','share','clear','help','bkg'],
       es: [
         'Guardar este Mannequin?', 'Enviar tu Mannequin a nuestro Instagram?',
-        'Limpiar que cosa?', 'Si', 'No', 'Lo tengo claro!'
+        'Limpiar que cosa?', '', 'Poner fondo?', 'Si', 'No', 'Lo tengo claro!'
       ],
       en: [
-        'Save this Mannequin?', 'Share this on our Instagram?', 'Clear what?',
+        'Save this Mannequin?', 'Share this on our Instagram?', 'Clear what?', '', 'Change Background?',
         'Yes', 'No', 'Got it!'
       ]
     }
@@ -197,14 +197,14 @@ class MannequinHome extends React.Component {
           <Modal.Actions>
             { helper ?
               <Button onClick={this.onModal} fluid name='o'>
-                <Icon name='checkmark' /> {ui[5]}
+                <Icon name='checkmark' /> {ui[7]}
               </Button> :
               <Button.Group widths='2'>
                 <Button onClick={this.onModal} name='n' secondary basic inverted>
-                  <Icon name='remove' /> {ui[4]}
+                  <Icon name='remove' /> {ui[6]}
                 </Button>
                 <Button onClick={this.onModal} name='y' primary>
-                  <Icon name='checkmark' /> {ui[3]}
+                  <Icon name='checkmark' /> {ui[5]}
                 </Button>
               </Button.Group>
             }
