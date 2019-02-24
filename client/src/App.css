@@ -57,6 +57,9 @@ input, select, textarea {
   background: url(/img/IMG_1203.jpg);
   background-size: cover;
 }
+.App-content.none {
+  background: none;
+}
 
 .home-page {
   padding-top: 10vh;
@@ -111,8 +114,17 @@ input, select, textarea {
   height: 46vw;
 }
 .comming {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   background-size: cover!important;
   background-color: rgb(230,215,220)
+}
+.comming .modal {
+  background-color: rgba(205,205,205,.5);
+  padding: 5px 10px;
+  color: white;
 }
 .mann-page .list {
   max-width: 55vw;
@@ -548,6 +560,10 @@ a.domain {
 }
 .right {
   float: right;
+}
+.downed {
+  position: relative;
+  top: 140px;
 }
 .clear {
   clear: both;

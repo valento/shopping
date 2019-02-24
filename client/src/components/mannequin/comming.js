@@ -1,18 +1,35 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import CrowdFundUs from '../ui/CrowdFundUs'
+import LikeButton from '../ui/like'
 
-const MannequinComming = props => {
-  const bkg = {
-    background: `url(/img/mannequin/mann_bkg_100${props.match.params.uid}.png)`,
-    backgroundClor: 'rgb(230,215,220)'
+class MannequinComming extends React.Component {
+  state = {
+    bkg: {
+      background: `url(/img/mannequin/mann_bkg_100${this.props.match.params.uid}.jpg)`,
+      backgroundClor: 'rgb(230,215,220)'
+    }
   }
-  return (
-    <div className='App-content'>
-      <div className='comming' style={bkg}>
-        <div className='mann-overlay commming'>
-          Comming Up {props.match.params.uid}
+
+  render(){
+    const id = this.props.data.findIndex( entry => {
+      return entry.uid === Number(this.props.match.params.uid)
+    })
+    return (
+      <div className='App-content none'>
+        <div className='comming' style={this.state.bkg}>
+          <LikeButton type='coming' size='big' lan={this.props.lan} likes={this.props.data[id].rest.likes}/>
+          <CrowdFundUs type='coming' lan={this.props.lan} />
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
-export default MannequinComming
+
+const mapStateToProps = state => ({
+  lan: state.settings.language,
+  data: state.data
+})
+
+export default connect(mapStateToProps)(MannequinComming)
+//Comming Up {props.match.params.uid}

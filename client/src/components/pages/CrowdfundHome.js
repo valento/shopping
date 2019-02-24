@@ -1,13 +1,13 @@
 import React from 'react'
-import CrowdFundUs from '../ui/CrowdFundUs'
 import {connect} from 'react-redux'
+import CrowdFundUs from '../ui/CrowdFundUs'
 
 class CrowdfundHome extends React.Component {
   render() {
     return (
       <div className='App-content man'>
         <div className='home-page padded'>
-          <CrowdFundUs lan={this.props.lan} />
+          <CrowdFundUs lan={this.props.lan} type='full'/>
         </div>
       </div>
     )

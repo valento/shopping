@@ -1,22 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button,Icon,Label } from 'semantic-ui-react'
+import LikeButton from './like'
 
-const SocialBar = ({raintg,likes,lan}) => {
-  return (
-    <div className='social bar'>
-      <p>
-        <Button as='div' labelPosition='right'>
-          <Button color='black' size='mini'>
-            <Icon name='heart' />
-          </Button>
-          <Label basic pointing='left'>
-            <span>{likes}</span>
-          </Label>
-        </Button></p>
-      <p><Button as={Link} to='/crowdfunding' size='mini' color='blue' icon='undo' content='Support' /></p>
-    </div>
-  )
+class SocialBar extends React.Component {
+  state = {
+
+  }
+  render() {
+    const {raintg,likes,lan,simple} = this.props
+    return (
+      <div className='social bar'>
+        <LikeButton type='like' size='mini' lan={lan} likes={likes}/>
+        {
+          !simple ? (
+            <p><Button as={Link} to='/crowdfunding' size='mini' color='blue' icon='undo' content='Support' /></p>
+          ) : ''
+        }
+      </div>
+    )
+  }
+
 }
 
 export default SocialBar

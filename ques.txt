@@ -196,6 +196,11 @@ INSERT INTO resources (mann_id,item_id,body,layer,name) VALUES
 (1,1,16,4,'1_16_4_1'),
 (1,1,16,16,'1_16_16_1');
 
+INSERT INTO resources (mann_id,item_id,body,layer,name) values
+(1,1,4,8,'1_4_8_1'),
+(1,1,4,8,'1_4_8_2'),
+(1,1,4,8,'1_4_8_3');
+
 SELECT (body,layer) FROM resource WHERE uid=?;
 
 // MANNEQUINS: ================================================================
@@ -464,3 +469,50 @@ mannequin: {
   proms: [],
   user: {}
 }
+
+
+================================================================================
+======= INDIEGOGO ===========================================================
+================================================================================
+Campaign Overview:
+
+In an inspiring attempt to improve online shopping experience, here we present our Mannequin Doll - a
+Web Application. Mannequin Doll App. explores modern techniques to promote fashion through gameable user experience.
+Mannequin Doll App. will periodically publish Mannequins showcasing wearable fashion products in a unique,
+pleasant and entertaining style. Our audience will enjoy beautiful models, diverse styling and innovative
+user interface and experience. Shopping will be fun again!
+
+
+=====================================================
+Short Summary:
+
+Contributors fund ideas they can be passionate about and to people they trust. Here are some things to do in this section:
+
+Introduce yourself and your background.
+Briefly describe your campaign and why it's important to you.
+Express the magnitude of what contributors will help you achieve.
+Remember, keep it concise, yet personal. Ask yourself: if someone stopped reading here would they be ready to make a contribution?
+
+What We Need & What You Get
+What we spend money for:
+
+Our Mobile platform is deployed on Google App Engine - that costs us monthly fee for Virtual Machines, cloud data base and storage. Cloud services can get expensive on production - yet they give us secure and scalable environment.
+Our Mannequin productions take professional models, photography staging and sometimes exotic locations. We spend good money to ensure good looking, but we believe it's worth it.
+We will keep maintaining our digital environment regardless the success of this crowd funding. But with the help of community funding we will develop more exciting features - like glamour mannequins, loyalty shopping coupons, realtime user interactions, live sessions,  models' Story-telling, random events actions, etc.
+
+Crowdfunding will also help us produce and publish many and more exciting Mannequin Dolls - we have plenty of ideas how to mix shopping, fashion and entertainment.
+
+Only Contributors will have access to the more exciting productions. Your contribution will make you part of The Catalista Club. The level of your Membership will give you access to our special model events during the year (of course you'll also need to be close to our location, but we move a lot)
+
+The Impact
+We won't change the world. But: We can entertain and help your fashion and good looks. We can also improve your shopping choices and help you trade better with designers by exchanging your passion for good discounts.
+
+Mannequin Doll is a just a pilot micro-service included into a bigger privately funded project - The Catalista Club. Contributors will become members of that club - we keep record of our contributers through this service's API
+
+Risks & Challenges
+This is a just a pilot feature from a bigger privately funded project - The Catalista Club. Our goal is to introduce and test some of our digital features as micro-services. Mannequin Doll is just the beginning!
+
+Other Ways You Can Help
+If this isn't the project you were looking for please pass the word to your friends - sure some will get entertained
+
+And that's all there is to it.

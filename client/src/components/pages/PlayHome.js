@@ -61,7 +61,7 @@ class PlayHome extends React.Component {
                               {lan[0]}
                             </Button>
                           <span>{entry.rest[dscr]}</span>
-                          <SocialBar likes={entry.rest.likes} rating={entry.rest.rating} lan={language} />
+                          <SocialBar likes={entry.rest.likes} simple={true} rating={entry.rest.rating} lan={language} />
                         </div>
                     </li>
                   )

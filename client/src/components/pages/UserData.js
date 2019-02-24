@@ -27,7 +27,7 @@ class UserData extends React.Component {
       <div className='home-page vintage'>
         { mdata && <UserDataForm user={user} main_data={mdata} lan={language} saveUser={this.saveUser}/>}
         { !mdata && <UserDataForm user={user} main_data={mdata} lan={language} saveUser={this.saveUser}/>}
-        <Divider horizontal className='promo'>{lan.slice(-1)[0]}</Divider>
+      
         <CrowdFundUs lan={language} />
       </div>
     )

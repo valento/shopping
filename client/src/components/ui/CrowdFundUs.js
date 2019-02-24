@@ -11,7 +11,8 @@ export default class CrowdFundUs extends React.Component {
           'El Mannequin es el proyecto piloto de ua serie de applicaciones entorno personalidades \
           catalizadoras. Con este proyecto intento poner el inicio del Club Catalista, \
           y entretener, provocar, revelar y catalizar con la energia que siempre he podido \
-          irradiar alrededor mío. Bienvenido! y espero que lo disfrute...'
+          irradiar alrededor mío. Bienvenido! y espero que lo disfrute...',
+          'crowdfunding','próximamente'
         ],
         faq: [
           {
@@ -35,10 +36,11 @@ export default class CrowdFundUs extends React.Component {
         ]
       },
       en: {
-        ui: ['Support Us','Click here, please to keep this project alive','Why should I do that?',
-            'This Mannequin Doll is just the pilot project in a serie of appliations dedicated to \
+        ui: ['Support Us','Click here, please to keep this project alive','Why would I do that?',
+            'This Mannequin Doll is just the pilot in a serie of micro-services dedicated to \
             "La Catalista" movement. It is also the beginning of The Catalist Club. More exciting \
-            services are to be published. To follow me - click below and support this project!'
+            services are to be published. To follow me - click below and support this project!',
+            'crowdfunding','Coming soon'
         ],
         faq: [
           {
@@ -83,16 +85,30 @@ export default class CrowdFundUs extends React.Component {
   render() {
     const { ui, faq } = this.state.lan[this.props.lan]
     const { open, activeIndex } = this.state
+    let styles
+    switch(this.props.type){
+      case 'full' :
+        styles = 'signup vintage'
+      break
+      case 'coming' :
+        styles = 'signup vintage downed modal'
+      break
+    }
     return(
-      <div className='signup vintage'>
-        <span className='paraf-narative'>
-          {ui[3]}
-        </span>
-        <Divider horizontal> * * * </Divider>
+      <div className={styles}>
+        { this.props.type === 'full' ?
+          (
+            <span className='paraf-narative'>
+              {ui[3]}
+            </span>
+          ) :
+          ''
+        }
+        <Divider horizontal className='promo'> {this.props.type === 'full' ? ui[4] : ui[5]} </Divider>
         <p className='paraf-big'>{ui[1]}</p>
         <Button fluid icon='undo' color='blue' content={ui[0]} />
-        <Label as='a' onClick={this.openFaq} basic color='red' inverted='true' size='big' pointing> {ui[2]} </Label>
-        <Divider horizontal> * * * </Divider>
+        {this.props.type === 'full' && <Label as='a' onClick={this.openFaq} basic color='red' inverted='true' size='big' pointing> {ui[2]} </Label>}
+        <Divider horizontal className='promo'> * * * </Divider>
         {open &&
           <Accordion fluid styled>
             {faq.map((f, i) => {
