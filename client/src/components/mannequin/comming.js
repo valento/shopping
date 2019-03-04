@@ -18,7 +18,7 @@ class MannequinComming extends React.Component {
     return (
       <div className='App-content none'>
         <div className='comming' style={this.state.bkg}>
-          <LikeButton type='coming' size='big' lan={this.props.lan} likes={this.props.data[id].rest.likes}/>
+          <LikeButton type='coming' size='small' lan={this.props.lan} likes={this.props.data[id].rest.likes}/>
           <CrowdFundUs type='coming' lan={this.props.lan} />
         </div>
       </div>

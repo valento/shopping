@@ -12,6 +12,10 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _uaParserJs = require('ua-parser-js');
+
+var _uaParserJs2 = _interopRequireDefault(_uaParserJs);
+
 var _user = require('./routes/user');
 
 var _user2 = _interopRequireDefault(_user);
@@ -53,13 +57,16 @@ app.use('/list', _lists2.default);
 app.use('/gsql', _gsqlRouter2.default);
 
 app.get('/', function (req, res) {
-  //console.log(req.headers)
   var language = req.get('accept-language').split(',')[0];
   var lan = language.match(/^(es)/) ? 'es' : 'en';
   var mobile = req.get('user-agent').match(/(Mobile)/g) ? true : false;
   //res.send(`Hi, there, from Express! ${lan}, ${((mobile) ? 'mobile' : 'pc')}`)
   if (ENV === 'production') {
-    res.sendFile(_path2.default.join(__dirname, '../client/build/index.html'));
+    if (lan === 'es') {
+      res.sendFile(_path2.default.join(__dirname, '../client/build/index_es.html'));
+    } else {
+      res.sendFile(_path2.default.join(__dirname, '../client/build/index.html'));
+    }
   } else {
     res.send('This is not a Web Page');
   }

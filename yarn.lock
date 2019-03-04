@@ -2384,14 +2384,6 @@ nconf@^0.10.0:
     secure-keys "^1.0.0"
     yargs "^3.19.0"
 
-nconfig@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/nconfig/-/nconfig-0.0.6.tgz#1c086c88ddfd9934ad89eaf73d3a173f85a2d880"
-  integrity sha1-HAhsiN39mTStier3PToXP4Wi2IA=
-  dependencies:
-    underscore "~1.6.0"
-    underscore-deep-extend "~0.0.3"
-
 needle@^2.2.1:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/needle/-/needle-2.2.4.tgz#51931bff82533b1928b7d1d69e01f1b00ffd2a4e"
@@ -3204,15 +3196,10 @@ type-is@~1.6.16:
     media-typer "0.3.0"
     mime-types "~2.1.18"
 
-underscore-deep-extend@~0.0.3:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/underscore-deep-extend/-/underscore-deep-extend-0.0.5.tgz#121eea506f86ccc0c1b24dc6bae1c97f9b767162"
-  integrity sha1-Eh7qUG+GzMDBsk3GuuHJf5t2cWI=
-
-underscore@~1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.6.0.tgz#8b38b10cacdef63337b8b24e4ff86d45aea529a8"
-  integrity sha1-izixDKze9jM3uLJOT/htRa6lKag=
+ua-parser-js@^0.7.19:
+  version "0.7.19"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.19.tgz#94151be4c0a7fb1d001af7022fdaca4642659e4b"
+  integrity sha512-T3PVJ6uz8i0HzPxOF9SWzWAlfN/DavlpQqepn22xgve/5QecC+XMCAtmUNnY7C9StehaV6exjUCI801lOI7QlQ==
 
 union-value@^1.0.0:
   version "1.0.0"

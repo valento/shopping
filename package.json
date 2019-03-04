@@ -36,6 +36,7 @@
     "jsonwebtoken": "^8.4.0",
     "mysql": "^2.16.0",
     "nconf": "^0.10.0",
-    "sqlite3": "^4.0.4"
+    "sqlite3": "^4.0.4",
+    "ua-parser-js": "^0.7.19"
   }
 }

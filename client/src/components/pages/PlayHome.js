@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Divider, Button, Icon } from 'semantic-ui-react'
-import { getListMann, activateMann, getMannResources } from '../../actions/mann'
+
+import { getListMann, activateMann, getMannResources, addSocial } from '../../actions/mann'
+
 import SocialBar from '../ui/social'
 
 class PlayHome extends React.Component {
@@ -27,7 +29,7 @@ class PlayHome extends React.Component {
   }
 
   render() {
-    const { mannequins, language } = this.props
+    const { mannequins, language, games } = this.props
     const lan = this.state.lan[language]
     return (
       <div className='App-content'>
@@ -61,7 +63,11 @@ class PlayHome extends React.Component {
                               {lan[0]}
                             </Button>
                           <span>{entry.rest[dscr]}</span>
-                          <SocialBar likes={entry.rest.likes} simple={true} rating={entry.rest.rating} lan={language} />
+                          <SocialBar id={entry.uid}
+                            social={games[entry.uid]}
+                            likes={entry.rest.likes} simple={true}
+                            rating={entry.rest.rating} lan={language}
+                          />
                         </div>
                     </li>
                   )
@@ -80,9 +86,13 @@ PlayHome.propTypes = {
   mannequins: PropTypes.array.isRequired
 }
 
- const mapStateToProps = state => ({
-   gender: state.user.gender || state.settings.gender,
-   language: state.user.language || state.settings.language,
-   mannequins: state.data
- })
-export default connect(mapStateToProps, { getListMann,activateMann,getMannResources })(PlayHome)
+const mapStateToProps = state => ({
+  gender: state.user.gender || state.settings.gender,
+  language: state.user.language || state.settings.language,
+  mannequins: state.data,
+  games: state.games
+})
+
+export default connect(mapStateToProps,
+  { getListMann,activateMann,getMannResources,
+   addSocial })(PlayHome)

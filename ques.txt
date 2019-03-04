@@ -248,6 +248,29 @@ INSERT INTO mann (c_status,title_en,title_es,dscr_en,dscr_es,head,corp,waist,leg
 'Colombia es la Nueva Tierra de oportunidades. "Tayrona" es la nueva Costa Azul...',
 4,4,4,4,4);
 
+CREATE TABLE mann_actions (
+uid INTEGER PRIMARY KEY UNIQUE AUTO_INCREMENT NOT NULL,
+user_id INTEGER NOT NULL,
+mann_id INTEGER NOT NULL,
+likes INTEGER,
+rate INTEGER,
+going INTEGER,
+waiting INTEGER,
+played INTEGER,
+attended INTEGER,
+support INTEGER,
+interested INTEGER,
+c_owner INTEGER unsigned NOT NULL DEFAULT 1,
+c_group TINYINT unsigned NOT NULL DEFAULT 1,
+c_status TINYINT unsigned DEFAULT 16,
+c_permis INTEGER unsigned DEFAULT 500,
+FOREIGN KEY (user_id) REFERENCES users (uid) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (mann_id) REFERENCES mann (uid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO mann_actions (mann_id, user_id, likes) VALUES(
+1,1,1
+)
 
 // =================================================================
 echo $PATH
@@ -264,13 +287,12 @@ export PATH=$PATH:/usr/local/mysql/bin
 
 // == ROLES: ================
 role = ['owner','owner_group','other']
-role = ['owner','owner_group','other']
-role = ['owner','owner_group','other']
-role = ['owner','owner_group','other']
-role = ['owner','owner_group','other']
 
 // == GROUPS: ================
 groups = ['root','officer','vip','fan','user','wheel']
+
+// == SOCIAL: ================
+actions = ['like','dislike','rate','want','coming','interested']
 
 // == PRIVILEGES: ===========
 permiss = [

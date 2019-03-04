@@ -24,14 +24,31 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _user = require('../api/user');
 
 var _user2 = _interopRequireDefault(_user);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var fb = {
+  clientSecret: process.env.FB_APP_SECRET,
+  clientID: process.env.FB_APP_ID,
+  callbackURL: process.env.FB_CALLBACK_URL
+};
+
 var authRouter = _express2.default.Router();
 authRouter.use(_bodyParser2.default.json());
+
+authRouter.get('/facebook', function (req, res, next) {
+  //
+});
+authRouter.get('/facebook/callback', function (req, res, next) {
+  //
+});
 
 authRouter.get('/check', function (req, res, next) {
   //db.findOne( req.query, 'users' )

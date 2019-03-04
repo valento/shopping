@@ -15,7 +15,7 @@ import setAuthHeader from './setAuthHeader'
 
 const initState = {
   settings: {
-    language: 'en',
+    language: window._DEFAULT_LAN || 'en',
     domain: 1,
     category: 0,
     gender: 0,// 0-none, 1-male, 2-female
@@ -26,7 +26,8 @@ const initState = {
   resources: {},
   data: [],
   proms: [],
-  user: {}
+  user: {},
+  games: {}
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

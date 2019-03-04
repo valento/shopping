@@ -3,11 +3,25 @@ import bodyParser from 'body-parser'
 import generator from 'generate-password'
 import bcrypt from 'bcrypt-nodejs'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
 import api from '../api/user'
 
+const fb = {
+  clientSecret: process.env.FB_APP_SECRET,
+  clientID: process.env.FB_APP_ID,
+  callbackURL: process.env.FB_CALLBACK_URL
+}
+
 const authRouter = express.Router()
 authRouter.use(bodyParser.json())
+
+authRouter.get('/facebook', (req,res,next) => {
+  //
+})
+authRouter.get('/facebook/callback', (req,res,next) => {
+  //
+})
 
 authRouter.get('/check', (req,res,next) => {
   //db.findOne( req.query, 'users' )

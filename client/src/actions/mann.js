@@ -1,6 +1,7 @@
 import { BODY_ACTIVATED, MANN_UPDATED, MANN_ACTIVE_UPDATED,
   LAYER_ACTIVATED, ITEM_CHANGED, DATA_UPDATED, MANN_ACTIVATED,
-  RESOURCES_SET, RESOURCE_CHANGED} from '../types'
+  RESOURCES_SET, RESOURCE_CHANGED, MANN_SOC_ACTION
+} from '../types'
 import api from '../api'
 
 export const updateData = data => ({
@@ -10,6 +11,11 @@ export const updateData = data => ({
 
 export const updateMann = data => ({
   type: MANN_UPDATED,
+  data
+})
+
+export const addSocial = data => ({
+  type: MANN_SOC_ACTION,
   data
 })
 

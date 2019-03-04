@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Button, Label, Icon, Divider, Accordion } from 'semantic-ui-react'
 
 export default class CrowdFundUs extends React.Component {
@@ -69,7 +70,7 @@ export default class CrowdFundUs extends React.Component {
     }
   }
 
-  handleClick = (e, titleProps) => {
+  handleModalsOptions = (e, titleProps) => {
     const { index } = titleProps
     const { activeIndex } = this.state
     const newIndex = activeIndex === index ? -1 : index
@@ -88,10 +89,10 @@ export default class CrowdFundUs extends React.Component {
     let styles
     switch(this.props.type){
       case 'full' :
-        styles = 'signup vintage'
+        styles = 'vintage'
       break
       case 'coming' :
-        styles = 'signup vintage downed modal'
+        styles = 'vintage downed modal'
       break
     }
     return(
@@ -106,8 +107,12 @@ export default class CrowdFundUs extends React.Component {
         }
         <Divider horizontal className='promo'> {this.props.type === 'full' ? ui[4] : ui[5]} </Divider>
         <p className='paraf-big'>{ui[1]}</p>
-        <Button fluid icon='undo' color='blue' content={ui[0]} />
-        {this.props.type === 'full' && <Label as='a' onClick={this.openFaq} basic color='red' inverted='true' size='big' pointing> {ui[2]} </Label>}
+        <Button fluid icon='undo' as='a' href='https://www.indiegogo.com/projects/mannequin-doll/x/19109771#/' color='blue' content={ui[0]} />
+        {this.props.type === 'full' &&
+          <Label as='a' onClick={this.openFaq} basic color='red'
+            inverted='true' size='big' pointing>
+            {ui[2]}
+          </Label>}
         <Divider horizontal className='promo'> * * * </Divider>
         {open &&
           <Accordion fluid styled>
@@ -116,7 +121,7 @@ export default class CrowdFundUs extends React.Component {
                 <div className='faq'>
                   <Accordion.Title active={activeIndex === i+1}
                     index={i+1}
-                    onClick={this.handleClick}
+                    onClick={this.handleModalsOptions}
                     className='accordion-white-title'>
                     <Icon name='dropdown' />
                       {f.q}
