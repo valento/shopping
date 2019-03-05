@@ -118,7 +118,7 @@ export default class CrowdFundUs extends React.Component {
             {ui[2]}
           </Label>}
         {this.props.type === 'full' && <Divider horizontal className='promo'> * * * </Divider>}
-        {this.props.type === 'coming' && <Link to='/mannequin'>Go Back to Mannequins</Link>}
+        
         {open &&
           <Accordion fluid styled>
             {faq.map((f, i) => {
