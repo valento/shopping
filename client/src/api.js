@@ -31,5 +31,8 @@ export default {
   mann: {
     listMann: gender => axios.get('list/m/mann/'+gender).then( res => res.data ),
     getResources: uid => axios.get('../list/mann/resources/'+uid).then( res => res.data )
+  },
+  settup: {
+    setUI: () => axios.get('/ua').then( res => res.data )
   }
 }

@@ -29,6 +29,8 @@ export const setTree = taxonomy => ({
 export const getStore = domain => dispatch =>
   api.collection.getCategories(domain).then( collection => dispatch(setTree(collection)) )
 
+export const uiSettup = () => dispatch =>
+  api.settup.setUI().then( language => dispatch({ type: LANGUAGE, language }) )
 
 export const getPromos = domain => dispatch =>
   api.collection.getPromos(domain).then( proms =>  dispatch(promos(proms)) )

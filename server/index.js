@@ -17,6 +17,9 @@ let ENV = process.env.NODE_ENV || 'development'
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
+//app.set('view engine','pug')
+//app.set('views', '.views')
+
 app.use('/static', express.static(path.join(__dirname, '../client/build/static')))
 
 app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
@@ -27,17 +30,20 @@ app.use('/auth', authRouter)
 app.use('/list', listRouter)
 app.use('/gsql', gsqlRouter)
 
-app.get('/', (req,res) => {
+app.get('/ua', (req,res,next) => {
+  //let settings = {}
   const language = req.get('accept-language').split(',')[0]
   const lan = language.match(/^(es)/) ? 'es' : 'en'
   const mobile = req.get('user-agent').match((/(Mobile)/g)) ? true : false
+  //settings.lan = lan
+  //settings.mob = mobile
+  res.status(200).send(lan)
+})
+
+app.get('/', (req,res) => {
   //res.send(`Hi, there, from Express! ${lan}, ${((mobile) ? 'mobile' : 'pc')}`)
   if(ENV === 'production') {
-    if(lan === 'es') {
-      res.sendFile(path.join(__dirname, '../client/build/index_es.html'))
-    } else {
-      res.sendFile(path.join(__dirname, '../client/build/index.html'))
-    }
+    res.sendFile(path.join(__dirname, '../client/build/index.html'))
   } else {
     res.send('This is not a Web Page')
   }

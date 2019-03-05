@@ -11,16 +11,17 @@ const LikeButton = ({lan,type,size,likes,onLike,social}) => {
   }
 
   return (
-    <div>
+    <div className='social like'>
       <Button as='div' disabled={social !== undefined ? social.like : 0} labelPosition='right' onClick={onLike}>
         <Button color='black' size={size}>
-          {type==='coming'? <span>{state.ui[lan][1]}</span> : ''}
+          {type==='coming'? <span>{state.ui[lan][1]} </span> : ''}
           <Icon name='heart'/>
         </Button>
         <Label basic pointing='left'>
           <span>{likes}</span>
         </Label>
       </Button>
+      <div className='clear'></div>
     </div>
   )
 }

@@ -92,7 +92,7 @@ export default class CrowdFundUs extends React.Component {
         styles = 'vintage'
       break
       case 'coming' :
-        styles = 'vintage downed modal'
+        styles = 'vintage modal'
       break
     }
     return(
@@ -107,13 +107,18 @@ export default class CrowdFundUs extends React.Component {
         }
         <Divider horizontal className='promo'> {this.props.type === 'full' ? ui[4] : ui[5]} </Divider>
         <p className='paraf-big'>{ui[1]}</p>
-        <Button fluid icon='undo' as='a' href='https://www.indiegogo.com/projects/mannequin-doll/x/19109771#/' color='blue' content={ui[0]} />
+        <Button fluid icon='undo' as='a' color='blue'
+          content={ui[0]}
+          href='https://www.indiegogo.com/projects/mannequin-doll/x/19109771#/'
+        />
+        <div className='clear'></div>
         {this.props.type === 'full' &&
           <Label as='a' onClick={this.openFaq} basic color='red'
             inverted='true' size='big' pointing>
             {ui[2]}
           </Label>}
-        <Divider horizontal className='promo'> * * * </Divider>
+        {this.props.type === 'full' && <Divider horizontal className='promo'> * * * </Divider>}
+        {this.props.type === 'coming' && <Link to='/mannequin'>Go Back to Mannequins</Link>}
         {open &&
           <Accordion fluid styled>
             {faq.map((f, i) => {

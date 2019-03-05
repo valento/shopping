@@ -315,15 +315,23 @@ input, select, textarea {
 
 /* ==== SOCIAL UI ==================================================*/
 .social {
+  margin: 0;
   font: 'Lato', sans-serif;
   font-style: normal;
+}
+.social .ui.button {
+  margin-right: 0;
+}
+.like {
+  margin: 8px 0;
 }
 .bar {
 }
 .social span {
   margin: 0;
+  margin-right: 4px;
   padding: 0;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .ui.styled.accordion, .ui.styled.accordion .accordion {
@@ -449,6 +457,14 @@ input, select, textarea {
   text-align: left;
   font-size: 1.2em;
 }
+.vintage a {
+  color: white;
+  margin: 8px;
+  float: right;
+  font-size: 1.1em;
+  clear: both;
+}
+
 .vintage.title {
   line-height: 1em;
   text-align: left;

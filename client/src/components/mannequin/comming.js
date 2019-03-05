@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { Button, Icon } from 'semantic-ui-react'
 import CrowdFundUs from '../ui/CrowdFundUs'
 import LikeButton from '../ui/like'
 
@@ -17,9 +19,12 @@ class MannequinComming extends React.Component {
     })
     return (
       <div className='App-content none'>
-        <div className='comming' style={this.state.bkg}>
-          <LikeButton type='coming' size='small' lan={this.props.lan} likes={this.props.data[id].rest.likes}/>
-          <CrowdFundUs type='coming' lan={this.props.lan} />
+        <div className='man-page comming' style={this.state.bkg}>
+          <div className='downed'>
+            <LikeButton type='coming' size='small' lan={this.props.lan} likes={this.props.data[id].rest.likes}/>
+            <div className='clear'></div>
+            <CrowdFundUs type='coming' lan={this.props.lan} />
+          </div>
         </div>
       </div>
     )

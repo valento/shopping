@@ -11,11 +11,12 @@ import App from './App'
 //import * as serviceWorker from './serviceWorker'
 import decode from 'jwt-decode'
 import { userSignedIn, initUser } from './actions/auth'
+import { uiSettup } from './actions/'
 import setAuthHeader from './setAuthHeader'
 
 const initState = {
   settings: {
-    language: window._DEFAULT_LAN || 'en',
+    language: 'en',
     domain: 1,
     category: 0,
     gender: 0,// 0-none, 1-male, 2-female
@@ -31,7 +32,7 @@ const initState = {
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-console.log('window full: ',window.navigator.standalone)
+console.log('window full: ',window.navigator.standalone, window._lng)
 const store = createStore(
   rootReducer,
   initState,
@@ -48,6 +49,7 @@ if(localStorage.valeCollectionJWT){
   setAuthHeader(localStorage.valeCollectionJWT)
   store.dispatch(userSignedIn(user))
   store.dispatch(initUser())
+  store.dispatch(uiSettup())
 }
 
 const Root = (
