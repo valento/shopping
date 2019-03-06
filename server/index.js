@@ -37,7 +37,7 @@ app.get('/ua', (req,res,next) => {
   const mobile = req.get('user-agent').match((/(Mobile)/g)) ? true : false
   //settings.lan = lan
   //settings.mob = mobile
-  res.status(200).send(lan)
+  res.status(200).json({language: lan, mobile: mobile})
 })
 
 app.get('/', (req,res) => {

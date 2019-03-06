@@ -35,5 +35,7 @@ class SocialBar extends React.Component {
   }
 
 }
-
-export default connect(null,{ addSocial, userSocAction })(SocialBar)
+const mapStateToProps = state => ({
+  uid: state.user.uid
+})
+export default connect(mapStateToProps,{ addSocial, userSocAction })(SocialBar)

@@ -9,6 +9,18 @@ input, select, textarea {
   text-align: center;
   background-color: rgba(230,220,210,.8);
 }
+.desktop {
+  width: 414px;
+  height: 736px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 6px solid black;
+  border-radius: 24px;
+  color: white;
+  background: url(/img/IMG_5875.jpg);
+  background-size: cover;
+}
 
 .App-menu {
   position: fixed;
@@ -637,6 +649,45 @@ a.domain {
     top: 105px;
   }
   .App-menu {
+    height: 6vh;
+  }
+}
+@media screen and (min-width: 415px) {
+  .body-parts img {
+    left: -87px;
+    top: 0px;
+    height: calc(100vh - 0px);
+  }
+  .mnq-arrows {
+    top: 105px;
+  }
+  #root {
+    display: flex;
+    justify-content: center;
+  }
+  .home-mannequin {
+    width: 414px;
+  }
+  .mann-page ul {
+    width: auto;
+  }
+  .mann-page .list {
+    width: 220px;
+  }
+  .App {
+    max-width: 414px;
+    max-height: 736px;
+  }
+  .App-content {
+    max-width: 414px;
+    max-height: 736px;
+  }
+  .vintage {
+    width: 414px;
+    padding-right: 28px;
+  }
+  .App-menu {
+    width: 414px;
     height: 6vh;
   }
 }

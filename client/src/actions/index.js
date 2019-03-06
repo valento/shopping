@@ -1,6 +1,6 @@
 import {
   CATEGORY_CHANGED, CATEGORY_TREE,
-  USER_UPDATED, PROMOS_LIST, DOMAIN_CHANGED, LANGUAGE
+  USER_UPDATED, PROMOS_LIST, DOMAIN_CHANGED, LANGUAGE, MOBILE
 } from '../types'
 import api from '../api'
 
@@ -30,7 +30,11 @@ export const getStore = domain => dispatch =>
   api.collection.getCategories(domain).then( collection => dispatch(setTree(collection)) )
 
 export const uiSettup = () => dispatch =>
-  api.settup.setUI().then( language => dispatch({ type: LANGUAGE, language }) )
+  api.settup.setUI().then( data => {
+    const { language, mobile } = data
+    dispatch({ type: LANGUAGE, language })
+    dispatch({ type: MOBILE, mobile })
+  })
 
 export const getPromos = domain => dispatch =>
   api.collection.getPromos(domain).then( proms =>  dispatch(promos(proms)) )

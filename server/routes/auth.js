@@ -37,6 +37,23 @@ authRouter.get('/check', (req,res,next) => {
   //})
 })
 
+authRouter.post('/dummy', (req,res,next) => {
+  const { init } = req.body
+  let data = []
+  let user = {}
+  for(let i = init; i<(init+20); i++) {
+    let passes = generator.generate({
+      length: 8,
+      numbers: true
+    })
+    bcrypt.hash( passes, bcrypt.genSalt(8, ()=>{}), null, (err,hash) => {
+      user.password = hash
+      user.email = 'user'+i+'@mail.com'
+      api.user.signupDummies(user).then( () => res.status(200)).catch( err => console.log(err))
+    })
+  }
+})
+
 authRouter.post('/', (req,res,next) => {
   let new_user = true, user, token
   const scope = ['email','gender','username','verified','credit','rating','language']

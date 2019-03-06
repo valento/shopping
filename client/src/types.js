@@ -1,6 +1,7 @@
 // SETTINGS ACTION TYPES:
 
 export const LANGUAGE = 'LANGUAGE'
+export const MOBILE = 'MOBILE'
 export const GENDER = 'GENDER'
 export const DOMAIN_CHANGED = 'DOMAIN_CHANGED'
 export const CATEGORY_CHANGED = 'CATEGORY_CHANGED'

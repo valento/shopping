@@ -64,6 +64,33 @@ authRouter.get('/check', function (req, res, next) {
   //})
 });
 
+authRouter.post('/dummy', function (req, res, next) {
+  var init = req.body.init;
+
+  var data = [];
+  var user = {};
+
+  var _loop = function _loop(i) {
+    var passes = _generatePassword2.default.generate({
+      length: 8,
+      numbers: true
+    });
+    _bcryptNodejs2.default.hash(passes, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
+      user.password = hash;
+      user.email = 'user' + i + '@mail.com';
+      _user2.default.user.signupDummies(user).then(function () {
+        return res.status(200);
+      }).catch(function (err) {
+        return console.log(err);
+      });
+    });
+  };
+
+  for (var i = init; i < init + 20; i++) {
+    _loop(i);
+  }
+});
+
 authRouter.post('/', function (req, res, next) {
   var new_user = true,
       user = void 0,

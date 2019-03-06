@@ -32,6 +32,18 @@ export default {
         })
       })
     },
+    signupDummies: user => {
+      let params = []
+      const { email, password } = user
+      params.push(email,password)
+      const sql = `INSERT INTO users(email,password) VALUES(?,?)`;
+      return new Promise( (resolve, reject ) => {
+        db.query(sql, params, ( err ) => {
+          if(err) return reject(err)
+          resolve()
+        })
+      })
+    },
     login: () => {},
     getAll: () => {},
     getOne: (data={},table,scope=['email']) => {

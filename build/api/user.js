@@ -46,6 +46,20 @@ exports.default = {
         });
       });
     },
+    signupDummies: function signupDummies(user) {
+      var params = [];
+      var email = user.email,
+          password = user.password;
+
+      params.push(email, password);
+      var sql = 'INSERT INTO users(email,password) VALUES(?,?)';
+      return new Promise(function (resolve, reject) {
+        db.query(sql, params, function (err) {
+          if (err) return reject(err);
+          resolve();
+        });
+      });
+    },
     login: function login() {},
     getAll: function getAll() {},
     getOne: function getOne() {

@@ -66,7 +66,7 @@ app.get('/ua', function (req, res, next) {
   var mobile = req.get('user-agent').match(/(Mobile)/g) ? true : false;
   //settings.lan = lan
   //settings.mob = mobile
-  res.status(200).send(lan);
+  res.status(200).json({ language: lan, mobile: mobile });
 });
 
 app.get('/', function (req, res) {

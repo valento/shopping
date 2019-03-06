@@ -1,5 +1,5 @@
 import {
-  LANGUAGE, GENDER, LOCATION, PROMOS_LIST,
+  LANGUAGE, MOBILE, GENDER, LOCATION, PROMOS_LIST,
   DOMAIN_CHANGED, CATEGORY_CHANGED, CATEGORY_TREE,
   USER_INIT, USER_SIGNED, USER_UPDATED, USER_LOGGED_OUT
 } from '../types'
@@ -8,10 +8,12 @@ export const settings = (state={}, action) => {
   switch (action.type) {
     case LANGUAGE :
      return {...state, language: action.language}
+    case MOBILE :
+      return {...state, mobile: action.mobile}
     case GENDER :
       return {...state, gender: action.gender}
     case DOMAIN_CHANGED :
-     return {...state, domain: action.domain}
+      return {...state, domain: action.domain}
     case CATEGORY_CHANGED :
       return {...state, category: action.category}
     case CATEGORY_TREE :
