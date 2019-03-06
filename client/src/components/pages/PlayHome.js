@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Divider, Button, Icon } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 
 import { getListMann, activateMann, getMannResources, addSocial } from '../../actions/mann'
 
@@ -88,7 +88,7 @@ PlayHome.propTypes = {
 
 const mapStateToProps = state => ({
   gender: state.user.gender || state.settings.gender,
-  language: state.user.language || state.settings.language,
+  language: state.settings.language || state.user.language,
   mannequins: state.data,
   games: state.games
 })

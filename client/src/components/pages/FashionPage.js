@@ -9,37 +9,48 @@ import PropTypes from 'prop-types'
 class FashionHome extends React.Component {
 
   render() {
-    const { match } = this.props
+    const { match, closed } = this.props
     console.log('Fashion Page Gender: ', match.params.gender)
     const g = match.params.gender
     const bkg = (g > 1) ? 'woman' : 'man'
     return (
-      <div className={'App-content ' + bkg}>
-        <div className='contents'>
-          <div className='submenu'>
-            <SubmenuRoute location={this.props.location} path={match.url}
-              gen={g}
-              component={FashionMenu}
-            />
+      closed ? (
+        <div className={'App-content ' + bkg}>
+          <div className="desktop">
+            <h2>Shopping is under construction!</h2>
+            <p>Check out soon!</p>
           </div>
-          <Switch>
-            <Route path={match.url} component={AnyList}/>
-            <Route path={`${match.url}/:category`} component={AnyList}/>
-          </Switch>
         </div>
-      </div>
+      ):(
+        <div className={'App-content ' + bkg}>
+          <div className='contents'>
+            <div className='submenu'>
+              <SubmenuRoute location={this.props.location} path={match.url}
+                gen={g}
+                component={FashionMenu}
+              />
+            </div>
+            <Switch>
+              <Route path={match.url} component={AnyList}/>
+              <Route path={`${match.url}/:category`} component={AnyList}/>
+            </Switch>
+          </div>
+        </div>
+      )
     )
   }
 }
 
 FashionHome.propTypes = {
-  gender: PropTypes.number.isRequired
+  gender: PropTypes.number.isRequired,
+  closed: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => {
   return {
     lan: state.settings.language,
-    domain: state.settings.domain
+    domain: state.settings.domain,
+    closed: state.settings.closed
   }
 }
 

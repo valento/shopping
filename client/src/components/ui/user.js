@@ -13,7 +13,7 @@ const UserAccount = ({ credit }) => {
       </div>
       <div className='user-icon'>
         <Link to='/cart'><Icon name='cart' size='small' color='grey' /></Link>
-        <span>2</span>
+        <span></span>
       </div>
     </div>
   )

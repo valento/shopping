@@ -14,6 +14,6 @@ class CrowdfundHome extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  lan: state.user.language || state.settings.language,
+  lan: state.settings.language,
 })
 export default connect(mapStateToProps)(CrowdfundHome)

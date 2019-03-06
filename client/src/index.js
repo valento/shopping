@@ -16,12 +16,13 @@ import setAuthHeader from './setAuthHeader'
 
 const initState = {
   settings: {
-    language: 'en',
+    language: 'es',
     mobile: true,
     domain: 1,
     category: 0,
     gender: 0,// 0-none, 1-male, 2-female
-    taxonomy: []
+    taxonomy: [],
+    closed: true
   },
   mannequins: [],
   mstate: [],

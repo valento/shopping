@@ -10,8 +10,8 @@ input, select, textarea {
   background-color: rgba(230,220,210,.8);
 }
 .desktop {
-  width: 414px;
-  height: 736px;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -652,42 +652,10 @@ a.domain {
     height: 6vh;
   }
 }
-@media screen and (min-width: 415px) {
-  .body-parts img {
-    left: -87px;
-    top: 0px;
-    height: calc(100vh - 0px);
-  }
-  .mnq-arrows {
-    top: 105px;
-  }
-  #root {
-    display: flex;
-    justify-content: center;
-  }
-  .home-mannequin {
+@media screen and (min-width: 420px) {
+
+  .desktop {
     width: 414px;
-  }
-  .mann-page ul {
-    width: auto;
-  }
-  .mann-page .list {
-    width: 220px;
-  }
-  .App {
-    max-width: 414px;
-    max-height: 736px;
-  }
-  .App-content {
-    max-width: 414px;
-    max-height: 736px;
-  }
-  .vintage {
-    width: 414px;
-    padding-right: 28px;
-  }
-  .App-menu {
-    width: 414px;
-    height: 6vh;
+    height: 736px;
   }
 }

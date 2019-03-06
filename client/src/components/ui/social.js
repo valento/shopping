@@ -1,19 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button,Icon,Label } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
 import { addSocial } from '../../actions/mann'
 import { userSocAction } from '../../actions/games'
 import LikeButton from './like'
 
 class SocialBar extends React.Component {
-  state = {
 
-  }
   onLike = () => {
     console.log( 'Like this: ' , this.props.id)
-    this.props.userSocAction({[this.props.id]: {like: 1}})
+    this.props.userSocAction({[this.props.id]: {like: 1}}, this.props.uid)
   }
   render() {
     const {raintg,likes,lan,simple,social} = this.props

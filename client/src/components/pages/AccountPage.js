@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button, Icon, Form, Divider, Label } from 'semantic-ui-react'
+import { Button, Divider } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { updateUser } from '../../actions'
 import PropTypes from 'prop-types'
