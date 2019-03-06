@@ -17,6 +17,7 @@ import setAuthHeader from './setAuthHeader'
 const initState = {
   settings: {
     language: 'en',
+    mobile: true,
     domain: 1,
     category: 0,
     gender: 0,// 0-none, 1-male, 2-female

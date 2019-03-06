@@ -50,6 +50,7 @@ const App = ({ location, mobile }) => {
 }
 
 App.propTypes = {
+  mobile: PropTypes.boolean,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired
