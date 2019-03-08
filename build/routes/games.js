@@ -27,10 +27,10 @@ gamesRouter.route('/mann/').get(function (req, res, next) {
   var _req$body = req.body,
       mann_id = _req$body.mann_id,
       user_id = _req$body.user_id,
-      rest = _objectWithoutProperties(_req$body, ['mann_id', 'user_id']);
+      action = _objectWithoutProperties(_req$body, ['mann_id', 'user_id']);
 
-  _games2.default.addSocial(mann_id.toString(), rest).then(function (results) {
-    return console.log(results[0]);
+  _games2.default.addSocial(mann_id.toString(), mann_id.toString(), action).then(function (results) {
+    return console.log(results);
   });
 });
 

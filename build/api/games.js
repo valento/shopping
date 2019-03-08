@@ -33,7 +33,6 @@ exports.default = {
     var act = Object.keys(action)[0];
     var val = Object.values(action)[0];
     var sql = 'INSERT INTO mann_actions(uid,mann_id,user_id,' + act + ') VALUES(\'' + uid + '\',' + mann_id + ',' + user_id + ',' + val + ') ON DUPLICATE KEY UPDATE ' + act + '=' + val;
-    console.log(sql);
     return new Promise(function (resolve, reject) {
       db.query(sql, (mann_id, user_id, val), function (err) {
         if (err) return reject(err);
@@ -41,16 +40,8 @@ exports.default = {
       });
     });
   },
-  countSocial: function countSocial(mann_id, action) {
-    //const act = Object.keys(action)[0]
-    //const sql = `SELECT COUNT(${act}) FROM mann_actions WHERE mann_id=${mann_id}`
-    //console.log(sql)
-    //return new Promise( (resolve,reject) => {
-    //  db.query(sql, ( err,results ) => {
-    //    if(err) return reject(err)
-    //    resolve(results)
-    //  })
-    //} )
+  countSocial: function countSocial() {
+    //
   }
 };
 //# sourceMappingURL=games.js.map

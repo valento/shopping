@@ -23,7 +23,6 @@ export default {
     const act = Object.keys(action)[0]
     const val = Object.values(action)[0]
     const sql = `INSERT INTO mann_actions(uid,mann_id,user_id,${act}) VALUES('${uid}',${mann_id},${user_id},${val}) ON DUPLICATE KEY UPDATE ${act}=${val}`
-    console.log(sql)
     return new Promise( (resolve,reject) => {
       db.query(sql, (mann_id,user_id,val), err => {
         if(err) return reject(err)
@@ -31,15 +30,7 @@ export default {
       })
     } )
   },
-  countSocial: (mann_id, action) => {
-    //const act = Object.keys(action)[0]
-    //const sql = `SELECT COUNT(${act}) FROM mann_actions WHERE mann_id=${mann_id}`
-    //console.log(sql)
-    //return new Promise( (resolve,reject) => {
-    //  db.query(sql, ( err,results ) => {
-    //    if(err) return reject(err)
-    //    resolve(results)
-    //  })
-    //} )
+  countSocial: () => {
+    //
   }
 }

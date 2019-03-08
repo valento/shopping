@@ -11,8 +11,8 @@ gamesRouter.route('/mann/')
   //api.countSocial(mann_id.toString(), rest).then( results => console.log(results) )
 } )
 .post( (req,res,next) => {
-  const { mann_id, user_id, ...rest } = req.body
-  api.addSocial(mann_id.toString(), rest).then( results => console.log(results[0]))
+  const { mann_id, user_id, ...action } = req.body
+  api.addSocial(mann_id.toString(),mann_id.toString(), action).then( results => console.log(results))
 } )
 
 export default gamesRouter
