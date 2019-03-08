@@ -34,7 +34,7 @@ exports.default = {
     var val = Object.values(action)[0];
     var sql = 'INSERT INTO mann_actions(uid,mann_id,user_id,' + act + ') VALUES(\'' + uid + '\',' + mann_id + ',' + user_id + ',' + val + ') ON DUPLICATE KEY UPDATE ' + act + '=' + val;
     return new Promise(function (resolve, reject) {
-      db.query(sql, (mann_id, user_id, val), function (err) {
+      db.query(sql, function (err) {
         if (err) return reject(err);
         resolve();
       });

@@ -12,7 +12,7 @@ gamesRouter.route('/mann/')
 } )
 .post( (req,res,next) => {
   const { mann_id, user_id, ...action } = req.body
-  api.addSocial(mann_id.toString(),mann_id.toString(), action).then( results => console.log(results))
+  api.addSocial(mann_id.toString(),user_id.toString(), action).then( results => console.log(results))
 } )
 
 export default gamesRouter

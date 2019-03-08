@@ -24,7 +24,7 @@ export default {
     const val = Object.values(action)[0]
     const sql = `INSERT INTO mann_actions(uid,mann_id,user_id,${act}) VALUES('${uid}',${mann_id},${user_id},${val}) ON DUPLICATE KEY UPDATE ${act}=${val}`
     return new Promise( (resolve,reject) => {
-      db.query(sql, (mann_id,user_id,val), err => {
+      db.query(sql, err => {
         if(err) return reject(err)
         resolve()
       })
