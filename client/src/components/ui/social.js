@@ -4,14 +4,16 @@ import { Link } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
 
 import { addSocial } from '../../actions/mann'
-import { userSocAction } from '../../actions/games'
+import { userSocAction, socAction } from '../../actions/games'
 import LikeButton from './like'
 
 class SocialBar extends React.Component {
 
   onLike = () => {
+    const {id,uid} = this.props
     console.log( 'Like this: ' , this.props.id)
-    this.props.userSocAction({[this.props.id]: {like: 1}}, this.props.uid)
+    this.props.userSocAction({[id]: {like: 1}})
+    this.props.socAction({user_id: uid, mann_id: id, likes: 1})
   }
   render() {
     const {raintg,likes,lan,simple,social} = this.props
@@ -36,4 +38,4 @@ class SocialBar extends React.Component {
 const mapStateToProps = state => ({
   uid: state.user.uid
 })
-export default connect(mapStateToProps,{ addSocial, userSocAction })(SocialBar)
+export default connect(mapStateToProps,{ addSocial, userSocAction, socAction })(SocialBar)

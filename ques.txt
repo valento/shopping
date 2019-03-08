@@ -249,7 +249,7 @@ INSERT INTO mann (c_status,title_en,title_es,dscr_en,dscr_es,head,corp,waist,leg
 4,4,4,4,4);
 
 CREATE TABLE mann_actions (
-uid INTEGER PRIMARY KEY UNIQUE AUTO_INCREMENT NOT NULL,
+uid VARCHAR(20) PRIMARY KEY UNIQUE NOT NULL,
 user_id INTEGER NOT NULL,
 mann_id INTEGER NOT NULL,
 likes INTEGER,

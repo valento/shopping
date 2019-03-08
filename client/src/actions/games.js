@@ -8,4 +8,6 @@ export const userSocAct = game => ({
   game
 })
 
-export const userSocAction = (user,mann,act) => dispatch => dispatch(userSocAct(user,mann))
+export const userSocAction = (mann) => dispatch => dispatch(userSocAct(mann))
+
+export const socAction = (data) => dispatch => api.mann.manSoc(data).then()//dispatch(userSocAct(mann)

@@ -12,9 +12,9 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _uaParserJs = require('ua-parser-js');
+var _expressRequestLanguage = require('express-request-language');
 
-var _uaParserJs2 = _interopRequireDefault(_uaParserJs);
+var _expressRequestLanguage2 = _interopRequireDefault(_expressRequestLanguage);
 
 var _user = require('./routes/user');
 
@@ -27,6 +27,10 @@ var _auth2 = _interopRequireDefault(_auth);
 var _lists = require('./routes/lists');
 
 var _lists2 = _interopRequireDefault(_lists);
+
+var _games = require('./routes/games');
+
+var _games2 = _interopRequireDefault(_games);
 
 var _gsqlRouter = require('./routes/gsqlRouter');
 
@@ -57,16 +61,18 @@ app.use('/img', _express2.default.static(_path2.default.join(__dirname, '../clie
 app.use('/user', _user2.default);
 app.use('/auth', _auth2.default);
 app.use('/list', _lists2.default);
+app.use('/games', _games2.default);
 app.use('/gsql', _gsqlRouter2.default);
 
-app.get('/ua', function (req, res, next) {
+app.get('/ua', (0, _expressRequestLanguage2.default)({ languages: ['en', 'es'] }), function (req, res, next) {
   //let settings = {}
-  var language = req.get('accept-language').split(',')[0];
-  var lan = language.match(/^(es)/) ? 'es' : 'en';
+  var lng = req.language;
+  //const lan = language.match(/^(es)/) ? 'es' : 'en'
   var mobile = req.get('user-agent').match(/(Mobile)/g) ? true : false;
+  console.log('Language: ', lng);
   //settings.lan = lan
   //settings.mob = mobile
-  res.status(200).json({ language: lan, mobile: mobile });
+  res.status(200).json({ language: lng, mobile: mobile });
 });
 
 app.get('/', function (req, res) {

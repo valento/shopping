@@ -1,5 +1,4 @@
 import express from 'express'
-import database from '../api/user'
 import { checkAuth, getUserId } from '../middleware/auth'
 import dotenv from 'dotenv'
 import api from '../api/user'
@@ -7,11 +6,9 @@ import api from '../api/user'
 const userRouter = express.Router({
   mergeParams: true
 })
-//userRouter.use()
-dotenv.config({ silent: true })
-//const db = new database(process.env.DB)
 
-//userRouter.all('/data',checkAuth)
+dotenv.config({ silent: true })
+
 userRouter.route('/')
 .get(getUserId, (req,res,next) => {
   const { email } = req
@@ -32,7 +29,7 @@ userRouter.route('/')
 userRouter.route('/data')
 .get(getUserId, (req,res,next) => {
   const { email } = req
-  const scope = ['email','gender','username','verified','credit','rating','language']
+  const scope = ['uid','email','gender','username','verified','credit','rating','language']
   api.user.getOne({email}, 'users', scope)
   .then( results => {
     if(results.length > 0){

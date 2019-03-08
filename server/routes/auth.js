@@ -56,7 +56,7 @@ authRouter.post('/dummy', (req,res,next) => {
 
 authRouter.post('/', (req,res,next) => {
   let new_user = true, user, token
-  const scope = ['email','gender','username','verified','credit','rating','language']
+  const scope = ['uid','email','gender','username','verified','credit','rating','language']
   const { email } = req.body.credentials
 
   api.user.getOne({ email }, 'users', scope)
@@ -72,7 +72,7 @@ authRouter.post('/', (req,res,next) => {
         api.user.signup(data)
         .then( () => api.user.getOne({ email }, 'users', scope))
         .then( results => {
-          token = jwt.sign({email}, process.env.JWT_SECRET)
+          token = jwt.sign({ email }, process.env.JWT_SECRET)
           user = Object.assign({},results[0],{token: token, new_user: new_user})
           res.status(200).json( {user} )
         })

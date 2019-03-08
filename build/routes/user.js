@@ -8,15 +8,15 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _user = require('../api/user');
-
-var _user2 = _interopRequireDefault(_user);
-
 var _auth = require('../middleware/auth');
 
 var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
+
+var _user = require('../api/user');
+
+var _user2 = _interopRequireDefault(_user);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,11 +25,9 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 var userRouter = _express2.default.Router({
   mergeParams: true
 });
-//userRouter.use()
-_dotenv2.default.config({ silent: true });
-//const db = new database(process.env.DB)
 
-//userRouter.all('/data',checkAuth)
+_dotenv2.default.config({ silent: true });
+
 userRouter.route('/').get(_auth.getUserId, function (req, res, next) {
   var email = req.email;
 
@@ -49,7 +47,7 @@ userRouter.route('/').get(_auth.getUserId, function (req, res, next) {
 userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
   var email = req.email;
 
-  var scope = ['email', 'gender', 'username', 'verified', 'credit', 'rating', 'language'];
+  var scope = ['uid', 'email', 'gender', 'username', 'verified', 'credit', 'rating', 'language'];
   _user2.default.user.getOne({ email: email }, 'users', scope).then(function (results) {
     if (results.length > 0) {
       var user = Object.assign({}, results[0]);

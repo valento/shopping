@@ -1,11 +1,12 @@
 import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
-import parser from 'ua-parser-js'
+import requestLanguage from 'express-request-language'
 
 import userRouter from './routes/user'
 import authRouter from './routes/auth'
 import listRouter from './routes/lists'
+import gamesRouter from './routes/games'
 import gsqlRouter from './routes/gsqlRouter'
 import dotenv from 'dotenv'
 
@@ -28,16 +29,18 @@ app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
 app.use('/user', userRouter)
 app.use('/auth', authRouter)
 app.use('/list', listRouter)
+app.use('/games', gamesRouter)
 app.use('/gsql', gsqlRouter)
 
-app.get('/ua', (req,res,next) => {
+app.get('/ua', requestLanguage({languages: ['en','es']}), (req,res,next) => {
   //let settings = {}
-  const language = req.get('accept-language').split(',')[0]
-  const lan = language.match(/^(es)/) ? 'es' : 'en'
+  const lng = req.language
+  //const lan = language.match(/^(es)/) ? 'es' : 'en'
   const mobile = req.get('user-agent').match((/(Mobile)/g)) ? true : false
+  console.log('Language: ',lng)
   //settings.lan = lan
   //settings.mob = mobile
-  res.status(200).json({language: lan, mobile: mobile})
+  res.status(200).json({language: lng, mobile: mobile})
 })
 
 app.get('/', (req,res) => {

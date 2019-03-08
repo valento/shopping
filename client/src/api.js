@@ -29,7 +29,7 @@ export default {
     getCategories: domain => axios.get('../list/category/'+domain).then( res => res.data)
   },
   mann: {
-    //manSoc: (user,mann,act) => axios.post('/games/mann', {.......}),
+    manSoc: data => axios.post('/games/mann', data),
     listMann: gender => axios.get('list/m/mann/'+gender).then( res => res.data ),
     getResources: uid => axios.get('../list/mann/resources/'+uid).then( res => res.data )
   },

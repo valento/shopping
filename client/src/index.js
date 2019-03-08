@@ -51,8 +51,9 @@ if(localStorage.valeCollectionJWT){
   setAuthHeader(localStorage.valeCollectionJWT)
   store.dispatch(userSignedIn(user))
   store.dispatch(initUser())
-  store.dispatch(uiSettup())
 }
+
+store.dispatch(uiSettup())
 
 const Root = (
   <Provider store={store}>
