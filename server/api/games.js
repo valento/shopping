@@ -30,7 +30,17 @@ export default {
       })
     } )
   },
-  countSocial: () => {
-    //
+  countSocial: (mann_id,action) => {
+    const id=Number(mann_id)
+    const sql = `SELECT COUNT(${action}) from mann_actions WHERE mann_id=${id}`
+    return new Promise( (resolve,reject) => {
+      db.query(sql, (err,results) => {
+        if(!err){
+          resolve(results[0])
+        } else {
+          reject(err)
+        }
+      })
+    } )
   }
 }

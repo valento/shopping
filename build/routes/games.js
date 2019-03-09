@@ -8,9 +8,15 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
+var _bodyParser = require('body-parser');
+
+var _bodyParser2 = _interopRequireDefault(_bodyParser);
+
 var _games = require('../api/games');
 
 var _games2 = _interopRequireDefault(_games);
+
+var _auth = require('../middleware/auth');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19,11 +25,21 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 var gamesRouter = _express2.default.Router({
   mergeParams: true
 });
+gamesRouter.use(_bodyParser2.default.json());
 
-gamesRouter.route('/mann/').get(function (req, res, next) {
-  //const { mann_id, ...rest } = req.body
-  //api.countSocial(mann_id.toString(), rest).then( results => console.log(results) )
-}).post(function (req, res, next) {
+gamesRouter.get('/mann/:action/:id', function (req, res, next) {
+  var _req$params = req.params,
+      action = _req$params.action,
+      id = _req$params.id;
+
+  _games2.default.countSocial(id, action).then(function (results) {
+    return res.status(200).json({ data: results['COUNT(' + action + ')'] });
+  }).catch(function (error) {
+    return console.log(error);
+  });
+});
+
+gamesRouter.route('/mann').post(function (req, res, next) {
   var _req$body = req.body,
       mann_id = _req$body.mann_id,
       user_id = _req$body.user_id,

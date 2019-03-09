@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Button, Icon } from 'semantic-ui-react'
+import MannCard from '../ui/mannequin/card'
 
-import { getListMann, activateMann, getMannResources, addSocial } from '../../actions/mann'
-
-import SocialBar from '../ui/social'
+import { getListMann } from '../../actions/mann'
 
 class PlayHome extends React.Component {
   state = {
@@ -17,12 +16,6 @@ class PlayHome extends React.Component {
     }
   }
 
-  onMann = (e,{id,status}) => {
-    if(status) {
-      this.props.getMannResources(id)
-    }
-  }
-
   componentDidMount(){
     const gender = this.props.gender
     this.props.getListMann(gender)
@@ -30,7 +23,6 @@ class PlayHome extends React.Component {
 
   render() {
     const { mannequins, language, games } = this.props
-    const lan = this.state.lan[language]
     return (
       <div className='App-content'>
         <div className='mann-page'>
@@ -41,35 +33,19 @@ class PlayHome extends React.Component {
                 mannequins.map( (entry,i) => {
                   const ttl_style = (i % 2)? 'l' : 'r'
                   const img_style = (i % 2)? 'r' : 'l'
-                  const title = 'title_'+language
-                  const dscr = 'dscr_'+language
                   const bkg = {
                     background: `url(/img/mannequin/l_100${entry.uid}.png)`,
                     backgroundPosition: (i % 2)? 'right' : 'left',
                     backgroundRepeat: 'no-repeat'
                   }
                   return (
-                    <li key={entry.uid} style={bkg}>
-                        <div className={ttl_style + ' grid list'}>
-                          <p>{entry.rest[title]}</p>
-                            <Button icon fluid color='black'
-                              onClick={this.onMann}
-                              id={entry.uid} as={Link}
-                              status={entry.rest.c_status===4}
-                              to={entry.rest.c_status===4 ? '/mannequin/'+entry.uid :
-                              '/mannequin/comming/'+entry.uid}
-                              >
-                              <Icon name='play circle outline'/>
-                              {lan[0]}
-                            </Button>
-                          <span>{entry.rest[dscr]}</span>
-                          <SocialBar id={entry.uid}
-                            social={games[entry.uid]}
-                            likes={entry.rest.likes} simple={true}
-                            rating={entry.rest.rating} lan={language}
-                          />
-                        </div>
-                    </li>
+                    <MannCard
+                      entry={entry} bkg={bkg}
+                      language={language}
+                      onMann={this.onMann}
+                      games={games}
+                      img_style={img_style} ttl_style={ttl_style}
+                    />
                   )
                 })
               }
@@ -93,6 +69,4 @@ const mapStateToProps = state => ({
   games: state.games
 })
 
-export default connect(mapStateToProps,
-  { getListMann,activateMann,getMannResources,
-   addSocial })(PlayHome)
+export default connect(mapStateToProps,{getListMann})(PlayHome)

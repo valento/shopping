@@ -40,8 +40,18 @@ exports.default = {
       });
     });
   },
-  countSocial: function countSocial() {
-    //
+  countSocial: function countSocial(mann_id, action) {
+    var id = Number(mann_id);
+    var sql = 'SELECT COUNT(' + action + ') from mann_actions WHERE mann_id=' + id;
+    return new Promise(function (resolve, reject) {
+      db.query(sql, function (err, results) {
+        if (!err) {
+          resolve(results[0]);
+        } else {
+          reject(err);
+        }
+      });
+    });
   }
 };
 //# sourceMappingURL=games.js.map

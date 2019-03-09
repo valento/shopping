@@ -4,7 +4,7 @@ import { BODY_ACTIVATED, MANN_UPDATED, MANN_ACTIVE_UPDATED,
 } from '../types'
 import api from '../api'
 
-export const updateData = data => ({
+export const updateList = data => ({
   type: DATA_UPDATED,
   data
 })
@@ -53,7 +53,7 @@ export const getListMann = gender => dispatch => {
       return({uid,rest})
     })
     console.log('Mann Actions: ',mann)
-    dispatch( updateData(mnqs) )
+    dispatch( updateList(mnqs) )
     dispatch( updateMann(mann) )
   })
 }

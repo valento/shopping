@@ -30,6 +30,7 @@ export default {
   },
   mann: {
     manSoc: data => axios.post('/games/mann', data),
+    getMannSoc: (uid,act) => axios.get('/games/mann/'+act+'/'+uid).then(res => res.data),
     listMann: gender => axios.get('list/m/mann/'+gender).then( res => res.data ),
     getResources: uid => axios.get('../list/mann/resources/'+uid).then( res => res.data )
   },
