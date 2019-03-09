@@ -17,11 +17,16 @@ class SocialBar extends React.Component {
     this.props.updateLikes(id,social)
     this.props.socAction({user_id: uid, mann_id: id, likes: 1})
   }
+
   render() {
-    const {raintg,likes,lan,simple,social} = this.props
+    const {raintg,likes,lan,simple,social,id} = this.props
+    let lks = likes
+    if(social !== undefined){
+      lks += social.likes
+    }
     return (
       <div className='social bar'>
-        <LikeButton onLike={this.onLike} type='like' social={social} size='mini' lan={lan} likes={likes}/>
+        <LikeButton onLike={this.onLike} type='like' social={social} size='mini' lan={lan} likes={lks}/>
         {
           !simple ? (
             <p>

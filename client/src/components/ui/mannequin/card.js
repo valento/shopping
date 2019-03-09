@@ -23,9 +23,7 @@ class MannCard extends React.Component {
 
   componentDidMount() {
     const {uid} = this.props.entry
-    console.log('Mann Card Mounted with: ',uid)
     this.props.getSocialData(uid,'likes')
-    .then(res => console.log('MannCard: ',res))
   }
 
   render() {
