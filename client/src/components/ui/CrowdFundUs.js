@@ -109,6 +109,7 @@ export default class CrowdFundUs extends React.Component {
         <p className='paraf-big'>{ui[1]}</p>
         <Button fluid icon='undo' as='a' color='blue'
           content={ui[0]}
+          onClick={()=>this.props.onSoc('supported')}
           href='https://www.indiegogo.com/projects/mannequin-doll/x/19109771#/'
         />
         <div className='clear'></div>
@@ -118,7 +119,7 @@ export default class CrowdFundUs extends React.Component {
             {ui[2]}
           </Label>}
         {this.props.type === 'full' && <Divider horizontal className='promo'> * * * </Divider>}
-        
+
         {open &&
           <Accordion fluid styled>
             {faq.map((f, i) => {

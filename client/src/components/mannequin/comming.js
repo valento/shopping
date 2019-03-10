@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import CrowdFundUs from '../ui/CrowdFundUs'
 import LikeButton from '../ui/like'
+import { updateLikes, socAction } from '../../actions/games'
 
 class MannequinComming extends React.Component {
   state = {
@@ -16,9 +17,19 @@ class MannequinComming extends React.Component {
     }
   }
 
+  onSoc = action => {
+    const {uid} = this.props
+    let act = action === 'likes'? 'like' : action
+    console.log(action, act)
+    let social = {}
+    social[act.toString()] = 1
+    this.props.updateLikes(this.props.match.params.uid,social)
+    this.props.socAction({user_id: uid, mann_id: this.props.match.params.uid, [action]: 1})
+  }
+
   render(){
     const { ui, bkg } = this.state
-    const { lan, data, match } = this.props
+    const { lan, data, match, games } = this.props
     const id = data.findIndex( entry => {
       return entry.uid === Number(match.params.uid)
     })
@@ -27,9 +38,13 @@ class MannequinComming extends React.Component {
         <div className='man-page comming' style={bkg}>
           <div className='downed'>
             <Link to='/mannequin' className='vintage social'>&larr;{ui[lan][0]}</Link>
-            <LikeButton type='coming' size='small' lan={lan} likes={data[id].rest.likes}/>
+            <LikeButton type='interested' size='small' lan={lan}
+              social={games[match.params.uid]}
+              likes={data[id].rest.likes}
+              onSoc={this.onSoc}
+            />
             <div className='clear'></div>
-            <CrowdFundUs type='coming' lan={lan} />
+            <CrowdFundUs type='coming' onSoc={this.onSoc} lan={lan} />
           </div>
         </div>
       </div>
@@ -39,8 +54,10 @@ class MannequinComming extends React.Component {
 
 const mapStateToProps = state => ({
   lan: state.settings.language,
-  data: state.data
+  uid: state.user.uid,
+  data: state.data,
+  games: state.games
 })
 
-export default connect(mapStateToProps)(MannequinComming)
+export default connect(mapStateToProps, { updateLikes, socAction })(MannequinComming)
 //Comming Up {props.match.params.uid}

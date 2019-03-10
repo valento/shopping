@@ -1,8 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Icon,Label,Button } from 'semantic-ui-react'
 
-const LikeButton = ({lan,type,size,likes,onLike,social}) => {
+const LikeButton = ({lan,type,size,likes,onSoc,social}) => {
   const state = {
     ui: {
       es: ['Like it', 'Quiero verlo', 'Liked'],
@@ -10,15 +9,27 @@ const LikeButton = ({lan,type,size,likes,onLike,social}) => {
     }
   }
 
+  const action = type === 'like' ? 'likes' : type
+  const soc = social !== undefined ? Boolean(social[type]) : false
+  console.log(soc, action)
+
   return (
     <div className='social like'>
-      <Button as='div' disabled={social !== undefined ? social.like : 0} labelPosition='right' onClick={onLike}>
+      <Button as='div' labelPosition='right'
+        //disabled={soc}
+        onClick={() => {
+          if(!soc) onSoc(action)
+        }}
+      >
         <Button color='black' size={size}>
-          {type==='coming'? <span>{state.ui[lan][1]} </span> : ''}
-          <Icon name='heart'/>
+          {type==='interested'? <span>{state.ui[lan][1]} </span> : ''}
+          <Icon.Group>
+            <Icon name='heart'/>
+            {soc && <Icon corner='top right' size='large' color='red' name='check' />}
+          </Icon.Group>
         </Button>
         <Label basic pointing='left'>
-          <span>{likes}</span>
+          <span>{(likes < 1000)? likes : (likes/1000+'K')}</span>
         </Label>
       </Button>
       <div className='clear'></div>

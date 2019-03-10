@@ -354,6 +354,12 @@ input, select, textarea {
   padding: 0;
   font-size: 11px;
 }
+.social i.icons .corner.icon {
+  font-size: 1.5em;
+  left: 10px;
+  bottom: 12px;
+  text-shadow: none;
+}
 
 .like {
   margin: 8px 0;

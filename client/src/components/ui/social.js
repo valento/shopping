@@ -9,13 +9,15 @@ import LikeButton from './like'
 
 class SocialBar extends React.Component {
 
-  onLike = () => {
+  onSoc = action => {
     const {id,uid} = this.props
     console.log( 'Like this: ' , this.props.id)
+    let act = action === 'likes'? 'like' : action
+    console.log(action, act)
     let social = {}
-    social.like = 1
+    social[act.toString()] = 1
     this.props.updateLikes(id,social)
-    this.props.socAction({user_id: uid, mann_id: id, likes: 1})
+    this.props.socAction({user_id: uid, mann_id: id, [action]: 1})
   }
 
   render() {
@@ -26,7 +28,7 @@ class SocialBar extends React.Component {
     }
     return (
       <div className='social bar'>
-        <LikeButton onLike={this.onLike} type='like' social={social} size='mini' lan={lan} likes={lks}/>
+        <LikeButton onSoc={this.onSoc} type='like' social={social} size='mini' lan={lan} likes={lks}/>
         {
           !simple ? (
             <p>
