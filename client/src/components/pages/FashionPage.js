@@ -13,12 +13,17 @@ class FashionHome extends React.Component {
     console.log('Fashion Page Gender: ', match.params.gender)
     const g = match.params.gender
     const bkg = (g > 1) ? 'woman' : 'man'
+    const ttl = (g > 1) ? 'Woman' : 'Man'
+    const deadline = new Date('2019-04-10T00:24:00')
+    const now = new Date()
+    const rm = new Date(deadline-now)
     return (
       closed ? (
         <div className={'App-content ' + bkg}>
           <div className="desktop">
-            <h2>Shopping is under construction!</h2>
-            <p>Check out soon!</p>
+            <h2>{ttl} Store is under construction!</h2>
+            <p>Come back in:</p>
+            <span className='digital'>{rm.getDate()} days : {rm.getHours()} hrs : {rm.getMinutes()} min</span>
           </div>
         </div>
       ):(

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button,Icon } from 'semantic-ui-react'
 import SocialBar from '../social'
 import { getMannResources } from '../../../actions/mann'
-import { getSocialData } from '../../../actions/games'
+import { getSocialData, socAction } from '../../../actions/games'
 
 class MannCard extends React.Component {
   state = {
@@ -18,6 +18,7 @@ class MannCard extends React.Component {
   onMann = (e, {id,status}) => {
     if(status) {
       this.props.getMannResources(id)
+      this.props.socAction({user_id: this.props.user.uid, mann_id: id, played: 1})
     }
   }
 
@@ -58,4 +59,8 @@ class MannCard extends React.Component {
   }
 }
 
-export default connect(null,{ getMannResources, getSocialData })(MannCard)
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps,{ getMannResources, getSocialData, socAction })(MannCard)

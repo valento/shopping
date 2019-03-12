@@ -6,6 +6,7 @@ import { Button, Icon } from 'semantic-ui-react'
 import MannCard from '../ui/mannequin/card'
 
 import { getListMann } from '../../actions/mann'
+import Filters from '../ui/mannequin/filters'
 
 class PlayHome extends React.Component {
   state = {
@@ -22,12 +23,15 @@ class PlayHome extends React.Component {
   }
 
   render() {
-    const { mannequins, language, games } = this.props
+    const { mannequins, lan, games } = this.props
     return (
       <div className='App-content'>
         <div className='mann-page'>
           <div className='mann-overlay vintage labeled'>
-            <p className='paraf-big'>Mannequin Dolls:</p>
+            <div class='filters'>
+              <p className='paraf-big'>Mannequin Dolls</p>
+              <Filters filters={false} lan={lan}/>
+            </div>
             <ul>
               {
                 mannequins.map( (entry,i) => {
@@ -41,7 +45,7 @@ class PlayHome extends React.Component {
                   return (
                     <MannCard
                       entry={entry} bkg={bkg}
-                      language={language}
+                      language={lan}
                       onMann={this.onMann}
                       games={games}
                       img_style={img_style} ttl_style={ttl_style}
@@ -64,7 +68,7 @@ PlayHome.propTypes = {
 
 const mapStateToProps = state => ({
   gender: state.user.gender || state.settings.gender,
-  language: state.settings.language || state.user.language,
+  lan: state.settings.language || state.user.language,
   mannequins: state.data,
   games: state.games
 })

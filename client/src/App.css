@@ -73,6 +73,14 @@ input, select, textarea {
   background: none;
 }
 
+.general {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(230, 220, 215,.8);
+  padding: 0 8px;
+}
 .home-page {
   padding-top: 10vh;
   min-height: 100vh;
@@ -495,6 +503,37 @@ input, select, textarea {
   text-align: left;
   border-bottom: 1px solid #dcc6ab;
 }
+
+.filters p {
+  float: left;
+  margin-left: 4px;
+}
+.filters a {
+  margin-right: 10px;
+}
+.filters div {
+  position: relative;
+  text-align: right;
+  bottom: -10px;
+}
+.filters .ui.button {
+  padding: .6em 1.1em;
+  border-radius: 0;
+  background: black none;
+  color: white;
+  margin-left: -2px;
+}
+.filters .ui.basic.button, .filters .ui.basic.buttons .button {
+  flex: 1 0 auto;
+  margin: 0em;
+  border-right: 1px solid black;
+  padding: 0 1.1em;
+  border-radius: 0;
+  box-shadow: none;
+}
+.filters .ui.basic.button:last-child {
+  border: none;
+}
 .paraf-big {
   font-size: 2.3em;
   font-weight: 700;
@@ -612,6 +651,10 @@ a.domain {
 }
 .grid {
   display: grid
+}
+.digital {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.4em;
 }
 
 /* ------------------------------------------------------------------ */
