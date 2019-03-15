@@ -629,8 +629,7 @@ a.domain {
 
 /* ---- Utils --------------------------------------------------------------- */
 .padded {
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 0 12px;
 }
 .labeled .ui.labeled.button:not(.icon) {
   width: 100%;
@@ -646,6 +645,40 @@ a.domain {
   position: relative;
   top: 140px;
 }
+.red-font {
+  color: red;
+}
+.red-font.ui.divider {
+  color: red;
+}
+.alert {
+  padding: 4px 0;
+  background-color: rgba(200,50,50,.4);
+  border-radius: 6px;
+  color: rgb(130,0,0);
+}
+.alert p {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 2px;
+  font-weight: bold;
+}
+.alert .signup .ui.form input, .alert .signup .ui.form input:focus, .alert .signup .ui.form input>input {
+  border: 1px solid black;
+  border-radius: 1em;
+  background: white;
+  border-color: rgba(134,0,0,1)!important;
+  color: black;
+}
+.alert .signup .ui.form input>input {
+  border: 1px solid black;
+  border-radius: 1em;
+  background: none;
+}
+.alert .signup .ui.form .disabled.field, .ui.form .disabled.fields .field, .ui.form .field :disabled {
+  opacity: 1;
+}
+
 .clear {
   clear: both;
 }

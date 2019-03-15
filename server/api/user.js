@@ -70,6 +70,7 @@ export default {
       })
       params.push(email)
       const sql = `UPDATE users set ${upd} WHERE email=?`
+      console.log(sql)
       return new Promise( (resolve,reject ) => {
         db.query(sql,params, (err,results) => {
           if (err) return reject(err)

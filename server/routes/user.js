@@ -29,7 +29,7 @@ userRouter.route('/')
 userRouter.route('/data')
 .get(getUserId, (req,res,next) => {
   const { email } = req
-  const scope = ['uid','email','gender','username','verified','credit','rating','language']
+  const scope = ['uid','email','gender','username','verified','credit','rating','language','c_status']
   api.user.getOne({email}, 'users', scope)
   .then( results => {
     if(results.length > 0){

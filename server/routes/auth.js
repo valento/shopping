@@ -4,6 +4,7 @@ import generator from 'generate-password'
 import bcrypt from 'bcrypt-nodejs'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
+import { getUserId } from '../middleware/auth'
 
 import api from '../api/user'
 
@@ -54,9 +55,26 @@ authRouter.post('/dummy', (req,res,next) => {
   }
 })
 
+authRouter.post('/pass', getUserId, (req,res,next) => {
+  const { pass } = req.body.credentials
+  const { email } = req
+  bcrypt.hash( pass, bcrypt.genSalt(8, ()=>{}), null, ( err,hash ) => {
+    if(!err) {
+      let data = {password: hash, c_status: 4}
+      api.user.save({data}, email).then( () => {
+        let token = jwt.sign({email:email, password:hash}, process.env.JWT_SECRET)
+        let user = Object.assign({},{token:token, c_status: 4})
+        res.status(200).json({user})
+      } )
+      .catch( err => {
+        res.status(500)
+      })
+    }
+  })
+})
 authRouter.post('/', (req,res,next) => {
   let new_user = true, user, token
-  const scope = ['uid','email','gender','username','verified','credit','rating','language']
+  const scope = ['uid','email','gender','username','verified','credit','rating','language','c_status']
   const { email } = req.body.credentials
 
   api.user.getOne({ email }, 'users', scope)
@@ -74,7 +92,7 @@ authRouter.post('/', (req,res,next) => {
         .then( results => {
           token = jwt.sign({ email }, process.env.JWT_SECRET)
           user = Object.assign({},results[0],{token: token, new_user: new_user})
-          res.status(200).json( {user} )
+          res.status(200).json({user})
         })
       })
     } else {
@@ -131,7 +149,7 @@ authRouter.post('/', (req,res,next) => {
   })
 */
   .catch( err => {
-    res.status(200).json({ message: 'Welcome new one' })
+    res.status(500).json({ message: 'Something went wrong' })
   })
 })
 

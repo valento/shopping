@@ -28,6 +28,8 @@ var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
 
+var _auth = require('../middleware/auth');
+
 var _user = require('../api/user');
 
 var _user2 = _interopRequireDefault(_user);
@@ -91,11 +93,28 @@ authRouter.post('/dummy', function (req, res, next) {
   }
 });
 
+authRouter.post('/pass', _auth.getUserId, function (req, res, next) {
+  var pass = req.body.credentials.pass;
+  var email = req.email;
+
+  _bcryptNodejs2.default.hash(pass, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
+    if (!err) {
+      var data = { password: hash, c_status: 4 };
+      _user2.default.user.save({ data: data }, email).then(function () {
+        var token = _jsonwebtoken2.default.sign({ email: email, password: hash }, process.env.JWT_SECRET);
+        var user = Object.assign({}, { token: token, c_status: 4 });
+        res.status(200).json({ user: user });
+      }).catch(function (err) {
+        res.status(500);
+      });
+    }
+  });
+});
 authRouter.post('/', function (req, res, next) {
   var new_user = true,
       user = void 0,
       token = void 0;
-  var scope = ['uid', 'email', 'gender', 'username', 'verified', 'credit', 'rating', 'language'];
+  var scope = ['uid', 'email', 'gender', 'username', 'verified', 'credit', 'rating', 'language', 'c_status'];
   var email = req.body.credentials.email;
 
 
@@ -170,7 +189,7 @@ authRouter.post('/', function (req, res, next) {
     })
   */
   .catch(function (err) {
-    res.status(200).json({ message: 'Welcome new one' });
+    res.status(500).json({ message: 'Something went wrong' });
   });
 });
 

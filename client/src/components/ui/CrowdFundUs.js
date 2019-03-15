@@ -105,13 +105,15 @@ export default class CrowdFundUs extends React.Component {
           ) :
           ''
         }
-        <Divider horizontal className='promo'> {this.props.type === 'full' ? ui[4] : ui[5]} </Divider>
-        <p className='paraf-big'>{ui[1]}</p>
-        <Button fluid icon='undo' as='a' color='blue'
-          content={ui[0]}
-          onClick={()=>this.props.onSoc('supported')}
-          href='https://www.indiegogo.com/projects/mannequin-doll/x/19109771#/'
-        />
+        <Divider horizontal className='promo'> {ui[4]} </Divider>
+        <div className='padded'>
+          <p className='paraf-big'>{ui[1]}</p>
+          <Button fluid icon='undo' as='a' color='blue'
+            content={ui[0]}
+            onClick={()=>this.props.onSoc('supported')}
+            href='https://www.indiegogo.com/projects/mannequin-doll/x/19109771#/'
+          />
+        </div>
         <div className='clear'></div>
         {this.props.type === 'full' &&
           <Label as='a' onClick={this.openFaq} basic color='red'

@@ -1,4 +1,4 @@
-import { USER_SIGNED, USER_INIT, USER_LOGGED_OUT } from '../types'
+import { USER_SIGNED, USER_UPDATED, USER_INIT, USER_LOGGED_OUT } from '../types'
 import api from '../api'
 import decode from 'jwt-decode'
 import setAuthHeader from '../setAuthHeader'
@@ -17,12 +17,25 @@ export const userInit = user => ({
   user
 })
 
+export const userUpdated = user => ({
+  type: USER_UPDATED,
+  user
+})
+
 export const log = credentials => dispatch => {
   console.log('Action: ', credentials)
   api.user.log( credentials ).then( user => {
     localStorage.valeCollectionJWT = user.token
     setAuthHeader(localStorage.valeCollectionJWT)
     dispatch(userSignedIn(user))
+  })
+}
+
+export const pass = credentials => dispatch => {
+  api.user.pass(credentials).then( user => {
+    localStorage.valeCollectionJWT = user.token
+    setAuthHeader(localStorage.valeCollectionJWT)
+    dispatch(userUpdated(user))
   })
 }
 

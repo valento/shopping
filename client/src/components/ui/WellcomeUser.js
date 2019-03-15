@@ -8,7 +8,7 @@ class WellcomeUser extends React.Component {
   state = {}
 
   text = {
-    en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Get some Credits', 'Windowshop', 'Welcome, ', 'Play that Mannequin Doll', 'Support Us'],
+    en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Get some Credits', 'Windowshop', 'Welcome', 'Play that Mannequin Doll', 'Support Us'],
     es: ['Me alegra que volviste', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Gane Créditos', 'Vitrinando', 'Bienvenid', 'Juega este Mannequin' , 'Apóyenos']
   }
 
@@ -16,10 +16,10 @@ class WellcomeUser extends React.Component {
     const { gender, gen,language, new_user, username, lan } = this.props
     const u_name = (username) ? username : 'Anon'
     const l = this.text[lan]
-    const wellcome = new_user ? l[7].concat(gender>1 ? 'a' : 'o') : l[0]
+    const wellcome = new_user ? l[7] : l[0]
     return (
       <div className='vintage'>
-        <p className='paraf-mid'>{wellcome}<b>, {u_name}</b></p>
+        <p className='paraf-mid'>{wellcome},<b> {u_name}</b></p>
           <Button as={Link} to='/mannequin' fluid color='black' icon='play circle outline' content={l[8]} />
         <Divider horizontal>{l[1]}</Divider>
           <Button as={Link} to='/crowdfunding' fluid color='blue' icon='undo' content={l[9]} />

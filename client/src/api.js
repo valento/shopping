@@ -3,6 +3,7 @@ import axios from 'axios'
 export default {
   user: {
     log: credentials => axios.post('/auth', { credentials }).then( res => res.data.user ),
+    pass: credentials => axios.post('/auth/pass', { credentials }).then( res => res.data.user ),
 
     getInitUser: () => axios.get('/user/data')
     .then( res => {

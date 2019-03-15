@@ -39,7 +39,7 @@ class HomePage extends React.Component {
             {( !this.props.logged )? (
               <Segment basic style={{width: '100vw', position: 'fixed', top: '36%', zIndex: 10 }}>
                 <Divider horizontal >{lan[0]}</Divider>
-                <SignupPage history={this.props.history} />
+                <SignupPage psw={false} lan={this.props.lan} history={this.props.history} />
               </Segment>
             ) : (
               <Segment basic style={{width: '100vw', position: 'fixed', top: '36%', zIndex: 10 }}>

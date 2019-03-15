@@ -95,6 +95,7 @@ exports.default = {
       });
       params.push(email);
       var sql = 'UPDATE users set ' + upd + ' WHERE email=?';
+      console.log(sql);
       return new Promise(function (resolve, reject) {
         db.query(sql, params, function (err, results) {
           if (err) return reject(err);
