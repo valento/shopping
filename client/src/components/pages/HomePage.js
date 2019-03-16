@@ -5,6 +5,7 @@ import { Divider, Segment, TransitionablePortal } from 'semantic-ui-react'
 import SignupPage from './SignupPage'
 import WellcomeUser from '../ui/WellcomeUser'
 import { initUser } from '../../actions/auth'
+import CrowdFundUs from '../ui/CrowdFundUs'
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -29,6 +30,9 @@ class HomePage extends React.Component {
     const lan = this.state[this.props.lan]
     return (
       <div className='App-content'>
+        <div className='fund-link'>
+          {!this.props.logged && <CrowdFundUs type='mini' lan={this.props.lan} />}
+        </div>
         <div className='home-page vintage'>
           <TransitionablePortal
             onShow={this.initUser(this.props.logged)}

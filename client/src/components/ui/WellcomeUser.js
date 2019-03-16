@@ -22,7 +22,7 @@ class WellcomeUser extends React.Component {
         <p className='paraf-mid'>{wellcome},<b> {u_name}</b></p>
           <Button as={Link} to='/mannequin' fluid color='black' icon='play circle outline' content={l[8]} />
         <Divider horizontal>{l[1]}</Divider>
-          <Button as={Link} to='/crowdfunding' fluid color='blue' icon='undo' content={l[9]} />
+          <Button as={Link} to='/crowdfunding' fluid color='blue' content={'\u2618  ' +l[9]} />
 
         <Divider horizontal>{l[2]}</Divider>
           {(!username || !gender || !language) &&
