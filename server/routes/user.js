@@ -39,6 +39,13 @@ userRouter.route('/data')
       throw new Error({message: 'User lost'})
     }
   })
+  .then( () => {
+    let data = {email: email}
+    api.user.lastlog(email)
+    .catch(err => {
+      console.log(err)
+    })
+  })
   .catch(err => {
     res.status(500).json({errors: {global: err.message}})
   })

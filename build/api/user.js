@@ -95,9 +95,18 @@ exports.default = {
       });
       params.push(email);
       var sql = 'UPDATE users set ' + upd + ' WHERE email=?';
-      console.log(sql);
+      console.log(sql, data);
       return new Promise(function (resolve, reject) {
         db.query(sql, params, function (err, results) {
+          if (err) return reject(err);
+          resolve();
+        });
+      });
+    },
+    lastlog: function lastlog(email) {
+      var sql = 'UPDATE users set lastlog=DEFAULT WHERE email=?';
+      return new Promise(function (resolve, reject) {
+        db.query(sql, email, function (err, results) {
           if (err) return reject(err);
           resolve();
         });

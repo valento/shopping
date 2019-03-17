@@ -55,6 +55,11 @@ userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
     } else {
       throw new Error({ message: 'User lost' });
     }
+  }).then(function () {
+    var data = { email: email };
+    _user2.default.user.lastlog(email).catch(function (err) {
+      console.log(err);
+    });
   }).catch(function (err) {
     res.status(500).json({ errors: { global: err.message } });
   });
