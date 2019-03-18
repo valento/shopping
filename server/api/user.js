@@ -63,6 +63,7 @@ export default {
     create: () => {},
     save: (user={}, email) => {
       const {data} = user
+      console.log('Save that pass: ',user)
       let params = []
       const upd = Object.keys(data).map( k => {
         params.push(data[k])

@@ -16,9 +16,9 @@ var _generatePassword = require('generate-password');
 
 var _generatePassword2 = _interopRequireDefault(_generatePassword);
 
-var _bcryptNodejs = require('bcrypt-nodejs');
+var _bcrypt = require('bcrypt');
 
-var _bcryptNodejs2 = _interopRequireDefault(_bcryptNodejs);
+var _bcrypt2 = _interopRequireDefault(_bcrypt);
 
 var _jsonwebtoken = require('jsonwebtoken');
 
@@ -77,7 +77,7 @@ authRouter.post('/dummy', function (req, res, next) {
       length: 8,
       numbers: true
     });
-    _bcryptNodejs2.default.hash(passes, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
+    _bcrypt2.default.hash(passes, _bcrypt2.default.genSalt(8, function () {}), null, function (err, hash) {
       user.password = hash;
       user.email = 'user' + i + '@mail.com';
       _user2.default.user.signupDummies(user).then(function () {
@@ -94,15 +94,17 @@ authRouter.post('/dummy', function (req, res, next) {
 });
 
 authRouter.post('/pass', _auth.getUserId, function (req, res, next) {
-  var pass = req.body.credentials.pass;
+  var password = req.body.credentials.password;
+
+  console.log('Save that pass: ', req.body.credentials);
   var email = req.email;
 
-  _bcryptNodejs2.default.hash(pass, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
+  _bcrypt2.default.hash(password, 8, function (err, hash) {
     if (!err) {
       var data = { password: hash, c_status: 4 };
       _user2.default.user.save({ data: data }, email).then(function () {
-        var token = _jsonwebtoken2.default.sign({ email: email, password: hash }, process.env.JWT_SECRET);
-        var user = Object.assign({}, { token: token, c_status: 4 });
+        //let token = jwt.sign({email:email}, process.env.JWT_SECRET)
+        var user = Object.assign({}, { c_status: 4 });
         res.status(200).json({ user: user });
       }).catch(function (err) {
         res.status(500);
@@ -125,7 +127,7 @@ authRouter.post('/', function (req, res, next) {
         length: 8,
         numbers: true
       });
-      _bcryptNodejs2.default.hash(pass, _bcryptNodejs2.default.genSalt(8, function () {}), null, function (err, hash) {
+      _bcrypt2.default.hash(pass, 8, function (err, hash) {
         var data = Object.assign({ password: hash }, req.body.credentials);
         _user2.default.user.signup(data).then(function () {
           return _user2.default.user.getOne({ email: email }, 'users', scope);

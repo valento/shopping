@@ -88,6 +88,7 @@ exports.default = {
       var email = arguments[1];
       var data = user.data;
 
+      console.log('Save that pass: ', user);
       var params = [];
       var upd = Object.keys(data).map(function (k) {
         params.push(data[k]);

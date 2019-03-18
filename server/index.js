@@ -8,6 +8,7 @@ import authRouter from './routes/auth'
 import listRouter from './routes/lists'
 import gamesRouter from './routes/games'
 import gsqlRouter from './routes/gsqlRouter'
+import repRouter from './routes/report'
 import dotenv from 'dotenv'
 
 dotenv.config({ silent: true })
@@ -20,6 +21,7 @@ app.use(bodyParser.json())
 
 //app.set('view engine','pug')
 //app.set('views', '.views')
+app.use('/admin/static', express.static(path.join(__dirname, '../admin/build/static')))
 
 app.use('/static', express.static(path.join(__dirname, '../client/build/static')))
 
@@ -31,6 +33,7 @@ app.use('/auth', authRouter)
 app.use('/list', listRouter)
 app.use('/games', gamesRouter)
 app.use('/gsql', gsqlRouter)
+app.use('/report',repRouter)
 
 app.get('/ua', requestLanguage({languages: ['en','es']}), (req,res,next) => {
   //let settings = {}

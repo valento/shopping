@@ -36,6 +36,10 @@ var _gsqlRouter = require('./routes/gsqlRouter');
 
 var _gsqlRouter2 = _interopRequireDefault(_gsqlRouter);
 
+var _report = require('./routes/report');
+
+var _report2 = _interopRequireDefault(_report);
+
 var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
@@ -52,6 +56,7 @@ app.use(_bodyParser2.default.json());
 
 //app.set('view engine','pug')
 //app.set('views', '.views')
+app.use('/admin/static', _express2.default.static(_path2.default.join(__dirname, '../admin/build/static')));
 
 app.use('/static', _express2.default.static(_path2.default.join(__dirname, '../client/build/static')));
 
@@ -63,6 +68,7 @@ app.use('/auth', _auth2.default);
 app.use('/list', _lists2.default);
 app.use('/games', _games2.default);
 app.use('/gsql', _gsqlRouter2.default);
+app.use('/report', _report2.default);
 
 app.get('/ua', (0, _expressRequestLanguage2.default)({ languages: ['en', 'es'] }), function (req, res, next) {
   //let settings = {}

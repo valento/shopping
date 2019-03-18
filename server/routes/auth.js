@@ -1,7 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import generator from 'generate-password'
-import bcrypt from 'bcrypt-nodejs'
+import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import { getUserId } from '../middleware/auth'
@@ -56,14 +56,15 @@ authRouter.post('/dummy', (req,res,next) => {
 })
 
 authRouter.post('/pass', getUserId, (req,res,next) => {
-  const { pass } = req.body.credentials
+  const { password } = req.body.credentials
+  console.log('Save that pass: ', req.body.credentials)
   const { email } = req
-  bcrypt.hash( pass, bcrypt.genSalt(8, ()=>{}), null, ( err,hash ) => {
+  bcrypt.hash( password, 8, ( err,hash ) => {
     if(!err) {
       let data = {password: hash, c_status: 4}
       api.user.save({data}, email).then( () => {
-        let token = jwt.sign({email:email, password:hash}, process.env.JWT_SECRET)
-        let user = Object.assign({},{token:token, c_status: 4})
+        //let token = jwt.sign({email:email}, process.env.JWT_SECRET)
+        let user = Object.assign({},{c_status: 4})
         res.status(200).json({user})
       } )
       .catch( err => {
@@ -85,7 +86,7 @@ authRouter.post('/', (req,res,next) => {
         length: 8,
         numbers: true
       })
-      bcrypt.hash( pass, bcrypt.genSalt(8,()=>{}), null, ( err,hash ) => {
+      bcrypt.hash( pass, 8, ( err,hash ) => {
         const data = Object.assign( {password: hash}, req.body.credentials )
         api.user.signup(data)
         .then( () => api.user.getOne({ email }, 'users', scope))

@@ -32,9 +32,10 @@ export const log = credentials => dispatch => {
 }
 
 export const pass = credentials => dispatch => {
-  api.user.pass(credentials).then( user => {
-    localStorage.valeCollectionJWT = user.token
-    setAuthHeader(localStorage.valeCollectionJWT)
+  api.user.pass(credentials)
+  .then( user => {
+  //  localStorage.valeCollectionJWT = user.token
+  //  setAuthHeader(localStorage.valeCollectionJWT)
     dispatch(userUpdated(user))
   })
 }
