@@ -8,19 +8,20 @@ export const getUserId = (req,res,next) => {
   const decoded = jwt.decode(token)
   console.log('Auth Middleware: ', decoded)
   req.email = decoded.email
-  req.uid = decoded.uid
+  //req.uid = decoded.uid
   next()
 }
 
-export const checkAdmin = (req,res,next) => {
+export const checkAccess = (req,res,next) => {
   const token = req.get('Authorization')
   if(token){
     try {
       const verified = jwt.verify(token, 'valeCollectionJWT')
       const { email, password } = verified
       console.log({email})
-    if(email === 'valentin.mundrov@gmail.com'){
+    if(email === 'valentin.mundrov@gmail.com' || email === 'iloveaquiles09@gmail.com'){
         api.user.getOne({email},'users',['password'])
+        req.c_group = 2
         .then( results => {
           console.log(verified.password, results[0].password.length)
           console.log(bcrypt.compareSync('19K0l0mbin075', results[0].password))

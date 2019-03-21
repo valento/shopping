@@ -9,6 +9,7 @@ import listRouter from './routes/lists'
 import gamesRouter from './routes/games'
 import gsqlRouter from './routes/gsqlRouter'
 import repRouter from './routes/report'
+import galleryRouter from './routes/gallery'
 import dotenv from 'dotenv'
 
 dotenv.config({ silent: true })
@@ -34,6 +35,7 @@ app.use('/list', listRouter)
 app.use('/games', gamesRouter)
 app.use('/gsql', gsqlRouter)
 app.use('/report',repRouter)
+app.use('/gallery',galleryRouter)
 
 app.get('/ua', requestLanguage({languages: ['en','es']}), (req,res,next) => {
   //let settings = {}

@@ -270,6 +270,79 @@ INSERT INTO mann_actions (mann_id, user_id, likes) VALUES(
 1,1,1
 )
 
+// GALLERY: ====================================================================
+
+CREATE TABLE gallery (
+uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
+name_es TEXT,
+name_en TEXT,
+brand_id INT,
+brand TEXT,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+c_status TINYINT unsigned DEFAULT 16,
+c_owner INT unsigned NOT NULL DEFAULT 1,
+c_group INT unsigned NOT NULL DEFAULT 1,
+c_permis INT unsigned NOT NULL DEFAULT 500
+);
+
+CREATE TABLE gall_resources (
+uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
+gall_id INT DEFAULT NULL,
+itm_id INT DEFAULT NULL,
+mann_id INT DEFAULT NULL,
+body TINYINT DEFAULT NULL,
+layer TINYINT DEFAULT NULL,
+name VARCHAR(30),
+price INT NOT NULL DEFAULT 0,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+c_status TINYINT unsigned DEFAULT 4,
+c_owner INT unsigned NOT NULL DEFAULT 1,
+c_group INT unsigned NOT NULL DEFAULT 1,
+c_permis INT unsigned NOT NULL DEFAULT 500,
+FOREIGN KEY (mann_id) REFERENCES mann (uid) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (itm_id) REFERENCES items (uid) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (gall_id) REFERENCES gallery (uid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO gall_resources (name) VALUES
+('1006'),
+('1013'),
+('1015'),
+('1018'),
+('1020');
+
+INSERT INTO gall_resources (name,c_group,c_permis) VALUES 
+('1001',2,480),
+('1002',2,480),
+('1003',2,480),
+('1004',2,480),
+('1005',2,480),
+('1007',2,480),
+('1008',2,480),
+('1009',2,480),
+('1010',2,480),
+('1011',2,480),
+('1012',2,480),
+('1016',2,480),
+('1017',2,480),
+('1019',2,480);
+
+CREATE TABLE gall_actions (
+uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
+gall_res_id INT,
+user_id INT,
+name VARCHAR(30),
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+likes INT,
+views INT,
+share INT,
+save INT,
+buy INT,
+interested INT,
+FOREIGN KEY (gall_res_id) REFERENCES gall_resources (uid) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (user_id) REFERENCES users (uid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 // =================================================================
 echo $PATH
 /Users/Valent/Downloads/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
