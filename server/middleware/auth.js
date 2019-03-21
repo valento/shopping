@@ -14,20 +14,23 @@ export const getUserId = (req,res,next) => {
 
 export const checkAccess = (req,res,next) => {
   const token = req.get('Authorization')
+  const password = req.body.credentials
   if(token){
     try {
       const verified = jwt.verify(token, 'valeCollectionJWT')
-      const { email, password } = verified
+      const { email } = verified
       console.log({email})
     if(email === 'valentin.mundrov@gmail.com' || email === 'iloveaquiles09@gmail.com'){
         api.user.getOne({email},'users',['password'])
-        req.c_group = 2
+
         .then( results => {
           console.log(verified.password, results[0].password.length)
           console.log(bcrypt.compareSync('19K0l0mbin075', results[0].password))
 
         })
         .catch(err => console.log(err.message))
+      } else {
+        req.c_group = 16
       }
     }
     catch(err) {

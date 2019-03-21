@@ -25,6 +25,7 @@ const initState = {
     closed: true
   },
   mannequins: [],
+  gallery: [],
   mstate: [],
   resources: {},
   data: [],

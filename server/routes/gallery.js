@@ -1,7 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import api from '../api/lists'
-import { checkAuth, getAuth, getUserId } from '../middleware/auth'
+import { checkAuth, checkAccess, getUserId } from '../middleware/auth'
 import dotenv from 'dotenv'
 
 const galleryRouter = express.Router({

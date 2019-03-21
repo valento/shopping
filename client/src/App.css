@@ -349,7 +349,13 @@ input, select, textarea {
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-/* ==== SOCIAL UI ==================================================*/
+/* ===== GALLERY =================================================== */
+.gallery {
+  margin-top: 9vh;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+/* ==== SOCIAL UI ================================================== */
 .social {
   margin: 0;
   font: 'Lato', sans-serif;

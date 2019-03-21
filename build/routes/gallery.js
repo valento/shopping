@@ -34,7 +34,7 @@ galleryRouter.use(_bodyParser2.default.json());
 //  api.mann.getList( { gender,cat }, table, '*').then( rows => console.log(rows))
 //})
 
-galleryRouter.get('/access/:table', checkAccess, function (req, res, next) {
+galleryRouter.get('/access/:table', _auth.checkAccess, function (req, res, next) {
   var table = req.params.table;
   var c_permis = req.c_permis;
   //if()
