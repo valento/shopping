@@ -15,7 +15,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var repRouter = _express2.default.Router({
   paramsMerge: true
 });
-repRouter.use(_auth.checkAdmin);
+repRouter.use(_auth.checkAccess);
 repRouter.route('/:table/:prop').get(function (req, res, next) {
   var _req$params = req.params,
       table = _req$params.table,

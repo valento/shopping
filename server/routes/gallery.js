@@ -14,9 +14,10 @@ galleryRouter.use(bodyParser.json())
 //  api.mann.getList( { gender,cat }, table, '*').then( rows => console.log(rows))
 //})
 
-galleryRouter.get('/access/:table', checkAaccess, (req,res,next) => {
+galleryRouter.get('/access/:table', checkAccess, (req,res,next) => {
   const { table } = req.params
-  const { email } = req
+  const { c_permis } = req
+  //if()
   const scope = ['uid','name']
   api.list.getList({c_permis: 500}, table, scope)
   .then( results => {

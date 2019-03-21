@@ -40,10 +40,6 @@ var _report = require('./routes/report');
 
 var _report2 = _interopRequireDefault(_report);
 
-var _gallery = require('./routes/gallery');
-
-var _gallery2 = _interopRequireDefault(_gallery);
-
 var _dotenv = require('dotenv');
 
 var _dotenv2 = _interopRequireDefault(_dotenv);
@@ -51,6 +47,8 @@ var _dotenv2 = _interopRequireDefault(_dotenv);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv2.default.config({ silent: true });
+//import galleryRouter from './routes/gallery'
+
 
 var app = (0, _express2.default)();
 var PORT = process.env.PORT;
@@ -73,7 +71,7 @@ app.use('/list', _lists2.default);
 app.use('/games', _games2.default);
 app.use('/gsql', _gsqlRouter2.default);
 app.use('/report', _report2.default);
-app.use('/gallery', _gallery2.default);
+//app.use('/gallery',galleryRouter)
 
 app.get('/ua', (0, _expressRequestLanguage2.default)({ languages: ['en', 'es'] }), function (req, res, next) {
   //let settings = {}
