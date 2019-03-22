@@ -39,7 +39,7 @@ galleryRouter.get('/access/:table', _auth.checkAccess, function (req, res, next)
   var c_permis = req.c_permis;
   //if()
 
-  var scope = ['uid', 'name'];
+  var scope = ['uid', 'name', 'created_at', 'price'];
   _lists2.default.list.getList({ c_permis: 500 }, table, scope).then(function (results) {
     if (results.length > 0) {
       res.status(200).json(results);
@@ -55,7 +55,7 @@ galleryRouter.get('/:table', _auth.getUserId, function (req, res, next) {
   var table = req.params.table;
   var email = req.email;
 
-  var scope = ['uid', 'name'];
+  var scope = ['uid', 'name', 'created_at', 'price'];
   _lists2.default.list.getList({ c_permis: 500 }, table, scope).then(function (results) {
     if (results.length > 0) {
       res.status(200).json(results);
