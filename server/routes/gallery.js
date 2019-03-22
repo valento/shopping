@@ -18,7 +18,7 @@ galleryRouter.get('/access/:table', checkAccess, (req,res,next) => {
   const { table } = req.params
   const { c_permis } = req
   //if()
-  const scope = ['uid','name']
+  const scope = ['uid','name','created_at','price']
   api.list.getList({c_permis: 500}, table, scope)
   .then( results => {
     if(results.length > 0){
@@ -27,13 +27,13 @@ galleryRouter.get('/access/:table', checkAccess, (req,res,next) => {
       throw new Error({message: 'User lost'})
     }
   })
-  .catch( err => { res.status(500).json( {errors: {global: err.message}} ) })
+  .catch( err => {res.status(500).json({errors: {global: err.message}})})
 })
 
 galleryRouter.get('/:table', getUserId, (req,res,next) => {
   const { table } = req.params
   const { email } = req
-  const scope = ['uid','name']
+  const scope = ['uid','name','created_at','price']
   api.list.getList({c_permis: 500}, table, scope)
   .then( results => {
     if(results.length > 0){
@@ -42,7 +42,7 @@ galleryRouter.get('/:table', getUserId, (req,res,next) => {
       throw new Error({message: 'User lost'})
     }
   })
-  .catch( err => { res.status(500).json( {errors: {global: err.message}} ) })
+  .catch( err => { res.status(500).json({errors: {global: err.message}})})
 })
 
 export default galleryRouter

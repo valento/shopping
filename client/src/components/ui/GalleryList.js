@@ -1,13 +1,20 @@
 import React from 'react'
+import Linter from '../ui/linter'
 
-const GalleryList = ({gallery}) => {
+import GalleryThumb from '../ui/gall_thumb'
+
+const GalleryList = ({gallery, onThumb, onFilter}) => {
+  const scale = {
+    width: `100vw`,
+    overflow: `visible`
+  }
     return (
       <ul>
+        <Linter onFilter={onFilter} filters={false}/>
+        <div className='clear'></div>
         {gallery.map( entry => {
           return(
-            <div className='thumb'>
-              <img src={'/img/gallery/'+entry.name+'.jpg'} alt='img'/>
-            </div>
+            <GalleryThumb onThumb={onThumb} entry={entry} />
           )
         })}
         <div className='thumb'>

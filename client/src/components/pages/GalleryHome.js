@@ -6,6 +6,9 @@ import GalleryList from '../ui/GalleryList'
 import { getListGallery } from '../../actions/gallery'
 
 class GalleryHome extends React.Component {
+  state = {
+    filter: ''
+  }
   componentDidMount(){
     this.props.getListGallery()
   }
@@ -18,6 +21,16 @@ class GalleryHome extends React.Component {
   }
   }
 
+  onThumb = id => {
+    console.log('Open image: ',id)
+  }
+
+  onFilter = filter => {
+    this.setState({
+      filter: filter
+    })
+  }
+
   render() {
     const deadline = new Date('2019-04-10T00:24:00')
     const now = new Date()
@@ -26,11 +39,11 @@ class GalleryHome extends React.Component {
     console.log('Gallery Component: ', this.props.gallery)
     return (
       <div className='gallery'>
-          {(this.props.gallery.length > 0) && <GalleryList gallery={this.props.gallery} />}
+          {(this.props.gallery.length > 0) && <GalleryList onFilter={this.onFilter} onThumb={this.onThumb} gallery={this.props.gallery} />}
         <div className='clear'></div>
-        <div className='general'>
-          <h2>Gallery is Empty for now!</h2>
-          <p>Come back in: </p>
+        <div>
+          <p><br/><br/><br/><p>* * * * *</p></p>
+          <p>Come back for more in: </p>
           <span className='digital'>{rm.getDate()} days : {rm.getHours()} hours : {rm.getMinutes()} minutes</span>
         </div>
       </div>
