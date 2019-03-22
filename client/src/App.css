@@ -355,6 +355,17 @@ input, select, textarea {
   padding-left: 4px;
   padding-right: 4px;
 }
+.gallery ul {
+  margin: 0;
+  padding: 0;
+}
+.gallery .thumb {
+  width: 24vw;
+  height: 24vw;
+  float: left;
+  display: flex;
+  flex-direction: column;
+}
 /* ==== SOCIAL UI ================================================== */
 .social {
   margin: 0;
@@ -647,6 +658,21 @@ a.domain {
   padding-left: 12px;
   padding-right: 12px;
 }
+.thumb {
+  margin: .05em;
+  padding: 0;
+  overflow: hidden;
+  justify-content: center;
+}
+.thumb img {
+  width: 150px;
+  height: auto;
+}
+.thumb span {
+  color: #aaa;
+  font-size: 18px;
+}
+
 .labeled .ui.labeled.button:not(.icon) {
   width: 100%;
 }

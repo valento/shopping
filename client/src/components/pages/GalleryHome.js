@@ -27,6 +27,7 @@ class GalleryHome extends React.Component {
     return (
       <div className='gallery'>
           {(this.props.gallery.length > 0) && <GalleryList gallery={this.props.gallery} />}
+        <div className='clear'></div>
         <div className='general'>
           <h2>Gallery is Empty for now!</h2>
           <p>Come back in: </p>
