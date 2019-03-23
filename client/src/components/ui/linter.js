@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Icon,Button } from 'semantic-ui-react'
 
 export default class Linter extends React.Component {
@@ -16,7 +17,7 @@ export default class Linter extends React.Component {
       <div className='linter'>
         <ul className='ui grid'>
           <div className='three wide column'>
-  <Button onClick={this.onFilter} name='1' basic icon='arrow left' />
+  <Button as={Link} to='/' basic icon='arrow left' />
           </div>
           <div className='three wide column'>
   {this.props.filters && <Button onClick={this.onFilter} name='3' basic icon='exclamation' inverted={this.state.selected==='3'} />}
