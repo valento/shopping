@@ -366,6 +366,16 @@ input, select, textarea {
   display: flex;
   flex-direction: column;
 }
+.big-image {
+  width: 100vw;
+  min-height: 93vh;
+  background-color: white;
+}
+.big-image img {
+  width: 100vw;
+  height: auto;
+  margin-top: 4px;
+}
 .linter {
   margin-bottom: 6px;
   color: black;

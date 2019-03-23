@@ -12,9 +12,9 @@ const GalleryList = ({gallery, onThumb, onFilter}) => {
       <ul>
         <Linter onFilter={onFilter} filters={false}/>
         <div className='clear'></div>
-        {gallery.map( entry => {
+        {gallery.map( (entry,i) => {
           return(
-            <GalleryThumb onThumb={onThumb} entry={entry} />
+            <GalleryThumb ind={i} onThumb={onThumb} entry={entry} />
           )
         })}
         <div className='thumb'>
