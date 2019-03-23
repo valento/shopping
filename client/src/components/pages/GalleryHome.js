@@ -38,6 +38,11 @@ class GalleryHome extends React.Component {
       filter: filter
     })
   }
+  onMenu = () => {
+    this.setState({
+      image_big: false
+    })
+  }
 
   render() {
     const deadline = new Date('2019-04-10T00:24:00')
@@ -60,7 +65,7 @@ class GalleryHome extends React.Component {
           transition={{animation:'fly left', duration: 800}}
         >
           <div style={{width: '100vw', position: 'absolute', top: '7vh', left: 0 }}>
-            {(gallery.length>0) && <BigImage indx={this.state.indx} gallery={gallery} />}
+            {(gallery.length>0) && <BigImage onMenu={this.onMenu} indx={this.state.indx} gallery={gallery} />}
           </div>
         </TransitionablePortal>
       </div>

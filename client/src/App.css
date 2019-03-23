@@ -374,9 +374,9 @@ input, select, textarea {
 .big-image img {
   width: 100vw;
   height: auto;
-  margin-top: 4px;
 }
 .linter {
+  height: 50px;
   margin-bottom: 6px;
   color: black;
   border-bottom: 1px dashed #666;
