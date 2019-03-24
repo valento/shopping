@@ -311,7 +311,7 @@ INSERT INTO gall_resources (name) VALUES
 ('1018'),
 ('1020');
 
-INSERT INTO gall_resources (name,c_group,c_permis) VALUES 
+INSERT INTO gall_resources (name,c_group,c_permis) VALUES
 ('1001',2,480),
 ('1002',2,480),
 ('1003',2,480),
@@ -361,6 +361,7 @@ role = ['owner','owner_group','other']
 
 // == GROUPS: ================
 groups = ['root','officer','vip','fan','user','wheel']
+g = [1,2,4,8,16,32]
 
 // == SOCIAL: ================
 actions = ['like','dislike','rate','want','coming','interested']

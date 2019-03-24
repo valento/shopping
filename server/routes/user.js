@@ -12,7 +12,7 @@ dotenv.config({ silent: true })
 userRouter.route('/')
 .get(getUserId, (req,res,next) => {
   const { email } = req
-  const scope = ['email','username','credit','gender','rating','language','verified']
+  //const scope = ['email','username','credit','gender','rating','language','verified']
 
   //if(email === 'vale@gmail.com'){
   //  db.listAll('users')
@@ -29,7 +29,7 @@ userRouter.route('/')
 userRouter.route('/data')
 .get(getUserId, (req,res,next) => {
   const { email } = req
-  const scope = ['uid','email','gender','username','verified','credit','rating','language','c_status']
+  const scope = ['uid','email','gender','username','verified','credit','rating','language','c_status','membership']
   api.user.getOne({email}, 'users', scope)
   .then( results => {
     if(results.length > 0){

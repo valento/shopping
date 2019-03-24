@@ -116,7 +116,7 @@ authRouter.post('/', function (req, res, next) {
   var new_user = true,
       user = void 0,
       token = void 0;
-  var scope = ['uid', 'email', 'gender', 'username', 'verified', 'credit', 'rating', 'language', 'c_status'];
+  var scope = ['uid', 'email', 'gender', 'username', 'verified', 'credit', 'rating', 'language', 'c_status', 'membership'];
   var email = req.body.credentials.email;
 
 

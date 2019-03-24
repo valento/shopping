@@ -30,8 +30,7 @@ _dotenv2.default.config({ silent: true });
 
 userRouter.route('/').get(_auth.getUserId, function (req, res, next) {
   var email = req.email;
-
-  var scope = ['email', 'username', 'credit', 'gender', 'rating', 'language', 'verified'];
+  //const scope = ['email','username','credit','gender','rating','language','verified']
 
   //if(email === 'vale@gmail.com'){
   //  db.listAll('users')
@@ -47,7 +46,7 @@ userRouter.route('/').get(_auth.getUserId, function (req, res, next) {
 userRouter.route('/data').get(_auth.getUserId, function (req, res, next) {
   var email = req.email;
 
-  var scope = ['uid', 'email', 'gender', 'username', 'verified', 'credit', 'rating', 'language', 'c_status'];
+  var scope = ['uid', 'email', 'gender', 'username', 'verified', 'credit', 'rating', 'language', 'c_status', 'membership'];
   _user2.default.user.getOne({ email: email }, 'users', scope).then(function (results) {
     if (results.length > 0) {
       var user = Object.assign({}, results[0]);

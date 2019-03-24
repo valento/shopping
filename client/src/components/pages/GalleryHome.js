@@ -48,11 +48,11 @@ class GalleryHome extends React.Component {
     const deadline = new Date('2019-04-10T00:24:00')
     const now = new Date()
     const rm = new Date(deadline-now)
-    const {gallery} = this.props
+    const {gallery,mem} = this.props
 
     return (
       <div className='gallery'>
-          {(gallery.length > 0) && <GalleryList onFilter={this.onFilter} onThumb={this.onThumb} gallery={gallery} />}
+          {(gallery.length > 0) && <GalleryList onFilter={this.onFilter} onThumb={this.onThumb} gallery={gallery} membership={mem} />}
         <div className='clear'></div>
         <div>
           <p><br/><br/><br/><p>* * * * *</p></p>
@@ -78,7 +78,8 @@ GalleryHome.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  gallery: state.gallery
+  gallery: state.gallery,
+  mem: state.user.membership
 })
 
 export default connect(mapStateToProps, { getListGallery } )(GalleryHome)

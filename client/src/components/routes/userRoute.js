@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const UserRoute = ({isAuthenticated, component: Component, ...rest }) => {
+const UserRoute = ({isAuthenticated, lan, component: Component, ...rest }) => {
   return (
-    <Route {...rest} render={ props => isAuthenticated? <Component {...props} /> : <Redirect to='/' /> } />
+    <Route {...rest} render={ props => isAuthenticated? <Component {...props} lan={lan} /> : <Redirect to='/' /> } />
   )
 }
 
@@ -15,7 +15,8 @@ UserRoute.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: !!state.user.token
+    isAuthenticated: !!state.user.token,
+    lan: state.settings.language
   }
 }
 

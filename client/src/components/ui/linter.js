@@ -29,7 +29,7 @@ export default class Linter extends React.Component {
   {this.props.filters && <Button onClick={this.onFilter} name='4' basic icon='heart' inverted={this.state.selected==='4'} color={this.state==='4'? 'black' : 'red'} />}
           </div>
           <div className='three wide column'>
-  <Button onClick={this.onFilter} name='5' basic icon='key' inverted={this.state.selected==='5'} color={this.state==='5'? 'black' : 'orange'} />
+  <Button as={Link} to={'/access/8'} basic icon='key' inverted={this.state.selected==='5'} color={this.state==='5'? 'black' : 'orange'} />
           </div>
         </ul>
       </div>

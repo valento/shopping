@@ -34,13 +34,31 @@ galleryRouter.use(_bodyParser2.default.json());
 //  api.mann.getList( { gender,cat }, table, '*').then( rows => console.log(rows))
 //})
 
-galleryRouter.get('/access/:table', _auth.checkAccess, function (req, res, next) {
+galleryRouter.get('/access/:table', _auth.getPermis, function (req, res, next) {
+  //checkAccess,
   var table = req.params.table;
-  var c_permis = req.c_permis;
-  //if()
+  var group = req.group;
 
+  var gr = group < 8 ? 8 : group;
+  console.log(gr);
+  var permis = void 0;
+  switch (group) {
+    case 16:
+      permis = 480;
+      break;
+    case 8:
+      permis = 480;
+      break;
+      break;
+    case 4:
+      permis = 480;
+      break;
+    default:
+      permis = 500;
+  }
+  //if()
   var scope = ['uid', 'name', 'created_at', 'price'];
-  _lists2.default.list.getList({ c_permis: 500 }, table, scope).then(function (results) {
+  _lists2.default.list.getList({ c_group: gr }, table, scope).then(function (results) {
     if (results.length > 0) {
       res.status(200).json(results);
     } else {

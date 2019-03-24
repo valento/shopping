@@ -75,7 +75,7 @@ authRouter.post('/pass', getUserId, (req,res,next) => {
 })
 authRouter.post('/', (req,res,next) => {
   let new_user = true, user, token
-  const scope = ['uid','email','gender','username','verified','credit','rating','language','c_status']
+  const scope = ['uid','email','gender','username','verified','credit','rating','language','c_status','membership']
   const { email } = req.body.credentials
 
   api.user.getOne({ email }, 'users', scope)
