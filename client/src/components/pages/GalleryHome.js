@@ -64,7 +64,7 @@ class GalleryHome extends React.Component {
           closeOnDocumentClick={false}
           transition={{animation:'fly left', duration: 800}}
         >
-          <div style={{width: '100vw', position: 'absolute', top: '7vh', left: 0 }}>
+          <div style={{width: '100vw', position: 'absolute', top: '9vh', left: 0 }}>
             {(gallery.length>0) && <BigImage onMenu={this.onMenu} indx={this.state.indx} gallery={gallery} />}
           </div>
         </TransitionablePortal>

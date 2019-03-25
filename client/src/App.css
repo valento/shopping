@@ -386,6 +386,18 @@ input, select, textarea {
   box-shadow: none!important;
 }
 
+.ui.basic.button, .ui.basic.buttons .button,
+.ui.basic.button:active, .ui.basic.buttons .button:active,
+.ui.basic.red.button, .ui.basic.red.buttons .button,
+.ui.basic.orange.button, .ui.basic.orange.buttons .button,
+.ui.basic.red.button:active, .ui.basic.red.buttons .button:active,
+.ui.basic.orange.button:active, .ui.basic.orange.buttons .button:active,
+.ui.basic.red.button:hover, .ui.basic.red.buttons .button:hover,
+.ui.basic.orange.button:hover, .ui.basic.orange.buttons .button:hover {
+  box-shadow: none!important;
+  background: none!important;
+}
+
 .linter ul {
   margin: 0;
   padding: 0;

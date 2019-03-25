@@ -8,7 +8,7 @@ class WellcomeUser extends React.Component {
   state = {}
 
   text = {
-    en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'See Gallery', 'Windowshop', 'Welcome', 'Play that Mannequin Doll', 'Support Us'],
+    en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Gallery', 'Windowshop', 'Welcome', 'Play that Mannequin Doll', 'Support Us'],
     es: ['Me alegra que volviste', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Galería', 'Vitrinando', 'Bienvenid', 'Juega este Mannequin' , 'Apóyenos']
   }
 
@@ -26,7 +26,7 @@ class WellcomeUser extends React.Component {
 
         <Divider horizontal>{l[2]}</Divider>
           {(!username || !gender || !language) &&
-            <Button as={Link} to='/gallery' fluid color='black'>{l[5]}</Button>
+            <Button as={Link} to='/gallery' fluid color='black' icon='eye' content={l[5]} />
           }
 
       </div>
