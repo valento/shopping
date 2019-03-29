@@ -16,6 +16,10 @@ var _lists = require('../api/lists');
 
 var _lists2 = _interopRequireDefault(_lists);
 
+var _social = require('../api/social');
+
+var _social2 = _interopRequireDefault(_social);
+
 var _auth = require('../middleware/auth');
 
 var _dotenv = require('dotenv');
@@ -34,9 +38,11 @@ galleryRouter.use(_bodyParser2.default.json());
 //  api.mann.getList( { gender,cat }, table, '*').then( rows => console.log(rows))
 //})
 
-galleryRouter.get('/access/:table', _auth.getPermis, function (req, res, next) {
+galleryRouter.get('/access/:table/:level', _auth.getPermis, function (req, res, next) {
   //checkAccess,
-  var table = req.params.table;
+  var _req$params = req.params,
+      table = _req$params.table,
+      level = _req$params.level;
   var group = req.group;
 
   var gr = group < 8 ? 8 : group;
@@ -69,6 +75,35 @@ galleryRouter.get('/access/:table', _auth.getPermis, function (req, res, next) {
   });
 });
 
+galleryRouter.get('/:table/:id', _auth.getUserId, function (req, res, next) {
+  var _req$params2 = req.params,
+      table = _req$params2.table,
+      id = _req$params2.id;
+
+  var scope = ['liked', 'viewed', 'interested', 'ordered', 'shared'];
+  _social2.default.getSocial({ resource_id: id }, table, scope).then(function (results) {
+    var data = {
+      liked: 1080,
+      viewed: 2210,
+      shared: 0,
+      ordered: 0,
+      interested: 0
+    };
+    if (results.length > 0) {
+      results.forEach(function (entry) {
+        Object.keys(entry).forEach(function (e) {
+          if (entry[e] !== null) return data[e] += 1;
+        });
+      });
+      res.status(200).json(data);
+    } else {
+      throw new Error({ message: 'No resources' });
+    }
+  }).catch(function (err) {
+    res.status(500).json({ errors: { global: err.message } });
+  });
+});
+
 galleryRouter.get('/:table', _auth.getUserId, function (req, res, next) {
   var table = req.params.table;
   var email = req.email;
@@ -78,10 +113,21 @@ galleryRouter.get('/:table', _auth.getUserId, function (req, res, next) {
     if (results.length > 0) {
       res.status(200).json(results);
     } else {
-      throw new Error({ message: 'User lost' });
+      throw new Error({ message: 'No resources' });
     }
   }).catch(function (err) {
     res.status(500).json({ errors: { global: err.message } });
+  });
+});
+galleryRouter.post('/:table', _auth.getUserId, function (req, res, next) {
+  console.log(req.body);
+  var data = req.body.data;
+
+  data.user_id = req.uid;
+  _social2.default.addSocial({ data: data }, req.params.table).then(function (results) {
+    res.status(200).json({ success: true });
+  }).catch(function (err) {
+    return res.status(500);
   });
 });
 

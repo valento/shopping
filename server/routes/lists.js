@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import api from '../api/mann'
+//import api from '../api/mann'
+import api from '../api/lists'
 import { checkAuth, getAuth } from '../middleware/auth'
 import dotenv from 'dotenv'
 
@@ -17,7 +18,7 @@ listRouter.use(bodyParser.json())
 listRouter.route('/mann/resources/:mann_id')
 .get(getAuth, (req,res,next) => {
   const { mann_id } = req.params
-  api.mann.getListResources({mann_id},'resources')
+  api.list.getListResources({mann_id},'resources')//api.mann.
   .then( results => {
     res.status(200).json(results)
   })
@@ -31,7 +32,7 @@ listRouter.get('/m/:table/:kay', (req,res,next) => {
   let { kay, table } = req.params
   const scope = ['uid','title_en','title_es','dscr_en','dscr_es',
     'head','corp','waist','legs','feet','c_status','img_base','img_tumb','price','likes','rating']
-  api.mann.getList({gender:2}, table, scope)
+  api.list.getList({gender:2}, table, scope)//api.mann.
   .then( results => {
     if(results.length > 0){
       res.status(200).json(results)

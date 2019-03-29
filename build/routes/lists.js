@@ -12,9 +12,9 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _mann = require('../api/mann');
+var _lists = require('../api/lists');
 
-var _mann2 = _interopRequireDefault(_mann);
+var _lists2 = _interopRequireDefault(_lists);
 
 var _auth = require('../middleware/auth');
 
@@ -27,6 +27,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var listRouter = _express2.default.Router({
   mergeParams: true
 });
+//import api from '../api/mann'
+
 listRouter.use(_bodyParser2.default.json());
 
 //listRouter.get('/:table/:gender/:cat', (req,res,next) => {
@@ -37,7 +39,8 @@ listRouter.use(_bodyParser2.default.json());
 listRouter.route('/mann/resources/:mann_id').get(_auth.getAuth, function (req, res, next) {
   var mann_id = req.params.mann_id;
 
-  _mann2.default.mann.getListResources({ mann_id: mann_id }, 'resources').then(function (results) {
+  _lists2.default.list.getListResources({ mann_id: mann_id }, 'resources') //api.mann.
+  .then(function (results) {
     res.status(200).json(results);
   }).catch(function (err) {
     res.status(500).json({ errors: { global: err.message } });
@@ -50,7 +53,8 @@ listRouter.get('/m/:table/:kay', function (req, res, next) {
       table = _req$params.table;
 
   var scope = ['uid', 'title_en', 'title_es', 'dscr_en', 'dscr_es', 'head', 'corp', 'waist', 'legs', 'feet', 'c_status', 'img_base', 'img_tumb', 'price', 'likes', 'rating'];
-  _mann2.default.mann.getList({ gender: 2 }, table, scope).then(function (results) {
+  _lists2.default.list.getList({ gender: 2 }, table, scope) //api.mann.
+  .then(function (results) {
     if (results.length > 0) {
       res.status(200).json(results);
     } else {

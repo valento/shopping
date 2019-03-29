@@ -30,7 +30,7 @@ var getUserId = exports.getUserId = function getUserId(req, res, next) {
   var decoded = _jsonwebtoken2.default.decode(token);
   console.log('Auth Middleware: ', decoded);
   req.email = decoded.email;
-  //req.uid = decoded.uid
+  req.uid = decoded.uid;
   next();
 };
 

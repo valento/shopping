@@ -11,7 +11,7 @@ export const getUserId = (req,res,next) => {
   const decoded = jwt.decode(token)
   console.log('Auth Middleware: ', decoded)
   req.email = decoded.email
-  //req.uid = decoded.uid
+  req.uid = decoded.uid
   next()
 }
 

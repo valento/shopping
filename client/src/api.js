@@ -36,7 +36,9 @@ export default {
     getResources: uid => axios.get('../list/mann/resources/'+uid).then( res => res.data )
   },
   gallery: {
-    getResources: uid => axios.get('gallery/gall_resources').then( res => res.data )
+    getResources: () => axios.get('gallery/gall_resources').then( res => res.data ),
+    getSocData: id => axios.get('gallery/gall_actions/'+id).then( res => res.data ),
+    gallerySocial: data => axios.post('gallery/gall_actions', data).then( res => console.log(res.data) )
   },
   settup: {
     setUI: () => axios.get('/ua').then( res => res.data )

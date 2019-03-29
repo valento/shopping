@@ -132,17 +132,17 @@ authRouter.post('/', function (req, res, next) {
         _user2.default.user.signup(data).then(function () {
           return _user2.default.user.getOne({ email: email }, 'users', scope);
         }).then(function (results) {
-          token = _jsonwebtoken2.default.sign({ email: email }, process.env.JWT_SECRET);
+          console.log();
+          token = _jsonwebtoken2.default.sign({ email: email, uid: results[0].uid }, process.env.JWT_SECRET);
           user = Object.assign({}, results[0], { token: token, new_user: new_user });
           res.status(200).json({ user: user });
         });
       });
     } else {
       // Send Old User Data
-      token = _jsonwebtoken2.default.sign({ email: email }, process.env.JWT_SECRET);
+      token = _jsonwebtoken2.default.sign({ email: email, uid: results[0].uid }, process.env.JWT_SECRET);
       new_user = false;
       user = Object.assign({}, results[0], { token: token, new_user: new_user });
-      console.log(user);
       res.status(200).json({ user: user });
     }
   })

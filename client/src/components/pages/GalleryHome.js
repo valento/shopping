@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { TransitionablePortal, Segment } from 'semantic-ui-react'
 
 import GalleryList from '../ui/GalleryList'
-import { getListGallery } from '../../actions/gallery'
+import { getListGallery,gallerySocAction,getSocialData } from '../../actions/gallery'
 import BigImage from '../ui/bigimage'
 
 class GalleryHome extends React.Component {
@@ -26,11 +26,16 @@ class GalleryHome extends React.Component {
   }
 
   onThumb = (id,ind) => {
+    let data = {}
     console.log('Open image: ',id,ind)
     this.setState({
       indx: ind,
       image_big: true
     })
+    data.viewed = 1
+    data.resource_id = id
+    this.props.getSocialData(id)
+    this.props.gallerySocAction({data})
   }
 
   onFilter = filter => {
@@ -43,6 +48,10 @@ class GalleryHome extends React.Component {
       image_big: false
     })
   }
+  onBigSubmenu = data => {
+    console.log('Gallery Submenu: ',data)
+    this.props.gallerySocAction(data)
+  }
 
   render() {
     const deadline = new Date('2019-04-10T00:24:00')
@@ -52,7 +61,11 @@ class GalleryHome extends React.Component {
 
     return (
       <div className='gallery'>
-          {(gallery.length > 0) && <GalleryList onFilter={this.onFilter} onThumb={this.onThumb} gallery={gallery} membership={mem} />}
+          {(gallery.length > 0) &&
+            <GalleryList onFilter={this.onFilter} onThumb={this.onThumb}
+              gallery={gallery} membership={mem}
+            />
+          }
         <div className='clear'></div>
         <div>
           <p><br/><br/><br/><p>* * * * *</p></p>
@@ -65,7 +78,11 @@ class GalleryHome extends React.Component {
           transition={{animation:'fly left', duration: 800}}
         >
           <div style={{width: '100vw', position: 'absolute', top: '9vh', left: 0 }}>
-            {(gallery.length>0) && <BigImage onMenu={this.onMenu} indx={this.state.indx} gallery={gallery} />}
+            {(gallery.length>0) &&
+              <BigImage onSubmenu={this.onBigSubmenu} onMenu={this.onMenu}
+                indx={this.state.indx} gallery={gallery}
+              />
+            }
           </div>
         </TransitionablePortal>
       </div>
@@ -82,4 +99,4 @@ const mapStateToProps = state => ({
   mem: state.user.membership
 })
 
-export default connect(mapStateToProps, { getListGallery } )(GalleryHome)
+export default connect(mapStateToProps, { getListGallery,gallerySocAction,getSocialData } )(GalleryHome)

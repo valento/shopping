@@ -1,35 +1,71 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Button,Icon } from 'semantic-ui-react'
 
-export default class BigImageFeatures extends React.Component {
+class BigImageFeatures extends React.Component {
   state = {}
   onClick = (e, {name}) => {
-    this.setState({
-      [name]: !this.state[name]
-    })
+    if (name !== 'comment') {
+      this.setState({
+        [name]: true
+      })
+    } else {
+      this.setState({
+        [name]: !this.state[name]
+      })
+    }
+    if(!this.state[name]){
+      this.props.onSubmenu({
+        data:{
+          [name]: 1,
+          resource_id: this.props.id
+        }
+      })
+    }
   }
   render() {
-    const { like } = this.state
+    let likes,shares,views,interests,orders
+    const { liked,comment } = this.state
+    const {res} = this.props.gal[this.props.indx]
+    if(res){
+      likes = (res.liked/1000>1)? (res.liked/1000).toFixed(1) + 'K' : res.liked
+      views = (res.viewed/1000>1)? (res.viewed/1000).toFixed(1) + 'K' : res.viewed
+    }
 
     return (
       <div className='padded'>
         <ul className='ui grid'>
-          <div className="four wide column">
-<Button as='div' onClick={this.onClick} name='like' basic
-  icon={this.state.like? 'heart' : 'heart outline'}
-  color={this.state.like? 'red' : ''}
+          <div className="five wide column">
+<Button as='div' onClick={this.onClick} name='liked' basic
+  icon={liked? 'heart' : 'heart outline'}
+  color={liked? 'red' : ''}
+  content={likes}
 />
           </div>
-          <div className="four wide column">
+          <div className="two wide column">
 <Button as='div' onClick={this.onClick} name='comment' basic
-  icon={this.state.comment? 'comment' : 'comment outline'}
-  color={this.state.comment? 'red' : ''}
+  icon={comment? 'comment' : 'comment outline'}
 />
           </div>
-          <div className="four wide column"></div>
-          <div className="four wide column"></div>
+          <div className="five wide column">
+            <Button as='div' onClick={this.onClick} name='comment' basic
+              icon='eye'
+              content={likes}
+            />
+          </div>
+          <div className="two wide column">
+<Button as='div' onClick={this.onClick} name='comment' basic
+  icon='cloud download'
+/>
+          </div>
+          <div className="two wide column"></div>
         </ul>
       </div>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  gal: state.gallery
+})
+export default connect(mapStateToProps)(BigImageFeatures)

@@ -366,15 +366,23 @@ input, select, textarea {
   display: flex;
   flex-direction: column;
 }
+
 .big-image {
   width: 100vw;
   min-height: 93vh;
   background-color: white;
 }
+.big-image ul {
+  text-align: center!important;
+}
 .big-image img {
   width: 100vw;
   height: auto;
 }
+.big-image .ui.basic.button, .ui.basic.buttons .button {
+  color: black!important;
+}
+
 .linter {
   height: 50px;
   margin-bottom: 6px;
@@ -577,6 +585,9 @@ input, select, textarea {
 }
 .filters a {
   margin-right: 10px;
+  font-family: 'Cormorant', serif!important;
+  font-style: italic!important;
+  color: white!important;
 }
 .filters div {
   position: relative;

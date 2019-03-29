@@ -329,18 +329,31 @@ INSERT INTO gall_resources (name,c_group,c_permis) VALUES
 
 CREATE TABLE gall_actions (
 uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
-gall_res_id INT,
+resource_id INT,
 user_id INT,
 name VARCHAR(30),
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-likes INT,
-views INT,
-share INT,
-save INT,
-buy INT,
+liked INT,
+viewed INT,
+shared INT,
+saved INT,
+ordered INT,
 interested INT,
-FOREIGN KEY (gall_res_id) REFERENCES gall_resources (uid) ON DELETE CASCADE ON UPDATE CASCADE,
+contributed INT,
+FOREIGN KEY (resource_id) REFERENCES gall_resources (uid) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (user_id) REFERENCES users (uid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE gall_comments (
+uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
+user_id INT NOT NULL,
+resource_id INT NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+comment VARCHAR(240),
+ref INT DEFAULT NULL,
+FOREIGN KEY (user_id) REFERENCES users (uid) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (ref) REFERENCES gall_comments (uid),
+FOREIGN KEY (resource_id) REFERENCES gall_resources (uid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 // =================================================================
