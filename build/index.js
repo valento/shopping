@@ -65,7 +65,7 @@ app.use(_bodyParser2.default.json());
 app.use('/static', _express2.default.static(_path2.default.join(__dirname, '../client/build/static')));
 
 if (ENV === 'production') {
-  app.use('/img', _express2.default.static(_path2.default.join(__dirname, '../img')));
+  app.use('/img', _express2.default.static(_path2.default.join(__dirname, '../client/build/img')));
 } else {
   app.use('/img', _express2.default.static(_path2.default.join(__dirname, '../client/build/img')));
 }

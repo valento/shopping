@@ -27,7 +27,7 @@ app.use(bodyParser.json())
 app.use('/static', express.static(path.join(__dirname, '../client/build/static')))
 
 if(ENV === 'production') {
-  app.use('/img', express.static(path.join(__dirname, '../img')))
+  app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
 } else {
   app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
 }
