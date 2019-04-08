@@ -41,8 +41,7 @@ class MannCard extends React.Component {
               onClick={this.onMann}
               id={entry.uid} as={Link}
               status={entry.rest.c_status===4}
-              to={entry.rest.c_status===4 ? '/mannequin/'+entry.uid :
-              '/mannequin/comming/'+entry.uid}
+              to={'/mannequin/comming/'+entry.uid}//entry.rest.c_status===4 ? '/mannequin/'+entry.uid :
             >
             <Icon name='play circle outline'/>
             {ui[0]}

@@ -3,6 +3,7 @@ import {
 } from '../types'
 
 export const user = (state={}, action) => {
+  console.log('Reducer:',action.user)
   switch (action.type) {
     case USER_SIGNED :
       return action.user

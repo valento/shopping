@@ -22,11 +22,15 @@ app.use(bodyParser.json())
 
 //app.set('view engine','pug')
 //app.set('views', '.views')
-app.use('/admin/static', express.static(path.join(__dirname, '../admin/build/static')))
+//app.use('/admin/static', express.static(path.join(__dirname, '../admin/build/static')))
 
 app.use('/static', express.static(path.join(__dirname, '../client/build/static')))
 
-app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
+if(ENV === 'production') {
+  app.use('/img', express.static(path.join(__dirname, '../img')))
+} else {
+  app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
+}
 
 //app.use('/auth', authRouter)
 app.use('/user', userRouter)
@@ -42,7 +46,6 @@ app.get('/ua', requestLanguage({languages: ['en','es']}), (req,res,next) => {
   const lng = req.language
   //const lan = language.match(/^(es)/) ? 'es' : 'en'
   const mobile = req.get('user-agent').match((/(Mobile)/g)) ? true : false
-  console.log('Language: ',lng)
   //settings.lan = lan
   //settings.mob = mobile
   res.status(200).json({language: lng, mobile: mobile})

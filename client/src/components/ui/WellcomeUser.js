@@ -8,8 +8,8 @@ class WellcomeUser extends React.Component {
   state = {}
 
   text = {
-    en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Gallery', 'Windowshop', 'Welcome', 'Play that Mannequin Doll', 'Support Us'],
-    es: ['Me alegra que volviste', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Galería', 'Vitrinando', 'Bienvenid', 'Juega este Mannequin' , 'Apóyenos']
+    en: ['Glad to have you back', 'or', 'or just' , 'Check these out...', 'Get your Coupon', 'Gallery', 'Windowshop', 'Welcome', 'U-Game', 'Support Us'],
+    es: ['Me alegra que volviste', 'o', 'o simple' , 'Vea las gangas', 'Recibe su Bono', 'Galería', 'Vitrinando', 'Bienvenid', 'U-Game' , 'Apóyenos']
   }
 
   render() {
@@ -20,13 +20,14 @@ class WellcomeUser extends React.Component {
     return (
       <div className='vintage'>
         <p className='paraf-mid'>{wellcome},<b> {u_name}</b></p>
-          <Button as={Link} to='/mannequin' fluid color='black' icon='play circle outline' content={l[8]} />
-        <Divider horizontal>{l[1]}</Divider>
-          <Button as={Link} to='/crowdfunding' fluid color='blue' content={'\u2618  ' +l[9]} />
+        <Button as={Link} to='/gallery' fluid color='black' icon='eye' content={l[5]} />
 
-        <Divider horizontal>{l[2]}</Divider>
-          {(!username || !gender || !language) &&
-            <Button as={Link} to='/gallery' fluid color='black' icon='eye' content={l[5]} />
+          <Divider horizontal>{l[1]}</Divider>
+          <Button as={Link} to='/mannequin' fluid color='black' icon='play circle outline' content={l[8]} />
+
+          <Divider horizontal>{l[2]}</Divider>
+          {//(!username || !gender || !language) &&
+            <Button as={Link} to='/crowdfunding' fluid color='blue' content={'\u2618  ' +l[9]} />
           }
 
       </div>

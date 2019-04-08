@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Button,Icon } from 'semantic-ui-react'
+//import { / } from '../../actions'
 
 class BigImageFeatures extends React.Component {
   state = {}
@@ -28,8 +29,8 @@ class BigImageFeatures extends React.Component {
     const { liked,comment } = this.state
     const {res} = this.props.gal[this.props.indx]
     if(res){
-      likes = (res.liked/1000>1)? (res.liked/1000).toFixed(1) + 'K' : res.liked
-      views = (res.viewed/1000>1)? (res.viewed/1000).toFixed(1) + 'K' : res.viewed
+      likes = (res.liked/1000>1)? (res.liked/1000).toFixed(2) + 'K' : res.liked
+      views = (res.viewed/1000>1)? (res.viewed/1000).toFixed(2) + 'K' : res.viewed
     }
 
     return (
@@ -50,7 +51,7 @@ class BigImageFeatures extends React.Component {
           <div className="five wide column">
             <Button as='div' onClick={this.onClick} name='comment' basic
               icon='eye'
-              content={likes}
+              content={views}
             />
           </div>
           <div className="two wide column">

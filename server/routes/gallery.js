@@ -19,7 +19,6 @@ galleryRouter.get('/access/:table/:level', getPermis, (req,res,next) => {//check
   const { table,level } = req.params
   const { group } = req
   let gr = (group < 8) ? 8 : group
-  console.log(gr)
   let permis
   switch(group){
     case 16 :
@@ -88,6 +87,7 @@ galleryRouter.get('/:table', getUserId, (req,res,next) => {
   })
   .catch( err => { res.status(500).json({errors: {global: err.message}})})
 })
+
 galleryRouter.post('/:table', getUserId, (req,res,next) => {
 console.log(req.body)
   const { data } = req.body

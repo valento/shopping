@@ -1,4 +1,4 @@
-import { GALLERY_SET,GALLERY_OBJECT } from '../types'
+import { GALLERY_SET,GALLERY_OBJECT,GALLERY_SOCIAL_DATA } from '../types'
 import api from '../api'
 
 export const setGallery = gallery => ({

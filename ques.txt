@@ -96,7 +96,7 @@ uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
 email VARCHAR(40) NOT NULL UNIQUE,
 password VARCHAR(60) NOT NULL UNIQUE,
 verified TINYINT unsigned DEFAULT 0,
-c_status TINYINT unsigned DEFAULT 4,
+c_status TINYINT unsigned DEFAULT 16,
 c_owner INT unsigned NOT NULL DEFAULT 1,
 c_group TINYINT unsigned NOT NULL DEFAULT 1,
 c_permis INT unsigned DEFAULT 500,
@@ -168,7 +168,6 @@ FOREIGN KEY (mann_id) REFERENCES mann (uid) ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE resources (
 uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
 mann_id INT NOT NULL,
-item_id INT NOT NULL,
 body TINYINT NOT NULL,
 layer TINYINT NOT NULL,
 name VARCHAR(30),
@@ -176,30 +175,28 @@ c_status TINYINT unsigned DEFAULT 4,
 c_owner INT unsigned NOT NULL DEFAULT 1,
 c_group INT unsigned NOT NULL DEFAULT 1,
 c_permis INT unsigned NOT NULL DEFAULT 500,
-FOREIGN KEY (mann_id) REFERENCES mann (uid) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (item_id) REFERENCES items (uid) ON DELETE CASCADE ON UPDATE CASCADE
+FOREIGN KEY (mann_id) REFERENCES mann (uid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO resources (mann_id,item_id,body,layer,name) VALUES
-(1,1,1,4,'1_1_4_1'),
-(1,1,1,4,'1_1_4_2'),
-(1,1,2,2,'1_2_2_1'),
-(1,1,2,1,'1_1_2_1'),
-(1,1,2,4,'1_2_4_1'),
-(1,1,4,4,'1_4_4_1'),
-(1,1,8,2,'1_8_2_1'),
-(1,1,8,4,'1_8_4_1'),
-(1,1,8,4,'1_8_4_2'),
-(1,1,8,8,'1_8_8_1'),
-(1,1,8,16,'1_8_16_1'),
-(1,1,8,16,'1_8_16_2'),
-(1,1,16,4,'1_16_4_1'),
-(1,1,16,16,'1_16_16_1');
-
-INSERT INTO resources (mann_id,item_id,body,layer,name) values
-(1,1,4,8,'1_4_8_1'),
-(1,1,4,8,'1_4_8_2'),
-(1,1,4,8,'1_4_8_3');
+INSERT INTO resources (mann_id,body,layer,name) VALUES
+(1,1,4,'1_1_4_1'),
+(1,1,4,'1_1_4_2'),
+(1,2,2,'1_2_2_1'),
+(1,2,1,'1_2_1_1'),
+(1,2,1,'1_1_2_1'),
+(1,2,4,'1_2_4_1'),
+(1,4,4,'1_4_4_1'),
+(1,8,2,'1_8_2_1'),
+(1,8,4,'1_8_4_1'),
+(1,8,4,'1_8_4_2'),
+(1,8,8,'1_8_8_1'),
+(1,8,16,'1_8_16_1'),
+(1,8,16,'1_8_16_2'),
+(1,16,4,'1_16_4_1'),
+(1,16,16,'1_16_16_1'),
+(1,4,8,'1_4_8_1'),
+(1,4,8,'1_4_8_2'),
+(1,4,8,'1_4_8_3');
 
 SELECT (body,layer) FROM resource WHERE uid=?;
 
@@ -207,10 +204,6 @@ SELECT (body,layer) FROM resource WHERE uid=?;
 
 CREATE TABLE mann (
 uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
-c_owner INT unsigned NOT NULL DEFAULT 1,
-c_group TINYINT unsigned NOT NULL DEFAULT 1,
-c_status TINYINT unsigned DEFAULT 16,
-c_permis INT unsigned DEFAULT 500,
 gender TINYINT unsigned DEFAULT 2,
 title_en text,
 title_es text,
@@ -225,28 +218,32 @@ legs INT unsigned,
 feet INT unsigned,
 likes INT unsigned,
 rating INT unsigned,
-price INT DEFAULT 6
+price INT DEFAULT 6,
+c_owner INT unsigned NOT NULL DEFAULT 1,
+c_group TINYINT unsigned NOT NULL DEFAULT 1,
+c_status TINYINT unsigned DEFAULT 16,
+c_permis INT unsigned DEFAULT 500
 );
 
 UPDATE mann SET dscr_es='Nosotras, las Mujeres, hacemos el futuro posible. Este Mannequin lo hace visible.' WHERE uid=3;
 
-INSERT INTO mann (c_status,title_en,title_es,dscr_en,dscr_es,head,corp,waist,legs,feet) VALUES (
+INSERT INTO mann (c_status,title_en,title_es,dscr_en,dscr_es,head,corp,waist,legs,feet,likes) VALUES (
 4,'La Catalista','La Catalista',
 'The Catalist is the new image of lifestyle. This Mannequin shows the free spirit in controversy and braveness.',
 'La Catalista es una onda nueva. Este Mannequin representa el vuelo libre de la mujer innovadora atrevida.',
-20,30,4,7,4),
+24,30,12,7,4,183),
 (16,'Altered Carbon','Altered Carbon',
 'We, Women, make the future available. This Mannequin makes it foreseeable.',
-'Las Mujeres, somos el futuro. Este Mannequin abre una vista hacia aquello.',
-4,4,4,4,4),
+'Nosotras, las Mujeres, hacemos el futuro posible. Este Mannequin lo hace visible.',
+4,4,4,4,4,13),
 (16,'Ibiza','Ibiza',
 '"No-clothes" is hard to style. This Mannequin makes it easy.',
 '"Sin-ropa" es un estilo sofisticado. Este Mannequin lo hace ver fácil',
-4,4,4,4,4),
+4,4,4,4,4,283),
 (16,'Tayrona','Tayrona',
 'Colombia is the new land of opportunity. "Tayrona" is the new Cote d\'Azur...',
 'Colombia es la Nueva Tierra de oportunidades. "Tayrona" es la nueva Costa Azul...',
-4,4,4,4,4);
+4,4,4,4,4,18);
 
 CREATE TABLE mann_actions (
 uid VARCHAR(20) PRIMARY KEY UNIQUE NOT NULL,
@@ -288,7 +285,6 @@ c_permis INT unsigned NOT NULL DEFAULT 500
 CREATE TABLE gall_resources (
 uid INT AUTO_INCREMENT NOT NULL UNIQUE PRIMARY KEY,
 gall_id INT DEFAULT NULL,
-itm_id INT DEFAULT NULL,
 mann_id INT DEFAULT NULL,
 body TINYINT DEFAULT NULL,
 layer TINYINT DEFAULT NULL,
@@ -300,7 +296,6 @@ c_owner INT unsigned NOT NULL DEFAULT 1,
 c_group INT unsigned NOT NULL DEFAULT 1,
 c_permis INT unsigned NOT NULL DEFAULT 500,
 FOREIGN KEY (mann_id) REFERENCES mann (uid) ON DELETE CASCADE ON UPDATE CASCADE,
-FOREIGN KEY (itm_id) REFERENCES items (uid) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (gall_id) REFERENCES gallery (uid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

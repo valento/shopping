@@ -46,7 +46,6 @@ galleryRouter.get('/access/:table/:level', _auth.getPermis, function (req, res, 
   var group = req.group;
 
   var gr = group < 8 ? 8 : group;
-  console.log(gr);
   var permis = void 0;
   switch (group) {
     case 16:
@@ -119,6 +118,7 @@ galleryRouter.get('/:table', _auth.getUserId, function (req, res, next) {
     res.status(500).json({ errors: { global: err.message } });
   });
 });
+
 galleryRouter.post('/:table', _auth.getUserId, function (req, res, next) {
   console.log(req.body);
   var data = req.body.data;
