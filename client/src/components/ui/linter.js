@@ -13,11 +13,13 @@ export default class Linter extends React.Component {
     this.props.onFilter(name)
   }
   render(){
+    const { service } = this.props
+    console.log('Service: ',service)
     return(
       <div className='linter'>
         <ul className='ui grid'>
           <div className='three wide column'>
-            {this.props.big? <Button onClick={this.props.onMenu} basic icon='arrow left' /> : <Button as={Link} to='/' basic icon='arrow left' />}
+            {this.props.big? <Button onClick={this.props.onMenu} basic icon='arrow left' /> : <Button as={Link} to={service!==undefined? '/'+service : '/'} basic icon='arrow left' />}
           </div>
           <div className='three wide column'>
 {!this.props.big && this.props.filters && <Button onClick={this.onFilter} name='3' basic icon='exclamation' inverted={this.state.selected==='3'} />}

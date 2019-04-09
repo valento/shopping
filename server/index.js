@@ -26,11 +26,9 @@ app.use(bodyParser.json())
 
 app.use('/static', express.static(path.join(__dirname, '../client/build/static')))
 
-if(ENV === 'production') {
+//if(ENV !== 'production') {
   app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
-} else {
-  app.use('/img', express.static(path.join(__dirname, '../client/build/img')))
-}
+//}
 
 //app.use('/auth', authRouter)
 app.use('/user', userRouter)

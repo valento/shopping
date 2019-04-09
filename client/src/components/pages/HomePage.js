@@ -6,6 +6,7 @@ import SignupPage from './SignupPage'
 import WellcomeUser from '../ui/WellcomeUser'
 import { initUser } from '../../actions/auth'
 import CrowdFundUs from '../ui/CrowdFundUs'
+import CalendarPromo from '../ui/CalendarPromo'
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class HomePage extends React.Component {
       es: ['Registro', 'Bienvenido'],
       en: ['Register', 'Wellcome'],
       register: true,
-      portalOpen: true
+      portalOpen: true,
+      fund_link: false
     }
   }
 
@@ -30,8 +32,11 @@ class HomePage extends React.Component {
     const lan = this.state[this.props.lan]
     return (
       <div className='App-content'>
+        <div className='calendar-link'>
+          <CalendarPromo lan={this.props.lan} />
+        </div>
         <div className='fund-link'>
-          {!this.props.logged && <CrowdFundUs type='mini' lan={this.props.lan} />}
+          {!this.props.logged && this.state.fund_link && <CrowdFundUs type='mini' lan={this.props.lan} />}
         </div>
         <div className='home-page vintage'>
           <TransitionablePortal

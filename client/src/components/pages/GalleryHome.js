@@ -57,13 +57,12 @@ class GalleryHome extends React.Component {
     const deadline = new Date('2019-04-10T00:24:00')
     const now = new Date()
     const rm = new Date(deadline-now)
-    const {gallery,mem} = this.props
-
+    const {gallery,mem,match} = this.props
     return (
       <div className='gallery'>
           {(gallery.length > 0) &&
             <GalleryList onFilter={this.onFilter} onThumb={this.onThumb}
-              gallery={gallery} membership={mem}
+              gallery={gallery} membership={mem} service={match.params.service}
             />
           }
         <div className='clear'></div>
@@ -79,7 +78,7 @@ class GalleryHome extends React.Component {
         >
           <div style={{width: '100vw', position: 'absolute', top: '9vh', left: 0 }}>
             {(gallery.length>0) &&
-              <BigImage onSubmenu={this.onBigSubmenu} onMenu={this.onMenu}
+              <BigImage service={match.params.service} onSubmenu={this.onBigSubmenu} onMenu={this.onMenu}
                 indx={this.state.indx} gallery={gallery}
               />
             }

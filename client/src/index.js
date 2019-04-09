@@ -17,6 +17,7 @@ import setAuthHeader from './setAuthHeader'
 const initState = {
   settings: {
     language: 'es',
+    calendar: {},
     mobile: true,
     domain: 1,
     category: 0,

@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 
 import GalleryThumb from '../ui/gall_thumb'
 
-const GalleryList = ({gallery, onThumb, onFilter, membership}) => {
+const GalleryList = ({gallery, onThumb, onFilter, membership, service}) => {
     return (
       <div>
-        <Linter big={false} onFilter={onFilter} membership={membership} filters={false}/>
+        <Linter big={false} service={service} onFilter={onFilter} membership={membership} filters={false}/>
         <div className='clear'></div>
         <ul>
           {gallery.map( (entry,i) => {

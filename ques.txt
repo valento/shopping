@@ -300,11 +300,15 @@ FOREIGN KEY (gall_id) REFERENCES gallery (uid) ON DELETE CASCADE ON UPDATE CASCA
 );
 
 INSERT INTO gall_resources (name) VALUES
-('1006'),
-('1013'),
-('1015'),
-('1018'),
-('1020');
+('1021'),
+('1022'),
+('1023'),
+('1024'),
+('1025'),
+('1026'),
+('1027'),
+('1028'),
+('1029');
 
 INSERT INTO gall_resources (name,c_group,c_permis) VALUES
 ('1001',2,480),

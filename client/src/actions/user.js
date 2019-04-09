@@ -1,5 +1,5 @@
 import {
-  USER_UPDATED
+  USER_UPDATED, USER_BDAY
 } from '../types'
 import api from '../api'
 
@@ -8,8 +8,13 @@ export const userUpdated = user => ({
   user
 })
 
+export const bdayAdded = user => ({
+  type: USER_BDAY,
+  user
+})
 
-export const changeCategory = category => dispatch => dispatch(ch_cat(category))
+export const switchLanguage = () => ({})
+//export const changeCategory = category => dispatch => dispatch(ch_cat(category))
 
 export const updateUser = user => dispatch =>
   api.user.updateUser(user).then( res => {
