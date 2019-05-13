@@ -4,6 +4,7 @@ import { Button, Label, Icon, Divider, Accordion } from 'semantic-ui-react'
 
 export default class CrowdFundUs extends React.Component {
   state = {
+    link: 'https://www.indiegogo.com/projects/mannequin-doll-part-2/x/19109771#/',
     open: false,
     activeIndex: false,
     lan: {
@@ -72,7 +73,7 @@ export default class CrowdFundUs extends React.Component {
 
   handleModalsOptions = (e, titleProps) => {
     const { index } = titleProps
-    const { activeIndex } = this.state
+    const { activeIndex,link } = this.state
     const newIndex = activeIndex === index ? -1 : index
 
     this.setState({ activeIndex: newIndex })
@@ -118,7 +119,7 @@ export default class CrowdFundUs extends React.Component {
             //inverted={this.props.type==='mini'}
             content={('\u2618  ' + ui[0])}
             onClick={()=>this.props.onSoc('supported')}
-            href='https://www.indiegogo.com/projects/mannequin-doll/x/19109771#/'
+            href={link}
           />
         </div>
         <div className='clear'></div>

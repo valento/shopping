@@ -17,7 +17,6 @@ class CalendarGame extends React.Component {
 
   onDate = (data) => {
     let user = {}
-    console.log({data})
     this.setState({
       ...this.state, data
     })
@@ -29,16 +28,19 @@ class CalendarGame extends React.Component {
     const {lan} = this.props
     const ui = this.state.ui[lan]
     return (
-      <div className='ui three column grid padded'>
+      <div className='ui two column grid padded'>
         <div className='five wide column'>
-          <Calendar lan={lan} d={(this.state.data && this.state.data.day) ? this.state.data.day : 0} />
+          <Calendar lan={lan}
+            d={(this.state.data && this.state.data.day) ? this.state.data.day : 0}
+            m={(this.state.data && this.state.data.month) ? this.state.data.month : 0} 
+          />
         </div>
-        <div className='central six wide column'>
+        <div className='central ten wide column'>
           <Bday onDate={this.onDate} lan={lan} />
           <Divider></Divider>
           <CalBkg lan={lan} />
           <Divider></Divider>
-          <Button content={ui[2]}
+          <Button color='black' content={ui[2]}
             disabled={!this.state.data || Object.keys(this.state.data).length === 0}
           />
         </div>
@@ -46,5 +48,7 @@ class CalendarGame extends React.Component {
     )
   }
 }
-
-export default connect(null, { bdayAdded })(CalendarGame)
+const mapStateToProps = state => ({
+  calendar: state.calendar
+})
+export default connect(mapStateToProps, { bdayAdded })(CalendarGame)

@@ -1,5 +1,5 @@
 import {
-  CATEGORY_CHANGED, CATEGORY_TREE,
+  CATEGORY_CHANGED, CATEGORY_TREE, CALENDAR_BKG,
   USER_UPDATED, PROMOS_LIST, DOMAIN_CHANGED, LANGUAGE, MOBILE
 } from '../types'
 import api from '../api'
@@ -8,6 +8,11 @@ import api from '../api'
 export const ch_cat = category => ({
   type: CATEGORY_CHANGED,
   category
+})
+
+export const bkgAdded = bkg => ({
+  type: CALENDAR_BKG,
+  bkg
 })
 
 export const switchDomain = domain => dispatch =>

@@ -54,7 +54,7 @@ class GalleryHome extends React.Component {
   }
 
   render() {
-    const deadline = new Date('2019-04-10T00:24:00')
+    const deadline = new Date('2019-04-30T00:24:00')
     const now = new Date()
     const rm = new Date(deadline-now)
     const {gallery,mem,match} = this.props

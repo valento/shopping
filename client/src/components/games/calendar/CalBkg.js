@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from 'semantic-ui-react'
+import { Button,Icon } from 'semantic-ui-react'
 
 const CalBkg = ({lan}) => {
   const ui ={
@@ -9,7 +9,7 @@ const CalBkg = ({lan}) => {
   }
   return (
     <div>
-      <p><Link to='/gallery/calendar'>{ui[lan][0]}</Link></p>
+      <p><Link to='/gallery/calendar' className='ttl'>{ui[lan][0]}<Icon name='long arrow alternate right' /></Link></p>
     </div>
   )
 }
